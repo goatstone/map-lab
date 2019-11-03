@@ -6,18 +6,16 @@ function App() {
   const [markerPosition, moveMarker] = useMap({ lat: 43, lng: 122 })
   // engine
   const [isRunnningEngine, setEngine] = useState(true)
-
-  function engine(count) {
+  function engine(maximumIntervals = 20) {
+    let intervalCount = 0
     return () => {
-      if (count < 10) {
+      if (intervalCount < maximumIntervals) {
         moveMarker()
       }
-      // eslint-disable-next-line
-      count += 1
+      intervalCount += 1
     }
   }
-  const eng = engine(0)
-  const maximumIntervals = 20
+  const maximumIntervals = 200
   const intervalSeconds = 1000
   useEffect(() => {
     let interval = null
@@ -26,7 +24,7 @@ function App() {
     if (isRunnningEngine) {
       interval = setInterval(() => {
         engineCount += 1
-        eng()
+        engine(maximumIntervals)()
         if (engineCount > maximumIntervals) {
           clearInterval(interval)
         }
