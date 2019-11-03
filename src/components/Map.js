@@ -6,13 +6,13 @@ const style = {
   height: '300px',
 }
 /* eslint-disable */
-function Map({ markerPosition }) {
+function Map({ markerPosition, center = [0, 0] }) {
 
   const mapRef = useRef(null)
   useEffect(() => {
     mapRef.current = L.map('map', {
-      center: [49.8419, 24.0315],
-      zoom: 16,
+      center: center,
+      zoom: 12,
       layers: [
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
           attribution:
@@ -21,7 +21,7 @@ function Map({ markerPosition }) {
       ],
     })
   }, [])
-
+  // marker
   const markerRef = useRef(null)
   useEffect(
     () => {
@@ -33,7 +33,12 @@ function Map({ markerPosition }) {
     },
     [markerPosition],
   )
-
+  // center positions
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.panTo(center)
+    }
+  }, [center])
   return (
     <section>
       <div id="map" style={style} />

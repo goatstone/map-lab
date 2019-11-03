@@ -3,7 +3,10 @@ import useMap from '../use-map'
 import Map from './Map'
 
 function App() {
-  const [markerPosition, moveMarker] = useMap({ lat: 43, lng: 122 })
+  const lat = 47.6
+  const lng = -122.3
+  const [markerPosition, moveMarker] = useMap({ lat, lng })
+  const [center, setCenter] = useState([lat, lng])
   // engine
   const [isRunnningEngine, setEngine] = useState(true)
   function intervalEngine(intervalCallback) {
@@ -12,15 +15,21 @@ function App() {
     }
   }
 
-  const maximumIntervals = 10
+  const engine = intervalEngine(() => {
+    const moveOffset = [0.001, 0.001]
+    moveMarker(moveOffset)
+    setCenter(currCenter => {
+      const newCenter = [...currCenter]
+      const a = newCenter.map((cdim, i) => cdim + moveOffset[i])
+      return a
+    })
+  })
+  const maximumIntervals = 100
   const intervalSeconds = 1000
   useEffect(() => {
     let interval = null
     if (isRunnningEngine) {
       let engineCount = 1
-      const engine = intervalEngine(() => {
-        moveMarker()
-      })
       interval = setInterval(() => {
         engineCount += 1
         engine()
@@ -44,8 +53,15 @@ function App() {
       >
         set engine
       </button>
+      <button
+        type="button"
+        onClick={() => setCenter([47.6, -122])}
+      >
+        set center
+      </button>
       <Map
         markerPosition={markerPosition}
+        center={center}
       />
       <div>
         Current markerPosition: lat:
