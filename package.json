@@ -1,8 +1,7 @@
 {
-  "name": "min-hooks",
+  "name": "map-lab",
   "homepage": "https://github.com/JoseHerminioCollas/min-hooks",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@babel/core": "7.4.3",
     "@babel/runtime": "^7.6.3",
