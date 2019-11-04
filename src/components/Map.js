@@ -1,25 +1,45 @@
 import React, { useEffect, useRef } from 'react'
 import L from 'leaflet'
+import './Map.css'
 
 const style = {
   width: '100%',
   height: '300px',
 }
+const attribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, '
+  + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, '
+  + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
+const mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ29hdHN0b25lIiwiYSI6ImNrMmp5dnoycjFsazgzYm1zbjE0anRobzkifQ.tW-4mQDJK41ayRkBxtz15w'
+const grayscale = L.tileLayer(
+  mbUrl,
+  {
+    id: 'mapbox.light',
+    attribution,
+  },
+)
+const streets = L.tileLayer(
+  mbUrl,
+  {
+    id: 'mapbox.streets',
+    attribution,
+  },
+)
+const baseMaps = {
+  Grayscale: grayscale,
+  Streets: streets,
+}
 /* eslint-disable */
 function Map({ markerPosition, center = [0, 0] }) {
-
   const mapRef = useRef(null)
   useEffect(() => {
     mapRef.current = L.map('map', {
       center: center,
       zoom: 12,
       layers: [
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-          attribution:
-            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        }),
+        grayscale, streets,
       ],
     })
+    L.control.layers(baseMaps).addTo(mapRef.current);
   }, [])
   // marker
   const markerRef = useRef(null)
