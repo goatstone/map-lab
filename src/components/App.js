@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import useMap from '../use-map'
+import useCenter from '../use-center'
 import Map from './Map'
 
 function App() {
-  const lat = 47.6
-  const lng = -122.3
-  const [markerPosition, moveMarker] = useMap({ lat, lng })
-  const [center, setCenter] = useState([lat, lng])
+  const initLatLng = [47.6, -122.3]
+  const [markerPosition, moveMarker] = useMap(initLatLng)
+  const [mapCenter, moveCenterBy, moveCenterTo] = useCenter(initLatLng)
+
   // engine
   const [isRunnningEngine, setEngine] = useState(true)
   function intervalEngine(intervalCallback) {
@@ -18,11 +19,7 @@ function App() {
   const engine = intervalEngine(() => {
     const moveOffset = [0.001, 0.001]
     moveMarker(moveOffset)
-    setCenter(currCenter => {
-      const newCenter = [...currCenter]
-      const a = newCenter.map((cdim, i) => cdim + moveOffset[i])
-      return a
-    })
+    moveCenterBy(moveOffset)
   })
   const maximumIntervals = 100
   const intervalSeconds = 1000
@@ -47,21 +44,34 @@ function App() {
   return (
     <div>
       {isRunnningEngine ? 'T' : 'F'}
+      {mapCenter[0]}
+      <button
+        type="button"
+        onClick={() => moveCenterBy([0.01, 0.01])}
+      >
+        move center by
+      </button>
+      <button
+        type="button"
+        onClick={() => moveCenterTo(initLatLng)}
+      >
+        move center to
+      </button>
       <button
         type="button"
         onClick={() => setEngine(!isRunnningEngine)}
       >
         set engine
       </button>
-      <button
+      {/* <button
         type="button"
         onClick={() => setCenter([47.6, -122])}
       >
         set center
-      </button>
+      </button> */}
       <Map
         markerPosition={markerPosition}
-        center={center}
+        center={mapCenter}
       />
       <div>
         Current markerPosition: lat:
@@ -72,8 +82,7 @@ function App() {
       <button
         type="button"
         onClick={() => {
-          const i = Math.floor(Math.random() * 90)
-          moveMarker(i, 20)
+          moveMarker([0.001, 0.001])
         }}
       >
         Move marker

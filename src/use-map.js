@@ -4,10 +4,10 @@ import { useState } from 'react'
 function useMap(initMarkerPosition) {
   const [markerPosition, setMarkerPosition] = useState(initMarkerPosition)
   function moveMarker(offset = [0, 0]) {
-    setMarkerPosition(currentPosition => ({
-      lat: currentPosition.lat + offset[0],
-      lng: currentPosition.lng + offset[1],
-    }))
+    setMarkerPosition(currentPosition => ([
+      currentPosition[0] + offset[0],
+      currentPosition[1] + offset[1],
+    ]))
   }
   return [markerPosition, moveMarker]
 }
