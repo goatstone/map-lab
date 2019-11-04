@@ -1,10 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import L from 'leaflet'
+import './Map.css'
 
-const style = {
-  width: '100%',
-  height: '300px',
-}
 const attribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, '
   + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, '
   + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
@@ -59,9 +56,7 @@ function Map({ markerPosition, center = [0, 0] }) {
     }
   }, [center])
   return (
-    <section>
-      <div id="map" style={style} />
-    </section>
+    <div id="map" data-id="leaflet-map"/>
   )
 }
 

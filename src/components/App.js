@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import useMap from '../use-map'
 import useCenter from '../use-center'
 import Map from './Map'
+import './App.css'
 
 function App() {
   const initLatLng = [47.6, -122.3]
@@ -42,52 +43,59 @@ function App() {
   }, [isRunnningEngine])
 
   return (
-    <div>
-      {isRunnningEngine ? 'T' : 'F'}
-      {mapCenter[0]}
-      <button
-        type="button"
-        onClick={() => moveCenterBy([0.01, 0.01])}
-      >
-        move center by
-      </button>
-      <button
-        type="button"
-        onClick={() => moveCenterTo(initLatLng)}
-      >
-        move center to
-      </button>
-      <button
-        type="button"
-        onClick={() => setEngine(!isRunnningEngine)}
-      >
-        set engine
-      </button>
-      {/* <button
-        type="button"
-        onClick={() => setCenter([47.6, -122])}
-      >
-        set center
-      </button> */}
+    <section data-id="app">
+      <section data-id="information">
+        <article>
+          Engine is&nbsp;
+          {isRunnningEngine ? 'Running' : 'Not Running'}
+        </article>
+        <article>
+          Map&nbsp;Center:&nbsp;
+          latitude:
+          &nbsp;
+          {mapCenter[0].toFixed(8)}
+          &nbsp;longitude:
+          &nbsp;
+          {mapCenter[1].toFixed(8)}
+        </article>
+      </section>
+      <section data-id="control">
+        <button
+          type="button"
+          onClick={() => {
+            moveMarker([0.001, 0.001])
+          }}
+        >
+          Move Marker By 0.01
+        </button>
+        <button
+          type="button"
+          onClick={() => moveCenterBy([0.01, 0.01])}
+        >
+          Move Center by 0.01
+        </button>
+        <button
+          type="button"
+          onClick={() => moveCenterTo(initLatLng)}
+        >
+          move center to:&nbsp;
+          {initLatLng[0]}
+          &nbsp;:&nbsp;
+          {initLatLng[1]}
+        </button>
+        <button
+          type="button"
+          onClick={() => setEngine(!isRunnningEngine)}
+        >
+          {!isRunnningEngine ? 'Start Engine' : 'Stop Engine'}
+        </button>
+
+      </section>
       <Map
         markerPosition={markerPosition}
         center={mapCenter}
       />
-      <div>
-        Current markerPosition: lat:
-        {markerPosition.lat}
-        , lng:
-        {markerPosition.lng}
-      </div>
-      <button
-        type="button"
-        onClick={() => {
-          moveMarker([0.001, 0.001])
-        }}
-      >
-        Move marker
-      </button>
-    </div>
+    </section>
   )
 }
 
