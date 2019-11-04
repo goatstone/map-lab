@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react'
 import L from 'leaflet'
-import './Map.css'
 
 const style = {
   width: '100%',
