@@ -46,49 +46,85 @@ function App() {
     <section data-id="app">
       <section data-id="information">
         <article>
-          Engine is&nbsp;
-          {isRunnningEngine ? 'Running' : 'Not Running'}
-        </article>
-        <article>
-          Map&nbsp;Center:&nbsp;
-          latitude:
-          &nbsp;
-          {mapCenter[0].toFixed(8)}
-          &nbsp;longitude:
-          &nbsp;
-          {mapCenter[1].toFixed(8)}
+          <ul>
+            <li>
+              Engine is&nbsp;
+              {isRunnningEngine ? 'Running' : 'Not Running'}
+            </li>
+            <ul>
+
+              <li>
+                Map&nbsp;Center:&nbsp;
+              </li>
+              <ul>
+                <li>
+                  latitude:
+                  &nbsp;
+                  {mapCenter[0].toFixed(4)}
+                </li>
+                <li>
+                  &nbsp;longitude:
+                  &nbsp;
+                  {mapCenter[1].toFixed(4)}
+                </li>
+              </ul>
+            </ul>
+          </ul>
         </article>
       </section>
       <section data-id="control">
-        <button
-          type="button"
-          onClick={() => {
-            moveMarker([0.001, 0.001])
-          }}
-        >
-          Move Marker By 0.01
-        </button>
-        <button
-          type="button"
-          onClick={() => moveCenterBy([0.01, 0.01])}
-        >
-          Move Center by 0.01
-        </button>
-        <button
-          type="button"
-          onClick={() => moveCenterTo(initLatLng)}
-        >
-          move center to:&nbsp;
-          {initLatLng[0]}
-          &nbsp;:&nbsp;
-          {initLatLng[1]}
-        </button>
-        <button
-          type="button"
-          onClick={() => setEngine(!isRunnningEngine)}
-        >
-          {!isRunnningEngine ? 'Start Engine' : 'Stop Engine'}
-        </button>
+        <fieldset>
+          <legend>
+            Place Search
+          </legend>
+          <input
+            data-id="search-place"
+          />
+          <button
+            type="button"
+          >
+            Search
+          </button>
+        </fieldset>
+        <fieldset>
+          <legend>
+            Move
+          </legend>
+          <button
+            type="button"
+            onClick={() => {
+              moveMarker([0.001, 0.001])
+            }}
+          >
+            Marker
+          </button>
+          <button
+            type="button"
+            onClick={() => moveCenterBy([0.01, 0.01])}
+          >
+            Center
+          </button>
+          <button
+            type="button"
+            onClick={() => moveCenterTo(initLatLng)}
+          >
+            center to:&nbsp;
+            {initLatLng[0]}
+            &nbsp;:&nbsp;
+            {initLatLng[1]}
+          </button>
+        </fieldset>
+        <fieldset>
+          <legend>
+            Motion
+          </legend>
+          <button
+            type="button"
+            onClick={() => setEngine(!isRunnningEngine)}
+          >
+            {!isRunnningEngine ? 'Start' : 'Stop'}
+          </button>
+        </fieldset>
 
       </section>
       <Map

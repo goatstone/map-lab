@@ -4,34 +4,57 @@
   color: white;
 }
 [data-id=control] {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   background: black;
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 50px;
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 60px;
+  width: 70%;
+  padding: 2px;
+}
+[data-id=control] fieldset {
+  background: none;
+  padding: 1px;
+  margin: 2px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
 }
 [data-id=control] button{
   font-weight: 900;
-  font-size: 1em;
+  font-size: 0.9em;
   background: #eee;
   margin: 3px;
   border-radius: 6px;
 }
-
+[data-id=control] input {
+  margin: 3px;
+  border-radius: 6px;
+}
 section[data-id=information] {
+  font-size: 0.8em;
   background: black;
   position: absolute;
   bottom: 0;
   right: 0;
-  height: 50px;
-  width: 50%;
+  height: 60px;
+  width: 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  padding-right: 12px;
+  padding: 2px 2px;
+}section[data-id=information] ul{
+  display: block;
+  list-style-type: none;
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+section[data-id=information] li {
+  display: inline;
+  padding: 0;
+  margin-left: 3px;
 }
