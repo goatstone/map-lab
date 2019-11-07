@@ -8,9 +8,18 @@ function App() {
   const initLatLng = [47.6, -122.3]
   const [markerPosition, moveMarker] = useMap(initLatLng)
   const [mapCenter, moveCenterBy, moveCenterTo] = useCenter(initLatLng)
-
+  const [placeQueryInput, setPlaceQueryInput] = useState('')
+  const [placeQuery, setPlaceQuery] = useState('')
+  const [placeInfo, setPlaceInfo] = useState({})
+  useEffect(() => {
+    const placeInfoPacket = {
+      q: placeQueryInput,
+      results: [],
+    }
+    setPlaceInfo(placeInfoPacket)
+  }, [placeQuery])
   // engine
-  const [isRunnningEngine, setEngine] = useState(true)
+  const [isRunnningEngine, setEngine] = useState(false)
   function intervalEngine(intervalCallback) {
     return () => {
       intervalCallback()
@@ -44,32 +53,27 @@ function App() {
 
   return (
     <section data-id="app">
+      <Map
+        markerPosition={markerPosition}
+        center={mapCenter}
+      />
       <section data-id="information">
         <article>
-          <ul>
-            <li>
-              Engine is&nbsp;
-              {isRunnningEngine ? 'Running' : 'Not Running'}
-            </li>
-            <ul>
-
-              <li>
-                Map&nbsp;Center:&nbsp;
-              </li>
-              <ul>
-                <li>
-                  latitude:
-                  &nbsp;
-                  {mapCenter[0].toFixed(4)}
-                </li>
-                <li>
-                  &nbsp;longitude:
-                  &nbsp;
-                  {mapCenter[1].toFixed(4)}
-                </li>
-              </ul>
-            </ul>
-          </ul>
+          Place Query:
+          {placeInfo.q}
+        </article>
+        <article>
+          Engine is&nbsp;
+          {isRunnningEngine ? 'Running' : 'Not Running'}
+        </article>
+        <article>
+          Map&nbsp;Center:&nbsp;
+          latitude:
+          &nbsp;
+          {mapCenter[0].toFixed(4)}
+          &nbsp;longitude:
+          &nbsp;
+          {mapCenter[1].toFixed(4)}
         </article>
       </section>
       <section data-id="control">
@@ -79,9 +83,12 @@ function App() {
           </legend>
           <input
             data-id="search-place"
+            value={placeQueryInput}
+            onChange={e => setPlaceQueryInput(e.target.value)}
           />
           <button
             type="button"
+            onClick={() => setPlaceQuery(placeQueryInput)}
           >
             Search
           </button>
@@ -120,6 +127,7 @@ function App() {
           </legend>
           <button
             type="button"
+            data-id="start-stop"
             onClick={() => setEngine(!isRunnningEngine)}
           >
             {!isRunnningEngine ? 'Start' : 'Stop'}
@@ -127,10 +135,6 @@ function App() {
         </fieldset>
 
       </section>
-      <Map
-        markerPosition={markerPosition}
-        center={mapCenter}
-      />
     </section>
   )
 }
