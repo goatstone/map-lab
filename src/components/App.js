@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import useMap from '../use-map'
 import useCenter from '../use-center'
 import Map from './Map'
@@ -12,11 +13,19 @@ function App() {
   const [placeQuery, setPlaceQuery] = useState('')
   const [placeInfo, setPlaceInfo] = useState({})
   useEffect(() => {
+    if (placeQuery === '') return () => 1
     const placeInfoPacket = {
-      q: placeQueryInput,
+      q: placeQuery,
+      message: '',
       results: [],
-    }
-    setPlaceInfo(placeInfoPacket)
+    };
+    (async () => {
+      const url = `http://localhost:8080/places?q=${placeQuery}`
+      const pI = await axios(url)
+      placeInfoPacket.message = pI.data[0].name
+      setPlaceInfo(placeInfoPacket)
+    })()
+    return () => 1
   }, [placeQuery])
   // engine
   const [isRunnningEngine, setEngine] = useState(false)
@@ -61,6 +70,7 @@ function App() {
         <article>
           Place Query:
           {placeInfo.q}
+          {placeInfo.message}
         </article>
         <article>
           Engine is&nbsp;
