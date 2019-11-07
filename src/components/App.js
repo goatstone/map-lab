@@ -11,7 +11,7 @@ function App() {
   const [mapCenter, moveCenterBy, moveCenterTo] = useCenter(initLatLng)
   const [placeQueryInput, setPlaceQueryInput] = useState('')
   const [placeQuery, setPlaceQuery] = useState('')
-  const [placeInfo, setPlaceInfo] = useState({})
+  const [placeInfo, setPlaceInfo] = useState(null)
   useEffect(() => {
     if (placeQuery === '') return () => 1
     const placeInfoPacket = {
@@ -23,6 +23,7 @@ function App() {
       const url = `http://localhost:8080/places?q=${placeQuery}`
       const pI = await axios(url)
       placeInfoPacket.message = pI.data[0].name
+      placeInfoPacket.results = pI.data
       setPlaceInfo(placeInfoPacket)
     })()
     return () => 1
@@ -65,12 +66,14 @@ function App() {
       <Map
         markerPosition={markerPosition}
         center={mapCenter}
+        placeInfo={placeInfo}
       />
       <section data-id="information">
         <article>
           Place Query:
-          {placeInfo.q}
-          {placeInfo.message}
+          {
+            placeInfo && `${placeInfo.q} ${placeInfo.message}`
+          }
         </article>
         <article>
           Engine is&nbsp;

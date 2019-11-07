@@ -25,7 +25,7 @@ const baseMaps = {
   Streets: streets,
 }
 /* eslint-disable */
-function Map({ markerPosition, center = [0, 0] }) {
+function Map({ markerPosition, center = [0, 0], placeInfo }) {
   const mapRef = useRef(null)
   useEffect(() => {
     mapRef.current = L.map('map', {
@@ -49,6 +49,25 @@ function Map({ markerPosition, center = [0, 0] }) {
     },
     [markerPosition],
   )
+  // place search markers
+  const placeMarkerRefs = Array.from(Array(20)).map(() => useRef(null))
+  useEffect(
+    () => {
+      if (!placeInfo) return
+      placeInfo.results.forEach((el, i) => {
+        if (placeMarkerRefs[i].current) {
+          placeMarkerRefs[i].current.setLatLng(
+            [el.geometry.location.lat, el.geometry.location.lng]
+          )
+        } else {
+          placeMarkerRefs[i].current = L.marker(
+            [el.geometry.location.lat, el.geometry.location.lng]
+          ).addTo(mapRef.current)
+        }
+      })
+    },
+    [placeInfo],
+  )
   // center positions
   useEffect(() => {
     if (mapRef.current) {
@@ -56,7 +75,7 @@ function Map({ markerPosition, center = [0, 0] }) {
     }
   }, [center])
   return (
-    <div id="map" data-id="leaflet-map"/>
+    <div id="map" data-id="leaflet-map" />
   )
 }
 
