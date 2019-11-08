@@ -60,9 +60,14 @@ function Map({ markerPosition, center = [0, 0], placeInfo }) {
             [el.geometry.location.lat, el.geometry.location.lng]
           )
         } else {
+          const placeIcon = L.icon({
+            iconUrl: el.icon,
+            iconSize: [25, 25],
+          })
           placeMarkerRefs[i].current = L.marker(
-            [el.geometry.location.lat, el.geometry.location.lng]
-          ).addTo(mapRef.current)
+            [el.geometry.location.lat, el.geometry.location.lng],
+            { icon: placeIcon }
+          ).addTo(mapRef.current).bindPopup(el.name)
         }
       })
     },
