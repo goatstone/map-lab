@@ -61,6 +61,8 @@ function Map({ markerPosition, center = [0, 0], placeInfo, setSearchQCenter }) {
     () => {
       if (!placeInfo) return
       placeInfo.results.forEach((el, i) => {
+        console.log(el)
+        const popupContent = `${el.name} : ${el.formatted_address}`
         const placeIcon = L.icon({
           iconUrl: el.icon || '',
           iconSize: [25, 25],
@@ -70,13 +72,16 @@ function Map({ markerPosition, center = [0, 0], placeInfo, setSearchQCenter }) {
             [el.geometry.location.lat, el.geometry.location.lng]
           )
           placeMarkerRefs[i].current.setIcon(placeIcon)
-          placeMarkerRefs[i].current.bindPopup(el.name)
+          placeMarkerRefs[i].current.unbindTooltip()
+          placeMarkerRefs[i].current.bindTooltip(el.name)
+          placeMarkerRefs[i].current.bindPopup(popupContent)
           placeMarkerRefs[i].current.closePopup()
         } else { // add markers
           placeMarkerRefs[i].current = L.marker(
             [el.geometry.location.lat, el.geometry.location.lng],
             { icon: placeIcon }
-          ).addTo(mapRef.current).bindPopup(el.name)
+          ).addTo(mapRef.current).bindPopup(popupContent)
+          .addTo(mapRef.current).bindTooltip(el.name)
         }
       })
     },
