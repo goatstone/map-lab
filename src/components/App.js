@@ -28,7 +28,7 @@ function App() {
         local: 'http://localhost:8080',
         remote: 'https://map-server-goatstone.appspot.com',
       }
-      const url = `${servers.local}/places?q=${placeQuery}&latlng=${searchQCenter}&radius=${searchQRadius}`
+      const url = `${servers.remote}/places?q=${placeQuery}&latlng=${searchQCenter}&radius=${searchQRadius}`
       const pI = await axios(url)
       placeInfoPacket.message = pI.data[0].name
       placeInfoPacket.results = pI.data
