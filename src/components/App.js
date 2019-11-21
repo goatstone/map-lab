@@ -84,16 +84,15 @@ function App() {
         setZoomLevel={setZoomLevel}
       />
       <section data-id="information">
+        {placeInfo && (
         <article>
-          Place Query:
+          Search Query:
           {
-            placeInfo && `${placeInfo.q} ${placeInfo.message}`
+            ` ${placeInfo.q} : ${placeInfo.message} `
           }
         </article>
-        <article>
-          Engine is&nbsp;
-          {isRunnningEngine ? 'Running' : 'Not Running'}
-        </article>
+        )}
+
         <article>
           Map&nbsp;Center:&nbsp;
           latitude:
@@ -123,32 +122,42 @@ function App() {
         </fieldset>
         <fieldset>
           <legend>
-            Move
+            Go To
           </legend>
+          <button
+            type="button"
+            onClick={() => moveCenterTo([47.6, -122.3])}
+          >
+            Seattle
+          </button>
+        </fieldset>
+        <fieldset>
+          <legend>
+            Move Marker
+          </legend>
+
           <button
             type="button"
             onClick={() => {
               moveMarker([0.001, 0.001])
             }}
           >
-            Marker
+            &#x279A;
           </button>
+        </fieldset>
+
+        <fieldset>
+          <legend>
+            Move Map
+          </legend>
           <button
             type="button"
             onClick={() => moveCenterBy([0.01, 0.01])}
           >
-            Center
-          </button>
-          <button
-            type="button"
-            onClick={() => moveCenterTo(initLatLng)}
-          >
-            center to:&nbsp;
-            {initLatLng[0]}
-            &nbsp;:&nbsp;
-            {initLatLng[1]}
+            &#x279A;
           </button>
         </fieldset>
+
         <fieldset>
           <legend>
             Motion
@@ -158,7 +167,7 @@ function App() {
             data-id="start-stop"
             onClick={() => setEngine(!isRunnningEngine)}
           >
-            {!isRunnningEngine ? 'Start' : 'Stop'}
+            {!isRunnningEngine ? <span>&#x2771;</span> : <span>&#x2751;</span>}
           </button>
         </fieldset>
 

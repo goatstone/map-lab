@@ -13,15 +13,19 @@
 }
 [data-id=control] {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  background: black;
-  padding: 2px;
+  flex-wrap: wrap;
+  background: #222;
+  padding: 0.5em;
 }
 [data-id=control] fieldset {
-  background: none;
-  padding: 1px;
-  margin: 2px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  background: #444;
+  padding: 0.5em;
+  margin: 0.5em;
   border: 1px solid #aaa;
   border-radius: 6px;
 }
@@ -41,10 +45,10 @@
 }
 section[data-id=information] {
   font-size: 0.8em;
-  background: black;
+  background: gray;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-end;
   align-items: flex-end;
   padding: 2px 2px;
 }
@@ -61,11 +65,9 @@ section[data-id=information] li {
   margin-left: 3px;
 }
 section[data-id=information] article {
-  border: 1px solid #555;
-  padding: 3px;
-  margin: 3px;
+  background: #999;
+  border: 1px solid #aaa;
+  padding: 0.5em;
+  margin: 0.5em;
   border-radius: 3px;
-}
-section[data-id=information] article:nth-child(1) {
-  width: 16em;
 }
