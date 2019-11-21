@@ -25,7 +25,11 @@ const baseMaps = {
   Streets: streets,
 }
 /* eslint-disable */
-function Map({ markerPosition, center = [0, 0], placeInfo, setSearchQCenter }) {
+function Map({ markerPosition,
+  center = [0, 0],
+  placeInfo,
+  setSearchQCenter,
+  setZoomLevel }) {
   const mapRef = useRef(null)
   useEffect(() => {
     mapRef.current = L.map('map', {
@@ -41,6 +45,9 @@ function Map({ markerPosition, center = [0, 0], placeInfo, setSearchQCenter }) {
         mapRef.current.getCenter().lat,
         mapRef.current.getCenter().lng,
       ])
+    })
+    mapRef.current.on('zoom', (z) => {
+      setZoomLevel(mapRef.current.getZoom())
     })
   }, [])
   // marker
@@ -61,7 +68,6 @@ function Map({ markerPosition, center = [0, 0], placeInfo, setSearchQCenter }) {
     () => {
       if (!placeInfo) return
       placeInfo.results.forEach((el, i) => {
-        console.log(el)
         const popupContent = `${el.name} : ${el.formatted_address}`
         const placeIcon = L.icon({
           iconUrl: el.icon || '',
@@ -81,7 +87,7 @@ function Map({ markerPosition, center = [0, 0], placeInfo, setSearchQCenter }) {
             [el.geometry.location.lat, el.geometry.location.lng],
             { icon: placeIcon }
           ).addTo(mapRef.current).bindPopup(popupContent)
-          .addTo(mapRef.current).bindTooltip(el.name)
+            .addTo(mapRef.current).bindTooltip(el.name)
         }
       })
     },

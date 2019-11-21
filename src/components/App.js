@@ -8,6 +8,8 @@ import './App.css'
 function App() {
   const initLatLng = [47.6, -122.3]
   const [searchQCenter, setSearchQCenter] = useState(initLatLng)
+  const [zoomLevel, setZoomLevel] = useState(12)
+  const [searchQRadius, setSearchQMapRadius] = useState(0)
   const [markerPosition, moveMarker] = useMap(initLatLng)
   const [mapCenter, moveCenterBy, moveCenterTo] = useCenter(initLatLng)
   const [placeQueryInput, setPlaceQueryInput] = useState('')
@@ -26,8 +28,7 @@ function App() {
         local: 'http://localhost:8080',
         remote: 'https://map-server-goatstone.appspot.com',
       }
-      const radius = 50
-      const url = `${servers.local}/places?q=${placeQuery}&latlng=${searchQCenter}&radius=${radius}`
+      const url = `${servers.local}/places?q=${placeQuery}&latlng=${searchQCenter}&radius=${searchQRadius}`
       const pI = await axios(url)
       placeInfoPacket.message = pI.data[0].name
       placeInfoPacket.results = pI.data
@@ -67,16 +68,20 @@ function App() {
     // equivalent of calling componentWillUnmount in a React Class component.
     return () => clearInterval(interval)
   }, [isRunnningEngine])
-
+  useEffect(() => {
+    // eslint-disable-next-line
+    const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(searchQCenter[0] * Math.PI / 180)) / Math.pow(2, zoomLevel + 8))
+    const newRadius = Math.min(150 * metresPerPixel, 50000)
+    setSearchQMapRadius(newRadius)
+  }, [zoomLevel])
   return (
     <section data-id="app">
-      {searchQCenter[0]}
-      {searchQCenter[1]}
       <Map
         markerPosition={markerPosition}
         center={mapCenter}
         placeInfo={placeInfo}
         setSearchQCenter={setSearchQCenter}
+        setZoomLevel={setZoomLevel}
       />
       <section data-id="information">
         <article>
