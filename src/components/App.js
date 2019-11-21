@@ -20,7 +20,14 @@ function App() {
       results: [],
     };
     (async () => {
-      const url = `http://localhost:8080/places?q=${placeQuery}`
+      // get these values from the map so the results are framed in the map
+      const servers = {
+        local: 'http://localhost:8080',
+        remote: 'https://map-server-goatstone.appspot.com',
+      }
+      const latlng = mapCenter
+      const radius = 50
+      const url = `${servers.local}/places?q=${placeQuery}&latlng=${latlng}&radius=${radius}`
       const pI = await axios(url)
       placeInfoPacket.message = pI.data[0].name
       placeInfoPacket.results = pI.data
