@@ -7,6 +7,7 @@ import './App.css'
 
 function App() {
   const initLatLng = [47.6, -122.3]
+  const [searchQCenter, setSearchQCenter] = useState(initLatLng)
   const [markerPosition, moveMarker] = useMap(initLatLng)
   const [mapCenter, moveCenterBy, moveCenterTo] = useCenter(initLatLng)
   const [placeQueryInput, setPlaceQueryInput] = useState('')
@@ -25,9 +26,8 @@ function App() {
         local: 'http://localhost:8080',
         remote: 'https://map-server-goatstone.appspot.com',
       }
-      const latlng = mapCenter
       const radius = 50
-      const url = `${servers.local}/places?q=${placeQuery}&latlng=${latlng}&radius=${radius}`
+      const url = `${servers.local}/places?q=${placeQuery}&latlng=${searchQCenter}&radius=${radius}`
       const pI = await axios(url)
       placeInfoPacket.message = pI.data[0].name
       placeInfoPacket.results = pI.data
@@ -70,10 +70,13 @@ function App() {
 
   return (
     <section data-id="app">
+      {searchQCenter[0]}
+      {searchQCenter[1]}
       <Map
         markerPosition={markerPosition}
         center={mapCenter}
         placeInfo={placeInfo}
+        setSearchQCenter={setSearchQCenter}
       />
       <section data-id="information">
         <article>

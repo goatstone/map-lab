@@ -25,7 +25,7 @@ const baseMaps = {
   Streets: streets,
 }
 /* eslint-disable */
-function Map({ markerPosition, center = [0, 0], placeInfo }) {
+function Map({ markerPosition, center = [0, 0], placeInfo, setSearchQCenter }) {
   const mapRef = useRef(null)
   useEffect(() => {
     mapRef.current = L.map('map', {
@@ -36,6 +36,12 @@ function Map({ markerPosition, center = [0, 0], placeInfo }) {
       ],
     })
     L.control.layers(baseMaps).addTo(mapRef.current);
+    mapRef.current.on('moveend', function (ev) {
+      setSearchQCenter([
+        mapRef.current.getCenter().lat,
+        mapRef.current.getCenter().lng,
+      ])
+    })
   }, [])
   // marker
   const markerRef = useRef(null)
@@ -61,7 +67,7 @@ function Map({ markerPosition, center = [0, 0], placeInfo }) {
           )
         } else {
           const placeIcon = L.icon({
-            iconUrl: el.icon,
+            iconUrl: el.icon || '',
             iconSize: [25, 25],
           })
           placeMarkerRefs[i].current = L.marker(
@@ -73,9 +79,9 @@ function Map({ markerPosition, center = [0, 0], placeInfo }) {
     },
     [placeInfo],
   )
-  // center positions
   useEffect(() => {
     if (mapRef.current) {
+      // will call the moveend event which will update center value
       mapRef.current.panTo(center)
     }
   }, [center])
