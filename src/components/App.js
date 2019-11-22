@@ -83,95 +83,99 @@ function App() {
         setSearchQCenter={setSearchQCenter}
         setZoomLevel={setZoomLevel}
       />
-      <section data-id="information">
-        {placeInfo && (
-        <article>
-          Search Query:
-          {
-            ` ${placeInfo.q} : ${placeInfo.message} `
-          }
-        </article>
-        )}
+      <section data-id="info-control-container">
 
-        <article>
-          Map&nbsp;Center:&nbsp;
-          latitude:
-          &nbsp;
-          {mapCenter[0].toFixed(4)}
-          &nbsp;longitude:
-          &nbsp;
-          {mapCenter[1].toFixed(4)}
-        </article>
+        <section data-id="information">
+          {placeInfo && (
+            <article>
+              Search Query:
+              {
+                ` ${placeInfo.q} : ${placeInfo.message} `
+              }
+            </article>
+          )}
+
+          <article>
+            Map&nbsp;Center:&nbsp;
+            latitude:
+            &nbsp;
+            {mapCenter[0].toFixed(4)}
+            &nbsp;longitude:
+            &nbsp;
+            {mapCenter[1].toFixed(4)}
+          </article>
+        </section>
+        <section data-id="control">
+          <fieldset>
+            <legend>
+              Place Search
+            </legend>
+            <input
+              data-id="search-place"
+              value={placeQueryInput}
+              onChange={e => setPlaceQueryInput(e.target.value)}
+            />
+            <button
+              type="button"
+              onClick={() => setPlaceQuery(placeQueryInput)}
+            >
+              Search
+            </button>
+          </fieldset>
+          <fieldset>
+            <legend>
+              Go To
+            </legend>
+            <button
+              type="button"
+              onClick={() => moveCenterTo([47.6, -122.3])}
+            >
+              Seattle
+            </button>
+          </fieldset>
+          <fieldset>
+            <legend>
+              Move Marker
+            </legend>
+
+            <button
+              type="button"
+              onClick={() => {
+                moveMarker([0.001, 0.001])
+              }}
+            >
+              &#x279A;
+            </button>
+          </fieldset>
+
+          <fieldset>
+            <legend>
+              Move Map
+            </legend>
+            <button
+              type="button"
+              onClick={() => moveCenterBy([0.01, 0.01])}
+            >
+              &#x279A;
+            </button>
+          </fieldset>
+
+          <fieldset>
+            <legend>
+              Motion
+            </legend>
+            <button
+              type="button"
+              data-id="start-stop"
+              onClick={() => setEngine(!isRunnningEngine)}
+            >
+              {!isRunnningEngine ? <span>&#x2771;</span> : <span>&#x2751;</span>}
+            </button>
+          </fieldset>
+
+        </section>
       </section>
-      <section data-id="control">
-        <fieldset>
-          <legend>
-            Place Search
-          </legend>
-          <input
-            data-id="search-place"
-            value={placeQueryInput}
-            onChange={e => setPlaceQueryInput(e.target.value)}
-          />
-          <button
-            type="button"
-            onClick={() => setPlaceQuery(placeQueryInput)}
-          >
-            Search
-          </button>
-        </fieldset>
-        <fieldset>
-          <legend>
-            Go To
-          </legend>
-          <button
-            type="button"
-            onClick={() => moveCenterTo([47.6, -122.3])}
-          >
-            Seattle
-          </button>
-        </fieldset>
-        <fieldset>
-          <legend>
-            Move Marker
-          </legend>
 
-          <button
-            type="button"
-            onClick={() => {
-              moveMarker([0.001, 0.001])
-            }}
-          >
-            &#x279A;
-          </button>
-        </fieldset>
-
-        <fieldset>
-          <legend>
-            Move Map
-          </legend>
-          <button
-            type="button"
-            onClick={() => moveCenterBy([0.01, 0.01])}
-          >
-            &#x279A;
-          </button>
-        </fieldset>
-
-        <fieldset>
-          <legend>
-            Motion
-          </legend>
-          <button
-            type="button"
-            data-id="start-stop"
-            onClick={() => setEngine(!isRunnningEngine)}
-          >
-            {!isRunnningEngine ? <span>&#x2771;</span> : <span>&#x2751;</span>}
-          </button>
-        </fieldset>
-
-      </section>
     </section>
   )
 }

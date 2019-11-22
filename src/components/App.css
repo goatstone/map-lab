@@ -11,9 +11,16 @@
   right: 0;
   bottom: 0;
 }
+section[data-id=info-control-container] {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;  
+  flex-wrap: wrap;
+  background: #222;
+}
 [data-id=control] {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   background: #222;
@@ -45,7 +52,6 @@
 }
 section[data-id=information] {
   font-size: 0.8em;
-  background: gray;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
