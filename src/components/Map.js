@@ -35,11 +35,19 @@ function Map({ markerPosition,
     mapRef.current = L.map('map', {
       center: center,
       zoom: 12,
+      zoomControl: false,
       layers: [
         grayscale, streets,
       ],
     })
-    L.control.layers(baseMaps).addTo(mapRef.current);
+
+    L.control.zoom({
+      position: 'bottomright'
+    }).addTo(mapRef.current)
+    L.control.layers(null, baseMaps, {
+      position: 'bottomright'
+    }).addTo(mapRef.current);
+
     mapRef.current.on('moveend', function (ev) {
       setSearchQCenter([
         mapRef.current.getCenter().lat,

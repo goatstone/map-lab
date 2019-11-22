@@ -20,7 +20,7 @@
   padding: 0.5em;
 }
 [data-id=control] fieldset {
-  display: flex;
+  display: inline;
   align-items: flex-start;
   flex-wrap: wrap;
   background: #444;
