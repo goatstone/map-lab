@@ -4,6 +4,7 @@ import useMap from '../use-map'
 import useCenter from '../use-center'
 import Map from './Map'
 import Information from './Information'
+import Control from './Control'
 import './App.css'
 
 function App() {
@@ -89,77 +90,17 @@ function App() {
           placeInfo={placeInfo}
           mapCenter={mapCenter}
         />
-        <section data-id="control">
-          <fieldset>
-            <legend>
-              Place Search
-            </legend>
-            <input
-              data-id="search-place"
-              value={placeQueryInput}
-              onChange={e => setPlaceQueryInput(e.target.value)}
-            />
-            <button
-              type="button"
-              onClick={() => setPlaceQuery(placeQueryInput)}
-            >
-              Search
-            </button>
-          </fieldset>
-          <fieldset>
-            <legend>
-              Go To
-            </legend>
-            <button
-              type="button"
-              onClick={() => moveCenterTo([47.6, -122.3])}
-            >
-              Seattle
-            </button>
-          </fieldset>
-          <fieldset>
-            <legend>
-              Move Marker
-            </legend>
-
-            <button
-              type="button"
-              onClick={() => {
-                moveMarker([0.001, 0.001])
-              }}
-            >
-              &#x279A;
-            </button>
-          </fieldset>
-
-          <fieldset>
-            <legend>
-              Move Map
-            </legend>
-            <button
-              type="button"
-              onClick={() => moveCenterBy([0.01, 0.01])}
-            >
-              &#x279A;
-            </button>
-          </fieldset>
-
-          <fieldset>
-            <legend>
-              Motion
-            </legend>
-            <button
-              type="button"
-              data-id="start-stop"
-              onClick={() => setEngine(!isRunnningEngine)}
-            >
-              {!isRunnningEngine ? <span>&#x2771;</span> : <span>&#x2751;</span>}
-            </button>
-          </fieldset>
-
-        </section>
+        <Control
+          placeQueryInput={placeQueryInput}
+          setPlaceQueryInput={setPlaceQueryInput}
+          setPlaceQuery={setPlaceQuery}
+          moveCenterBy={moveCenterBy}
+          moveCenterTo={moveCenterTo}
+          moveMarker={moveMarker}
+          isRunnningEngine={isRunnningEngine}
+          setEngine={setEngine}
+        />
       </section>
-
     </section>
   )
 }
