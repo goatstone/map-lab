@@ -7,6 +7,8 @@ import Information from './Information'
 import Control from './Control'
 import Frame from './Frame'
 import './App.css'
+import DisplayResults from './DisplayResults'
+import './DisplayResults.css'
 
 function App() {
   const initLatLng = [47.6, -122.3]
@@ -102,6 +104,7 @@ function App() {
           setEngine={setEngine}
         />
       </Frame>
+      <DisplayResults />
     </section>
   )
 }

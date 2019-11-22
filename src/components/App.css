@@ -4,7 +4,7 @@
   font-size: 0.9em;
   font-family: sans-serif;
   color: white;
-  background: red;
+  background: black;
   position: absolute;
   top: 0;
   left: 0;
@@ -17,6 +17,7 @@ section[data-id=info-control-container] {
   align-items: center;  
   flex-wrap: wrap;
   background: #222;
+  z-index: 9000;
 }
 [data-id=control] {
   display: flex;
