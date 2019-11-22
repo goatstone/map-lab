@@ -1,17 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Information = ({ placeInfo, mapCenter }) => (
+const Information = ({ mapCenter }) => (
   <section data-id="information">
-    {placeInfo && (
-      <article>
-        Search Query:
-        {
-          ` ${placeInfo.q} : ${placeInfo.message} `
-        }
-      </article>
-    )}
-
     <article>
       Map&nbsp;Center:&nbsp;
       latitude:
@@ -25,7 +16,6 @@ const Information = ({ placeInfo, mapCenter }) => (
 )
 /* eslint-disable react/forbid-prop-types */
 Information.propTypes = {
-  placeInfo: PropTypes.object.isRequired,
   mapCenter: PropTypes.array.isRequired,
 }
 export default Information

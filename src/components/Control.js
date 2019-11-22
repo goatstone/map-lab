@@ -23,7 +23,10 @@ const Control = ({
       />
       <button
         type="button"
-        onClick={() => setPlaceQuery(placeQueryInput)}
+        onClick={() => {
+          setPlaceQuery(placeQueryInput)
+          setPlaceQueryInput('')
+        }}
       >
         Search
       </button>

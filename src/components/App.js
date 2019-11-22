@@ -17,9 +17,9 @@ function App() {
   const [searchQRadius, setSearchQMapRadius] = useState(0)
   const [markerPosition, moveMarker] = useMap(initLatLng)
   const [mapCenter, moveCenterBy, moveCenterTo] = useCenter(initLatLng)
-  const [placeQueryInput, setPlaceQueryInput] = useState('dog')
+  const [placeQueryInput, setPlaceQueryInput] = useState('food')
   const [placeQuery, setPlaceQuery] = useState('')
-  const [placeInfo, setPlaceInfo] = useState({ results: [] }) // TODO set back to NULL
+  const [placeInfo, setPlaceInfo] = useState(null)
   const [placeFocusId, setPlaceFocusId] = useState(null)
 
   useEffect(() => {
@@ -93,7 +93,6 @@ function App() {
       />
       <Frame>
         <Information
-          placeInfo={placeInfo}
           mapCenter={mapCenter}
         />
         <Control
