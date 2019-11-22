@@ -29,7 +29,8 @@ function Map({ markerPosition,
   center = [0, 0],
   placeInfo,
   setSearchQCenter,
-  setZoomLevel }) {
+  setZoomLevel,
+  placeFocusId }) {
   const mapRef = useRef(null)
   useEffect(() => {
     mapRef.current = L.map('map', {
@@ -107,6 +108,14 @@ function Map({ markerPosition,
       mapRef.current.panTo(center)
     }
   }, [center])
+  useEffect(() => {
+    if (placeMarkerRefs && placeFocusId !== null) {
+      placeMarkerRefs.map(pmr => pmr.current.closeTooltip())
+      placeMarkerRefs.map(pmr => pmr.current.closePopup())
+      placeMarkerRefs[placeFocusId].current.openTooltip()
+    }
+  }, [placeFocusId])
+
   return (
     <div id="map" data-id="leaflet-map" />
   )

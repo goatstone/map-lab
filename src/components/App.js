@@ -20,6 +20,8 @@ function App() {
   const [placeQueryInput, setPlaceQueryInput] = useState('dog')
   const [placeQuery, setPlaceQuery] = useState('')
   const [placeInfo, setPlaceInfo] = useState({ results: [] }) // TODO set back to NULL
+  const [placeFocusId, setPlaceFocusId] = useState(null)
+
   useEffect(() => {
     if (placeQuery === '') return () => 1
     const placeInfoPacket = {
@@ -87,6 +89,7 @@ function App() {
         placeInfo={placeInfo}
         setSearchQCenter={setSearchQCenter}
         setZoomLevel={setZoomLevel}
+        placeFocusId={placeFocusId}
       />
       <Frame>
         <Information
@@ -108,6 +111,7 @@ function App() {
         && (
           <DisplayResults
             placeInfo={placeInfo}
+            setPlaceFocusId={setPlaceFocusId}
           />
         )
       }
