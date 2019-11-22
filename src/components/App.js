@@ -5,6 +5,7 @@ import useCenter from '../use-center'
 import Map from './Map'
 import Information from './Information'
 import Control from './Control'
+import Frame from './Frame'
 import './App.css'
 
 function App() {
@@ -85,7 +86,7 @@ function App() {
         setSearchQCenter={setSearchQCenter}
         setZoomLevel={setZoomLevel}
       />
-      <section data-id="info-control-container">
+      <Frame>
         <Information
           placeInfo={placeInfo}
           mapCenter={mapCenter}
@@ -100,7 +101,7 @@ function App() {
           isRunnningEngine={isRunnningEngine}
           setEngine={setEngine}
         />
-      </section>
+      </Frame>
     </section>
   )
 }
