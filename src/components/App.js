@@ -17,9 +17,9 @@ function App() {
   const [searchQRadius, setSearchQMapRadius] = useState(0)
   const [markerPosition, moveMarker] = useMap(initLatLng)
   const [mapCenter, moveCenterBy, moveCenterTo] = useCenter(initLatLng)
-  const [placeQueryInput, setPlaceQueryInput] = useState('')
+  const [placeQueryInput, setPlaceQueryInput] = useState('dog')
   const [placeQuery, setPlaceQuery] = useState('')
-  const [placeInfo, setPlaceInfo] = useState(null)
+  const [placeInfo, setPlaceInfo] = useState({ results: [] }) // TODO set back to NULL
   useEffect(() => {
     if (placeQuery === '') return () => 1
     const placeInfoPacket = {
@@ -104,7 +104,13 @@ function App() {
           setEngine={setEngine}
         />
       </Frame>
-      <DisplayResults />
+      {placeInfo
+        && (
+          <DisplayResults
+            placeInfo={placeInfo}
+          />
+        )
+      }
     </section>
   )
 }
