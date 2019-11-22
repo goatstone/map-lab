@@ -3,6 +3,7 @@ import axios from 'axios'
 import useMap from '../use-map'
 import useCenter from '../use-center'
 import Map from './Map'
+import Information from './Information'
 import './App.css'
 
 function App() {
@@ -84,27 +85,10 @@ function App() {
         setZoomLevel={setZoomLevel}
       />
       <section data-id="info-control-container">
-
-        <section data-id="information">
-          {placeInfo && (
-            <article>
-              Search Query:
-              {
-                ` ${placeInfo.q} : ${placeInfo.message} `
-              }
-            </article>
-          )}
-
-          <article>
-            Map&nbsp;Center:&nbsp;
-            latitude:
-            &nbsp;
-            {mapCenter[0].toFixed(4)}
-            &nbsp;longitude:
-            &nbsp;
-            {mapCenter[1].toFixed(4)}
-          </article>
-        </section>
+        <Information
+          placeInfo={placeInfo}
+          mapCenter={mapCenter}
+        />
         <section data-id="control">
           <fieldset>
             <legend>
