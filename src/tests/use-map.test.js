@@ -1,7 +1,7 @@
 import useMap from '../use-map'
 
 describe('use-map', () => {
-  it('should return the expected typeof objects', () => {
-    expect(true).toBe(true)
+  it('should be a function', () => {
+    expect(typeof useMap).toBe('function')
   })
 })
