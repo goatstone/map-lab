@@ -49,7 +49,11 @@ const Control = ({
       <button
         type="button"
         onClick={() => {
-          moveMarker([0.001, 0.001])
+          const moveOffset = [0.001, 0.001]
+          moveMarker(postion => [
+            postion[0] + moveOffset[0],
+            postion[1] + moveOffset[1],
+          ])
         }}
       >
         &#x279A;
