@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import useMap from '../use-map'
-import useCenter from '../use-center'
 import Map from './Map'
 import Information from './Information'
 import Control from './Control'
@@ -10,13 +9,18 @@ import './App.css'
 import DisplayResults from './DisplayResults'
 import './DisplayResults.css'
 
+const initLatLng = [47.6, -122.3]
 function App() {
-  const initLatLng = [47.6, -122.3]
+  // values that reflect map state
+  // centerMap setCenterMap
   const [searchQCenter, setSearchQCenter] = useState(initLatLng)
+  // mapZoomLevel setMapZoomLevel
   const [zoomLevel, setZoomLevel] = useState(12)
   const [searchQRadius, setSearchQMapRadius] = useState(0)
+  // values for actions on the map
+  const [centerPanMapTo, setCenterPanMapTo] = useState(initLatLng)
   const [markerPosition, moveMarker] = useMap(initLatLng)
-  const [mapCenter, moveCenterBy, moveCenterTo] = useCenter(initLatLng)
+  // search
   const [placeQueryInput, setPlaceQueryInput] = useState('food')
   const [placeQuery, setPlaceQuery] = useState('')
   const [placeInfo, setPlaceInfo] = useState(null)
@@ -54,7 +58,7 @@ function App() {
   const engine = intervalEngine(() => {
     const moveOffset = [0.001, 0.001]
     moveMarker(moveOffset)
-    moveCenterBy(moveOffset)
+    setCenterPanMapTo(([lat, lng]) => [lat + 0.01, lng + 0.01])
   })
   const maximumIntervals = 100
   const intervalSeconds = 1000
@@ -84,8 +88,9 @@ function App() {
   return (
     <section data-id="app">
       <Map
+        centerPanMapTo={centerPanMapTo}
         markerPosition={markerPosition}
-        center={mapCenter}
+        center={searchQRadius}
         placeInfo={placeInfo}
         setSearchQCenter={setSearchQCenter}
         setZoomLevel={setZoomLevel}
@@ -93,14 +98,13 @@ function App() {
       />
       <Frame>
         <Information
-          mapCenter={mapCenter}
+          mapCenter={searchQCenter}
         />
         <Control
+          setCenterPanMapTo={setCenterPanMapTo}
           placeQueryInput={placeQueryInput}
           setPlaceQueryInput={setPlaceQueryInput}
           setPlaceQuery={setPlaceQuery}
-          moveCenterBy={moveCenterBy}
-          moveCenterTo={moveCenterTo}
           moveMarker={moveMarker}
           isRunnningEngine={isRunnningEngine}
           setEngine={setEngine}

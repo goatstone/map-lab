@@ -25,7 +25,9 @@ const baseMaps = {
   Streets: streets,
 }
 /* eslint-disable */
-function Map({ markerPosition,
+function Map({
+  centerPanMapTo,
+  markerPosition,
   center = [0, 0],
   placeInfo,
   setSearchQCenter,
@@ -102,12 +104,13 @@ function Map({ markerPosition,
     },
     [placeInfo],
   )
+  // pan map to
   useEffect(() => {
     if (mapRef.current) {
       // will call the moveend event which will update center value
-      mapRef.current.panTo(center)
+      mapRef.current.panTo(centerPanMapTo)
     }
-  }, [center])
+  }, [centerPanMapTo])
   useEffect(() => {
     if (placeMarkerRefs && placeFocusId !== null) {
       placeMarkerRefs.map(pmr => pmr.current.closeTooltip())

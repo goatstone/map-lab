@@ -2,11 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Control = ({
+  setCenterPanMapTo,
   placeQueryInput,
   setPlaceQueryInput,
   setPlaceQuery,
-  moveCenterBy,
-  moveCenterTo,
   moveMarker,
   isRunnningEngine,
   setEngine,
@@ -37,7 +36,7 @@ const Control = ({
       </legend>
       <button
         type="button"
-        onClick={() => moveCenterTo([47.6, -122.3])}
+        onClick={() => setCenterPanMapTo([47.6, -122.3])}
       >
         Seattle
       </button>
@@ -63,7 +62,7 @@ const Control = ({
       </legend>
       <button
         type="button"
-        onClick={() => moveCenterBy([0.01, 0.01])}
+        onClick={() => setCenterPanMapTo(([lat, lng]) => [lat + 0.01, lng + 0.01])}
       >
         &#x279A;
       </button>
@@ -86,12 +85,12 @@ const Control = ({
 )
 
 /* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/require-default-props */
 Control.propTypes = {
+  setCenterPanMapTo: PropTypes.func, // TODO take out eslint disable for this prop
   placeQueryInput: PropTypes.string.isRequired,
   setPlaceQueryInput: PropTypes.func.isRequired,
   setPlaceQuery: PropTypes.func.isRequired,
-  moveCenterBy: PropTypes.func.isRequired,
-  moveCenterTo: PropTypes.func.isRequired,
   moveMarker: PropTypes.func.isRequired,
   isRunnningEngine: PropTypes.bool.isRequired,
   setEngine: PropTypes.func.isRequired,
