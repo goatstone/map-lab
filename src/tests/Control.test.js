@@ -6,7 +6,6 @@ import Control from '../components/Control'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-const mocknameUpdateMode = jest.fn(() => 1)
 describe('<Control />', () => {
   it('should mount', () => {
     const props = {
@@ -17,7 +16,7 @@ describe('<Control />', () => {
       moveCenterTo: jest.fn(() => true),
       moveMarker: jest.fn(() => true),
       isRunnningEngine: false,
-      setEngine: jest.fn(() => true)
+      setEngine: jest.fn(() => true),
     }
     let wrapper
     act(() => {

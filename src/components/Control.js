@@ -88,11 +88,11 @@ const Control = ({
 /* eslint-disable react/forbid-prop-types */
 Control.propTypes = {
   placeQueryInput: PropTypes.string.isRequired,
-  setPlaceQueryInput: PropTypes.string.isRequired,
-  setPlaceQuery: PropTypes.string.isRequired,
-  moveCenterBy: PropTypes.array.isRequired,
-  moveCenterTo: PropTypes.array.isRequired,
-  moveMarker: PropTypes.array.isRequired,
+  setPlaceQueryInput: PropTypes.func.isRequired,
+  setPlaceQuery: PropTypes.func.isRequired,
+  moveCenterBy: PropTypes.func.isRequired,
+  moveCenterTo: PropTypes.func.isRequired,
+  moveMarker: PropTypes.func.isRequired,
   isRunnningEngine: PropTypes.bool.isRequired,
   setEngine: PropTypes.func.isRequired,
 }
