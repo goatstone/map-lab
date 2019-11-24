@@ -12,15 +12,15 @@ import './DisplayResults.css'
 const initLatLng = [47.6, -122.3]
 function App() {
   // values that reflect map state
-  // centerMap setCenterMap
-  const [searchQCenter, setSearchQCenter] = useState(initLatLng)
-  // mapZoomLevel setMapZoomLevel
-  const [zoomLevel, setZoomLevel] = useState(12)
-  const [searchQRadius, setSearchQMapRadius] = useState(0)
+  const [mapCenter, setMapCenter] = useState(initLatLng)
+  const [mapZoomLevel, setMapZoomLevel] = useState(12)
+
   // values for actions on the map
   const [centerPanMapTo, setCenterPanMapTo] = useState(initLatLng)
   const [markerPosition, moveMarker] = useMap(initLatLng)
+
   // search
+  const [searchQRadius, setSearchQMapRadius] = useState(0)
   const [placeQueryInput, setPlaceQueryInput] = useState('food')
   const [placeQuery, setPlaceQuery] = useState('')
   const [placeInfo, setPlaceInfo] = useState(null)
@@ -39,7 +39,7 @@ function App() {
         local: 'http://localhost:8080',
         remote: 'https://map-server-goatstone.appspot.com',
       }
-      const url = `${servers.remote}/places?q=${placeQuery}&latlng=${searchQCenter}&radius=${searchQRadius}`
+      const url = `${servers.remote}/places?q=${placeQuery}&latlng=${mapCenter}&radius=${searchQRadius}`
       const pI = await axios(url)
       placeInfoPacket.message = pI.data[0].name
       placeInfoPacket.results = pI.data
@@ -81,24 +81,25 @@ function App() {
   }, [isRunnningEngine])
   useEffect(() => {
     // eslint-disable-next-line
-    const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(searchQCenter[0] * Math.PI / 180)) / Math.pow(2, zoomLevel + 8))
+    const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapCenter[0] * Math.PI / 180)) / Math.pow(2, mapZoomLevel + 8))
     const newRadius = Math.min(150 * metresPerPixel, 50000)
     setSearchQMapRadius(newRadius)
-  }, [zoomLevel])
+  }, [mapZoomLevel])
+
   return (
     <section data-id="app">
       <Map
         centerPanMapTo={centerPanMapTo}
         markerPosition={markerPosition}
-        center={searchQRadius}
+        center={mapCenter}
         placeInfo={placeInfo}
-        setSearchQCenter={setSearchQCenter}
-        setZoomLevel={setZoomLevel}
+        setSearchQCenter={setMapCenter}
+        setZoomLevel={setMapZoomLevel}
         placeFocusId={placeFocusId}
       />
       <Frame>
         <Information
-          mapCenter={searchQCenter}
+          mapCenter={mapCenter}
         />
         <Control
           setCenterPanMapTo={setCenterPanMapTo}
