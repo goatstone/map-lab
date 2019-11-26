@@ -8,6 +8,7 @@ import './App.css'
 import DisplayResults from './DisplayResults'
 import './DisplayResults.css'
 import DrawerContainer, { DrawerAlign } from './DrawerContainer'
+import GoToPlace from './GoToPlace'
 
 const initLatLng = [47.6, -122.3]
 function App() {
@@ -117,22 +118,25 @@ function App() {
       </Frame>
       {placeInfo
         && (
-          <DisplayResults
-            placeInfo={placeInfo}
-            setPlaceFocusId={setPlaceFocusId}
-          />
+          <DrawerContainer
+            yPosition={0}
+            alignX={DrawerAlign.LEFT}
+          >
+            <DisplayResults
+              placeInfo={placeInfo}
+              setPlaceFocusId={setPlaceFocusId}
+            />
+          </DrawerContainer>
         )
       }
       <DrawerContainer
         yPosition={0}
         alignX={DrawerAlign.RIGHT}
+        title="Go To"
       >
-        AAA
-      </DrawerContainer>
-      <DrawerContainer
-        yPosition={200}
-      >
-        BBB
+        <GoToPlace
+          setCenterPanMapTo={setCenterPanMapTo}
+        />
       </DrawerContainer>
     </section>
   )

@@ -8,7 +8,12 @@ const DrawerAlign = {
 }
 export { DrawerAlign }
 
-const DrawerContainer = ({ children, yPosition = 20, alignX = DrawerAlign.LEFT }) => {
+const DrawerContainer = ({
+  children,
+  yPosition = 20,
+  alignX = DrawerAlign.LEFT,
+  title = 'Open',
+}) => {
   // swap the alignments for the button
   const buttonPostion = alignX === DrawerAlign.LEFT ? DrawerAlign.RIGHT : DrawerAlign.LEFT
 
@@ -16,7 +21,7 @@ const DrawerContainer = ({ children, yPosition = 20, alignX = DrawerAlign.LEFT }
   const [isOpen, setIsOpen] = useState(true)
 
   // component state
-  const buttonSymbols = { OPEN: 'Open', CLOSED: 'Close' }
+  const buttonSymbols = { OPEN: title, CLOSED: 'Close' }
   const xPositions = { OPEN: 0, CLOSED: -250 }
   const initState = {
     buttonSymbol: buttonSymbols.OPEN,
@@ -46,6 +51,7 @@ const DrawerContainer = ({ children, yPosition = 20, alignX = DrawerAlign.LEFT }
       <button
         style={{ [buttonPostion]: -50 }}
         type="button"
+        data-id="set-is-open"
         onClick={() => {
           setIsOpen(isOpenState => !isOpenState)
         }}
@@ -61,6 +67,7 @@ DrawerContainer.propTypes = {
   children: PropTypes.node.isRequired,
   yPosition: PropTypes.number.isRequired,
   alignX: PropTypes.string,
+  title: PropTypes.string,
 }
 
 export default DrawerContainer

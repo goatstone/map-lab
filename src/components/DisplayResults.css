@@ -10,15 +10,6 @@
   color: #222;
   background: rgba(200,200,200, 0.8);
   z-index: 900;
-  transition-property: left;
-  transition-duration: 1s;
-  box-shadow: 10px 10px 10px rgba(100, 100, 100, 0.8);
- }
- [data-id=display-results] button{
-  position: absolute;
-  top: 3px;
-  right:-23px;
-  padding: 0;
   box-shadow: 10px 10px 10px rgba(100, 100, 100, 0.8);
  }
  [data-id=display-results] ul{

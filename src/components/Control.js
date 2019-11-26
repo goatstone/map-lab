@@ -32,17 +32,6 @@ const Control = ({
     </fieldset>
     <fieldset>
       <legend>
-        Go To
-      </legend>
-      <button
-        type="button"
-        onClick={() => setCenterPanMapTo([47.6, -122.3])}
-      >
-        Seattle
-      </button>
-    </fieldset>
-    <fieldset>
-      <legend>
         Move Marker
       </legend>
 
