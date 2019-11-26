@@ -8,7 +8,7 @@ const DrawerAlign = {
 }
 export { DrawerAlign }
 
-const DrawerContainer = ({ children, yPos = 20, alignX = DrawerAlign.LEFT }) => {
+const DrawerContainer = ({ children, yPosition = 20, alignX = DrawerAlign.LEFT }) => {
   // swap the alignments for the button
   const buttonPostion = alignX === DrawerAlign.LEFT ? DrawerAlign.RIGHT : DrawerAlign.LEFT
 
@@ -18,9 +18,7 @@ const DrawerContainer = ({ children, yPos = 20, alignX = DrawerAlign.LEFT }) => 
   // component state
   const buttonSymbols = { OPEN: 'Open', CLOSED: 'Close' }
   const xPositions = { OPEN: 0, CLOSED: -250 }
-  const drawerModes = { OPEN: 'OPEN', CLOSED: 'CLOSED' }
   const initState = {
-    mode: drawerModes.OPEN,
     buttonSymbol: buttonSymbols.OPEN,
     xPosition: xPositions.OPEN,
   }
@@ -28,11 +26,9 @@ const DrawerContainer = ({ children, yPos = 20, alignX = DrawerAlign.LEFT }) => 
 
   // on isOpen change, state is updated
   useEffect(() => {
-    const mode = isOpen ? drawerModes.OPEN : drawerModes.CLOSED
     const buttonSymbol = isOpen ? buttonSymbols.CLOSED : buttonSymbols.OPEN
     const xPosition = isOpen ? xPositions.OPEN : xPositions.CLOSED
     setState(stateCurr => Object.assign({}, stateCurr, {
-      mode,
       buttonSymbol,
       xPosition,
     }))
@@ -42,7 +38,7 @@ const DrawerContainer = ({ children, yPos = 20, alignX = DrawerAlign.LEFT }) => 
     <section
       data-id="drawer-container"
       style={{
-        top: yPos,
+        top: yPosition,
         [alignX]: state.xPosition,
       }}
     >
@@ -63,7 +59,7 @@ const DrawerContainer = ({ children, yPos = 20, alignX = DrawerAlign.LEFT }) => 
 /* eslint-disable react/require-default-props */
 DrawerContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  yPos: PropTypes.number.isRequired,
+  yPosition: PropTypes.number.isRequired,
   alignX: PropTypes.string,
 }
 

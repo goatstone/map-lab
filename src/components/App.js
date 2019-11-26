@@ -124,13 +124,13 @@ function App() {
         )
       }
       <DrawerContainer
-        yPos={0}
+        yPosition={0}
         alignX={DrawerAlign.RIGHT}
       >
         AAA
       </DrawerContainer>
       <DrawerContainer
-        yPos={200}
+        yPosition={200}
       >
         BBB
       </DrawerContainer>
