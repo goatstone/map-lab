@@ -10,6 +10,7 @@ import './DisplayResults.css'
 import DrawerContainer, { DrawerAlign } from './DrawerContainer'
 import GoToPlace from './GoToPlace'
 import MoveTo from './MoveTo'
+import Motion from './Motion'
 
 const initLatLng = [47.6, -122.3]
 function App() {
@@ -122,6 +123,7 @@ function App() {
           <DrawerContainer
             yPosition={0}
             alignX={DrawerAlign.LEFT}
+            title="Search"
           >
             <DisplayResults
               placeInfo={placeInfo}
@@ -131,7 +133,16 @@ function App() {
         )
       }
       <DrawerContainer
-        yPosition={100}
+        yPosition={0}
+        alignX={DrawerAlign.RIGHT}
+        title="Go To"
+      >
+        <GoToPlace
+          setCenterPanMapTo={setCenterPanMapTo}
+        />
+      </DrawerContainer>
+      <DrawerContainer
+        yPosition={50}
         alignX={DrawerAlign.RIGHT}
         title="Move To"
       >
@@ -141,12 +152,13 @@ function App() {
         />
       </DrawerContainer>
       <DrawerContainer
-        yPosition={0}
+        yPosition={125}
         alignX={DrawerAlign.RIGHT}
-        title="Go To"
+        title="Motion"
       >
-        <GoToPlace
-          setCenterPanMapTo={setCenterPanMapTo}
+        <Motion
+          isRunnningEngine={isRunnningEngine}
+          setEngine={setEngine}
         />
       </DrawerContainer>
     </section>

@@ -5,8 +5,6 @@ const Control = ({
   placeQueryInput,
   setPlaceQueryInput,
   setPlaceQuery,
-  isRunnningEngine,
-  setEngine,
 }) => (
   <section data-id="control">
     <fieldset>
@@ -28,20 +26,6 @@ const Control = ({
         Search
       </button>
     </fieldset>
-
-    <fieldset>
-      <legend>
-        Motion
-      </legend>
-      <button
-        type="button"
-        data-id="start-stop"
-        onClick={() => setEngine(!isRunnningEngine)}
-      >
-        {!isRunnningEngine ? <span>&#x2771;</span> : <span>&#x2751;</span>}
-      </button>
-    </fieldset>
-
   </section>
 )
 
@@ -51,8 +35,6 @@ Control.propTypes = {
   placeQueryInput: PropTypes.string.isRequired,
   setPlaceQueryInput: PropTypes.func.isRequired,
   setPlaceQuery: PropTypes.func.isRequired,
-  isRunnningEngine: PropTypes.bool.isRequired,
-  setEngine: PropTypes.func.isRequired,
 }
 
 export default Control

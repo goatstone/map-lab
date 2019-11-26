@@ -27,30 +27,6 @@ section[data-id=info-control-container] {
   background: #222;
   padding: 0.5em;
 }
-/* [data-id=control] fieldset {
-  display: inline;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  background: #444;
-  padding: 0.5em;
-  margin: 0.5em;
-  border: 1px solid #aaa;
-  border-radius: 6px;
-}
-[data-id=control] button{
-  font-weight: 900;
-  font-size: 0.9em;
-  background: #eee;
-  margin: 3px;
-  border-radius: 6px;
-}
-[data-id=control] button[data-id=start-stop]{
-  width: 7em;
-}
-[data-id=control] input {
-  margin: 3px;
-  border-radius: 6px;
-} */
 section[data-id=information] {
   font-size: 0.8em;
   display: flex;
