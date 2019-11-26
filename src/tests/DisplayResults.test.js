@@ -10,7 +10,7 @@ describe('<DisplayResults />', () => {
   it('should mount', () => {
     const props = {
       placeInfo: { results: [] },
-      setPlaceFocusId: 1,
+      setPlaceFocusId: () => 1,
     }
     let wrapper
     act(() => {
