@@ -2,11 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Control = ({
-  setCenterPanMapTo,
   placeQueryInput,
   setPlaceQueryInput,
   setPlaceQuery,
-  moveMarker,
   isRunnningEngine,
   setEngine,
 }) => (
@@ -30,36 +28,6 @@ const Control = ({
         Search
       </button>
     </fieldset>
-    <fieldset>
-      <legend>
-        Move Marker
-      </legend>
-
-      <button
-        type="button"
-        onClick={() => {
-          const moveOffset = [0.001, 0.001]
-          moveMarker(postion => [
-            postion[0] + moveOffset[0],
-            postion[1] + moveOffset[1],
-          ])
-        }}
-      >
-        &#x279A;
-      </button>
-    </fieldset>
-
-    <fieldset>
-      <legend>
-        Move Map
-      </legend>
-      <button
-        type="button"
-        onClick={() => setCenterPanMapTo(([lat, lng]) => [lat + 0.01, lng + 0.01])}
-      >
-        &#x279A;
-      </button>
-    </fieldset>
 
     <fieldset>
       <legend>
@@ -80,11 +48,9 @@ const Control = ({
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 Control.propTypes = {
-  setCenterPanMapTo: PropTypes.func, // TODO take out eslint disable for this prop
   placeQueryInput: PropTypes.string.isRequired,
   setPlaceQueryInput: PropTypes.func.isRequired,
   setPlaceQuery: PropTypes.func.isRequired,
-  moveMarker: PropTypes.func.isRequired,
   isRunnningEngine: PropTypes.bool.isRequired,
   setEngine: PropTypes.func.isRequired,
 }

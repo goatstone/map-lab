@@ -9,6 +9,7 @@ import DisplayResults from './DisplayResults'
 import './DisplayResults.css'
 import DrawerContainer, { DrawerAlign } from './DrawerContainer'
 import GoToPlace from './GoToPlace'
+import MoveTo from './MoveTo'
 
 const initLatLng = [47.6, -122.3]
 function App() {
@@ -129,6 +130,16 @@ function App() {
           </DrawerContainer>
         )
       }
+      <DrawerContainer
+        yPosition={100}
+        alignX={DrawerAlign.RIGHT}
+        title="Move To"
+      >
+        <MoveTo
+          setCenterPanMapTo={setCenterPanMapTo}
+          moveMarker={setMarkerPosMoveTo}
+        />
+      </DrawerContainer>
       <DrawerContainer
         yPosition={0}
         alignX={DrawerAlign.RIGHT}

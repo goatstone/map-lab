@@ -27,7 +27,7 @@ section[data-id=info-control-container] {
   background: #222;
   padding: 0.5em;
 }
-[data-id=control] fieldset {
+/* [data-id=control] fieldset {
   display: inline;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -50,7 +50,7 @@ section[data-id=info-control-container] {
 [data-id=control] input {
   margin: 3px;
   border-radius: 6px;
-}
+} */
 section[data-id=information] {
   font-size: 0.8em;
   display: flex;
