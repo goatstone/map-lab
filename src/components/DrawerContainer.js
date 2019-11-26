@@ -13,12 +13,13 @@ const DrawerContainer = ({
   yPosition = 20,
   alignX = DrawerAlign.LEFT,
   title = 'Open',
+  initIsOpen = false,
 }) => {
   // swap the alignments for the button
   const buttonPostion = alignX === DrawerAlign.LEFT ? DrawerAlign.RIGHT : DrawerAlign.LEFT
 
   // control hook: open closed state
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(initIsOpen)
 
   // component state
   const buttonSymbols = { OPEN: title, CLOSED: 'Close' }
@@ -68,6 +69,7 @@ DrawerContainer.propTypes = {
   yPosition: PropTypes.number.isRequired,
   alignX: PropTypes.string,
   title: PropTypes.string,
+  initIsOpen: PropTypes.bool,
 }
 
 export default DrawerContainer

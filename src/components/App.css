@@ -11,22 +11,6 @@
   right: 0;
   bottom: 0;
 }
-section[data-id=info-control-container] {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;  
-  flex-wrap: wrap;
-  background: #222;
-  z-index: 9000;
-}
-[data-id=control] {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
-  background: #222;
-  padding: 0.5em;
-}
 section[data-id=information] {
   font-size: 0.8em;
   display: flex;

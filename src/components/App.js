@@ -5,6 +5,7 @@ import Information from './Information'
 import Control from './Control'
 import Frame from './Frame'
 import './App.css'
+import Search from './Search'
 import DisplayResults from './DisplayResults'
 import './DisplayResults.css'
 import DrawerContainer, { DrawerAlign } from './DrawerContainer'
@@ -118,24 +119,30 @@ function App() {
           setEngine={setEngine}
         />
       </Frame>
-      {placeInfo
-        && (
-          <DrawerContainer
-            yPosition={0}
-            alignX={DrawerAlign.LEFT}
-            title="Search"
-          >
+      <DrawerContainer
+        yPosition={0}
+        alignX={DrawerAlign.LEFT}
+        title="Search"
+        initIsOpen
+      >
+        <Search
+          placeQueryInput={placeQueryInput}
+          setPlaceQueryInput={setPlaceQueryInput}
+          setPlaceQuery={setPlaceQuery}
+        />
+        {placeInfo
+          && (
             <DisplayResults
               placeInfo={placeInfo}
               setPlaceFocusId={setPlaceFocusId}
             />
-          </DrawerContainer>
-        )
-      }
+          )}
+      </DrawerContainer>
       <DrawerContainer
         yPosition={0}
         alignX={DrawerAlign.RIGHT}
         title="Go To"
+        initIsOpen
       >
         <GoToPlace
           setCenterPanMapTo={setCenterPanMapTo}
