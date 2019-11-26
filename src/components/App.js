@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Map from './Map'
-import Information from './Information'
-import Control from './Control'
-import Frame from './Frame'
 import './App.css'
 import Search from './Search'
 import DisplayResults from './DisplayResults'
@@ -105,20 +102,6 @@ function App() {
         setZoomLevel={setMapZoomLevel}
         placeFocusId={placeFocusId}
       />
-      <Frame>
-        <Information
-          mapCenter={mapCenter}
-        />
-        <Control
-          setCenterPanMapTo={setCenterPanMapTo}
-          placeQueryInput={placeQueryInput}
-          setPlaceQueryInput={setPlaceQueryInput}
-          setPlaceQuery={setPlaceQuery}
-          moveMarker={setMarkerPosMoveTo}
-          isRunnningEngine={isRunnningEngine}
-          setEngine={setEngine}
-        />
-      </Frame>
       <DrawerContainer
         yPosition={0}
         alignX={DrawerAlign.LEFT}

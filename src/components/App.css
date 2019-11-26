@@ -11,30 +11,3 @@
   right: 0;
   bottom: 0;
 }
-section[data-id=information] {
-  font-size: 0.8em;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
-  padding: 2px 2px;
-}
-section[data-id=information] ul{
-  display: block;
-  list-style-type: none;
-  display: block;
-  padding: 0;
-  margin: 0;
-}
-section[data-id=information] li {
-  display: inline;
-  padding: 0;
-  margin-left: 3px;
-}
-section[data-id=information] article {
-  background: #999;
-  border: 1px solid #aaa;
-  padding: 0.5em;
-  margin: 0.5em;
-  border-radius: 3px;
-}
