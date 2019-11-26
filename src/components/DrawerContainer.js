@@ -11,28 +11,41 @@ export { DrawerAlign }
 const DrawerContainer = ({ children, yPos = 20, alignX = DrawerAlign.LEFT }) => {
   // swap the alignments for the button
   const buttonPostion = alignX === DrawerAlign.LEFT ? DrawerAlign.RIGHT : DrawerAlign.LEFT
+
   // control hook: open closed state
   const [isOpen, setIsOpen] = useState(true)
+
   // component state
   const buttonSymbols = { OPEN: 'Open', CLOSED: 'Close' }
   const xPositions = { OPEN: 0, CLOSED: -250 }
-  const [xPos, setXPos] = useState(xPositions.OPEN)
   const drawerModes = { OPEN: 'OPEN', CLOSED: 'CLOSED' }
-  const drawer = {
+  const initState = {
     mode: drawerModes.OPEN,
     buttonSymbol: buttonSymbols.OPEN,
+    xPosition: xPositions.OPEN,
   }
-  const [state, setState] = useState(drawer)
+  const [state, setState] = useState(initState)
+
+  // on isOpen change, state is updated
   useEffect(() => {
     const mode = isOpen ? drawerModes.OPEN : drawerModes.CLOSED
     const buttonSymbol = isOpen ? buttonSymbols.CLOSED : buttonSymbols.OPEN
-    setState(stateCurr => Object.assign({}, stateCurr, { mode, buttonSymbol }))
-    setXPos(xPositions[mode])
+    const xPosition = isOpen ? xPositions.OPEN : xPositions.CLOSED
+    setState(stateCurr => Object.assign({}, stateCurr, {
+      mode,
+      buttonSymbol,
+      xPosition,
+    }))
   }, [isOpen])
-  const styleDefinition = { top: yPos, [alignX]: xPos }
 
   return (
-    <section data-id="drawer-container" style={styleDefinition}>
+    <section
+      data-id="drawer-container"
+      style={{
+        top: yPos,
+        [alignX]: state.xPosition,
+      }}
+    >
       {children}
       <button
         style={{ [buttonPostion]: -50 }}
