@@ -9,6 +9,7 @@ const DisplayResults = ({ placeInfo, setPlaceFocusId }) => (
         <li
           title={`${el.name} : ${el.formatted_address}`}
           onClick={() => setPlaceFocusId(i)}
+          key={`${el.name}`}
         >
           {`${el.name}`}
         </li>
@@ -19,7 +20,7 @@ const DisplayResults = ({ placeInfo, setPlaceFocusId }) => (
 /* eslint-disable react/forbid-prop-types */
 DisplayResults.propTypes = {
   placeInfo: PropTypes.object.isRequired,
-  setPlaceFocusId: PropTypes.number.isRequired,
+  setPlaceFocusId: PropTypes.func.isRequired,
 }
 
 export default DisplayResults
