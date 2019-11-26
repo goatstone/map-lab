@@ -1,0 +1,21 @@
+[data-id=drawer-container] {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  width: 250px;
+  padding: 0.25em;
+  color: #222;
+  background: rgba(200,200,200, 0.8);
+  z-index: 900;
+  transition-property: right, left;
+  transition-duration: 1s;
+  box-shadow: 10px 10px 10px rgba(100, 100, 100, 0.8);
+ }
+ [data-id=drawer-container] button{
+  position: absolute;
+  top: 3px;
+  right:-23px;
+  padding: 0;
+  box-shadow: 10px 10px 10px rgba(100, 100, 100, 0.8);
+ }

@@ -7,6 +7,7 @@ import Frame from './Frame'
 import './App.css'
 import DisplayResults from './DisplayResults'
 import './DisplayResults.css'
+import DrawerContainer, { DrawerAlign } from './DrawerContainer'
 
 const initLatLng = [47.6, -122.3]
 function App() {
@@ -122,6 +123,17 @@ function App() {
           />
         )
       }
+      <DrawerContainer
+        yPos={0}
+        alignX={DrawerAlign.RIGHT}
+      >
+        AAA
+      </DrawerContainer>
+      <DrawerContainer
+        yPos={200}
+      >
+        BBB
+      </DrawerContainer>
     </section>
   )
 }
