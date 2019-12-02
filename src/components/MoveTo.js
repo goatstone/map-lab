@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './MoveTo.css'
 
 const MoveTo = ({
   setCenterPanMapTo,
   moveMarker,
 }) => (
-  <section data-id="move-to">
+  <section data-id="goatstone-component-moveto">
     <fieldset>
       <legend>
         Marker

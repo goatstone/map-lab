@@ -143,6 +143,7 @@ function App() {
         yPosition={50}
         alignX={DrawerAlign.RIGHT}
         title="Move To"
+        initIsOpen
       >
         <MoveTo
           setCenterPanMapTo={setCenterPanMapTo}

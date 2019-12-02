@@ -9,6 +9,12 @@ const style = {
     left: 0,
     right: 0,
     bottom: 0,
+    '& section[data-id=goatstone-component-moveto]': {
+      background: 'green',
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'space-around',
+    },
   },
   displayResults: {
     display: 'flex',
