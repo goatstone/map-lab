@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import './DrawerContainer.css'
 
 const DrawerAlign = {
   LEFT: 'left',
@@ -14,6 +13,7 @@ const DrawerContainer = ({
   alignX = DrawerAlign.LEFT,
   title = 'Open',
   initIsOpen = false,
+  classNames = null,
 }) => {
   // swap the alignments for the button
   const buttonPostion = alignX === DrawerAlign.LEFT ? DrawerAlign.RIGHT : DrawerAlign.LEFT
@@ -40,19 +40,47 @@ const DrawerContainer = ({
     }))
   }, [isOpen])
 
+  const localStyleSheet = {
+    drawerContainer: {
+      color: 'blue',
+      top: yPosition,
+      [alignX]: state.xPosition,
+      position: 'absolute',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'flexStart',
+      width: 250,
+      zIndex: 900,
+      transitionProperty: 'right, left',
+      transitionDuration: '1s',
+      boxShadow: '10px 10px 10px rgba(100, 100, 100, 0.8)',
+    },
+    setIsOpenbutton: {
+      position: 'absolute',
+      top: 0,
+      padding: 0,
+      boxShadow: '10px 10px 10px rgba(100, 100, 100, 0.8)',
+      zIndex: 1000,
+      [buttonPostion]: -50,
+      background: 'red',
+    },
+  }
+  // if classNames are not provided add default styles to localStyleSheet
+  if (classNames === null) {
+    Object.assign(localStyleSheet.drawerContainer, { background: 'red' })
+  }
+
   return (
     <section
-      data-id="drawer-container"
-      style={{
-        top: yPosition,
-        [alignX]: state.xPosition,
-      }}
+      className={classNames && classNames.drawerContainer}
+      data-component-id="goatstone-container-drawer"
+      style={localStyleSheet.drawerContainer}
     >
       {children}
       <button
-        style={{ [buttonPostion]: -50 }}
+        style={localStyleSheet.setIsOpenbutton}
         type="button"
-        data-id="set-is-open"
         onClick={() => {
           setIsOpen(isOpenState => !isOpenState)
         }}
@@ -70,6 +98,7 @@ DrawerContainer.propTypes = {
   alignX: PropTypes.string,
   title: PropTypes.string,
   initIsOpen: PropTypes.bool,
+  classNames: PropTypes.object,
 }
 
 export default DrawerContainer

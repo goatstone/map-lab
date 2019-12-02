@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import jss from 'jss'
+import preset from 'jss-preset-default'
 import Map from './Map'
 import './App.css'
 import Search from './Search'
@@ -9,6 +11,16 @@ import DrawerContainer, { DrawerAlign } from './DrawerContainer'
 import GoToPlace from './GoToPlace'
 import MoveTo from './MoveTo'
 import Motion from './Motion'
+
+jss.setup(preset())
+const style = {
+  drawerContainer: {
+    color: 'orange',
+    background: 'green',
+  },
+}
+const sheet = jss.createStyleSheet(style)
+sheet.attach()
 
 const initLatLng = [47.6, -122.3]
 function App() {
@@ -107,6 +119,7 @@ function App() {
         alignX={DrawerAlign.LEFT}
         title="Search"
         initIsOpen
+        classNames={sheet.classes}
       >
         <Search
           placeQueryInput={placeQueryInput}
