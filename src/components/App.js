@@ -3,7 +3,6 @@ import axios from 'axios'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 import Map from './Map'
-import './App.css'
 import Search from './Search'
 import DisplayResults from './DisplayResults'
 import './DisplayResults.css'
@@ -100,7 +99,7 @@ function App() {
   }, [mapZoomLevel])
 
   return (
-    <section data-id="app">
+    <section className={sheet.classes.mainContainer}>
       <Map
         centerPanMapTo={centerPanMapTo}
         markerPosition={markerPosMoveTo}
