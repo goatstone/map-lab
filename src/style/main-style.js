@@ -9,11 +9,14 @@ const style = {
     left: 0,
     right: 0,
     bottom: 0,
+    '& button': {
+      cursor: 'pointer',
+    },
     '& section[data-id=goatstone-component-moveto]': {
-      background: 'green',
       width: '100%',
       display: 'flex',
       justifyContent: 'space-around',
+      background: '#888',
     },
     '& [data-id=goatstone-component-motion]': {
       width: '100%',
@@ -53,8 +56,7 @@ const style = {
     },
   },
   drawerContainer: {
-    color: 'orange',
-    background: 'green',
+    background: 'rgba(200,200,200, 0.8)',
   },
 }
 

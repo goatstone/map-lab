@@ -63,12 +63,11 @@ const DrawerContainer = ({
       boxShadow: '10px 10px 10px rgba(100, 100, 100, 0.8)',
       zIndex: 1000,
       [buttonPostion]: -50,
-      background: 'red',
     },
   }
   // if classNames are not provided add default styles to localStyleSheet
   if (classNames === null) {
-    Object.assign(localStyleSheet.drawerContainer, { background: 'red' })
+    Object.assign(localStyleSheet.drawerContainer, { background: '#aaa' })
   }
 
   return (
