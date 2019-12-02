@@ -20,7 +20,7 @@ const MoveTo = ({
           ])
         }}
       >
-        &#x279A;
+        <i className="material-icons" style={{ transform: 'rotate(45deg)' }}>arrow_upward</i>
       </button>
     </fieldset>
     <fieldset>
@@ -31,7 +31,7 @@ const MoveTo = ({
         type="button"
         onClick={() => setCenterPanMapTo(([lat, lng]) => [lat + 0.01, lng + 0.01])}
       >
-        &#x279A;
+        <i className="material-icons" style={{ transform: 'rotate(45deg)' }}>arrow_upward</i>
       </button>
     </fieldset>
 

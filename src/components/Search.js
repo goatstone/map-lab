@@ -20,7 +20,7 @@ const Search = ({
         setPlaceQueryInput('')
       }}
     >
-      Search
+      <i className="material-icons">search</i>
     </button>
   </section>
 )

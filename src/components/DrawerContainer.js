@@ -17,12 +17,12 @@ const DrawerContainer = ({
 }) => {
   // swap the alignments for the button
   const buttonPostion = alignX === DrawerAlign.LEFT ? DrawerAlign.RIGHT : DrawerAlign.LEFT
-
+  const buttonIcon = alignX === DrawerAlign.LEFT ? 'chevron_left' : 'chevron_right'
   // control hook: open closed state
   const [isOpen, setIsOpen] = useState(initIsOpen)
 
   // component state
-  const buttonSymbols = { OPEN: title, CLOSED: 'Close' }
+  const buttonSymbols = { OPEN: title, CLOSED: <i className="material-icons">{buttonIcon}</i> }
   const xPositions = { OPEN: 0, CLOSED: -250 }
   const initState = {
     buttonSymbol: buttonSymbols.OPEN,

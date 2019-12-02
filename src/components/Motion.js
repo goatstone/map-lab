@@ -15,7 +15,9 @@ const Motion = ({
         data-id="start-stop"
         onClick={() => setEngine(!isRunnningEngine)}
       >
-        {!isRunnningEngine ? <span>&#x2771;</span> : <span>&#x2751;</span>}
+        <i className="material-icons">
+          {!isRunnningEngine ? 'play_arrow' : 'stop'}
+        </i>
       </button>
     </fieldset>
   </section>
