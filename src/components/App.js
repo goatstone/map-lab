@@ -154,6 +154,7 @@ function App() {
         yPosition={125}
         alignX={DrawerAlign.RIGHT}
         title="Motion"
+        initIsOpen
       >
         <Motion
           isRunnningEngine={isRunnningEngine}

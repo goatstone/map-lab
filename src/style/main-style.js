@@ -15,6 +15,11 @@ const style = {
       display: 'flex',
       justifyContent: 'space-around',
     },
+    '& [data-id=goatstone-component-motion]': {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'space-around',
+    },
   },
   displayResults: {
     display: 'flex',

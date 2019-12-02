@@ -5,7 +5,7 @@ const Motion = ({
   isRunnningEngine,
   setEngine,
 }) => (
-  <section data-id="motion">
+  <section data-id="goatstone-component-motion">
     <fieldset>
       <legend>
         Motion
