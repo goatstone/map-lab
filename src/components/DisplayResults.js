@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const DisplayResults = ({ placeInfo, setPlaceFocusId }) => (
-  <section data-id="display-results">
+const DisplayResults = ({ placeInfo, setPlaceFocusId, classNames }) => (
+  <section className={classNames.displayResults}>
     <ul>
       {placeInfo.results.map((el, i) => (
         // eslint-disable-next-line
@@ -21,6 +21,7 @@ const DisplayResults = ({ placeInfo, setPlaceFocusId }) => (
 DisplayResults.propTypes = {
   placeInfo: PropTypes.object.isRequired,
   setPlaceFocusId: PropTypes.func.isRequired,
+  classNames: PropTypes.object.isRequired,
 }
 
 export default DisplayResults

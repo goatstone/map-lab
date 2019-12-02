@@ -5,7 +5,6 @@ import preset from 'jss-preset-default'
 import Map from './Map'
 import Search from './Search'
 import DisplayResults from './DisplayResults'
-import './DisplayResults.css'
 import DrawerContainer, { DrawerAlign } from './DrawerContainer'
 import GoToPlace from './GoToPlace'
 import MoveTo from './MoveTo'
@@ -126,6 +125,7 @@ function App() {
             <DisplayResults
               placeInfo={placeInfo}
               setPlaceFocusId={setPlaceFocusId}
+              classNames={sheet.classes}
             />
           )}
       </DrawerContainer>
