@@ -11,6 +11,7 @@ describe('<DisplayResults />', () => {
     const props = {
       placeInfo: { results: [] },
       setPlaceFocusId: () => 1,
+      classNames: {DisplayResults: {}},
     }
     let wrapper
     act(() => {
