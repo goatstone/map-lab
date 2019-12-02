@@ -20,6 +20,12 @@ const style = {
       display: 'flex',
       justifyContent: 'space-around',
     },
+    '& [data-id=goatstone-component-leaflet-map]': {
+      position: 'relative',
+      width: '100%',
+      height: '100%',
+      background: 'gray',
+    },
   },
   displayResults: {
     display: 'flex',

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react'
 import L from 'leaflet'
-import './Map.css'
 
 const attribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, '
   + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, '
@@ -120,7 +119,7 @@ function Map({
   }, [placeFocusId])
 
   return (
-    <div id="map" data-id="leaflet-map" />
+    <div id="map" data-id="goatstone-component-leaflet-map" />
   )
 }
 
