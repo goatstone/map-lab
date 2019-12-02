@@ -11,14 +11,10 @@ import DrawerContainer, { DrawerAlign } from './DrawerContainer'
 import GoToPlace from './GoToPlace'
 import MoveTo from './MoveTo'
 import Motion from './Motion'
+import style from '../style/main-style'
 
 jss.setup(preset())
-const style = {
-  drawerContainer: {
-    color: 'orange',
-    background: 'green',
-  },
-}
+
 const sheet = jss.createStyleSheet(style)
 sheet.attach()
 
