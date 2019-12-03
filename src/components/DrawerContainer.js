@@ -42,15 +42,16 @@ const DrawerContainer = ({
 
   const localStyleSheet = {
     drawerContainer: {
-      color: 'blue',
       top: yPosition,
       [alignX]: state.xPosition,
       position: 'absolute',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'flexStart',
+      alignItems: 'center',
       width: 250,
+      padding: '0.5em',
+      borderRadius: '0.3em',
       zIndex: 900,
       transitionProperty: 'right, left',
       transitionDuration: '1s',
@@ -62,7 +63,7 @@ const DrawerContainer = ({
       padding: 0,
       boxShadow: '10px 10px 10px rgba(100, 100, 100, 0.8)',
       zIndex: 1000,
-      [buttonPostion]: -50,
+      [buttonPostion]: -40,
     },
   }
   // if classNames are not provided add default styles to localStyleSheet

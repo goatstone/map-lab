@@ -151,7 +151,7 @@ function App() {
         />
       </DrawerContainer>
       <DrawerContainer
-        yPosition={125}
+        yPosition={150}
         alignX={DrawerAlign.RIGHT}
         title="Motion"
         initIsOpen

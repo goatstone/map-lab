@@ -1,12 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+const localStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+}
 const Search = ({
   placeQueryInput,
   setPlaceQueryInput,
   setPlaceQuery,
 }) => (
-  <section data-id="search">
+  <section style={localStyle}>
     <input
       data-id="search-place"
       value={placeQueryInput}

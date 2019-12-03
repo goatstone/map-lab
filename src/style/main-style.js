@@ -1,3 +1,5 @@
+const buttonTextColor = '#111'
+
 const style = {
   mainContainer: {
     fontSize: '0.9em',
@@ -11,17 +13,22 @@ const style = {
     bottom: 0,
     '& button': {
       cursor: 'pointer',
+      color: buttonTextColor,
+    },
+    '& button i': {
+      color: buttonTextColor,
+    },
+    '& fieldset': {
+      padding: '0.3em',
+      borderRadius: '0.3em',
     },
     '& section[data-id=goatstone-component-moveto]': {
-      width: '100%',
       display: 'flex',
-      justifyContent: 'space-around',
-      background: '#888',
+      justifyContent: 'flex-start',
     },
     '& [data-id=goatstone-component-motion]': {
-      width: '100%',
       display: 'flex',
-      justifyContent: 'space-around',
+      justifyContent: 'flex-start',
     },
     '& [data-id=goatstone-component-leaflet-map]': {
       position: 'relative',
