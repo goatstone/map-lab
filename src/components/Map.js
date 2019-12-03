@@ -72,33 +72,25 @@ function Map({
     },
     [markerPosition],
   )
-  // place search markers
-  const placeMarkerRefs = Array.from(Array(20)).map(() => useRef(null))
+  // place search markers : expects 20 or less results
+  const placeMarkerRefs = [...Array(20)].map(() => useRef(null))
   useEffect(
     () => {
       if (!placeInfo) return
+      if (placeMarkerRefs[0].current) {
+        placeMarkerRefs.forEach(el => el.current.remove())
+      }
       placeInfo.results.forEach((el, i) => {
         const popupContent = `${el.name} : ${el.formatted_address}`
         const placeIcon = L.icon({
           iconUrl: el.icon || '',
           iconSize: [25, 25],
         })
-        if (placeMarkerRefs[i].current) { // update
-          placeMarkerRefs[i].current.setLatLng(
-            [el.geometry.location.lat, el.geometry.location.lng]
-          )
-          placeMarkerRefs[i].current.setIcon(placeIcon)
-          placeMarkerRefs[i].current.unbindTooltip()
-          placeMarkerRefs[i].current.bindTooltip(el.name)
-          placeMarkerRefs[i].current.bindPopup(popupContent)
-          placeMarkerRefs[i].current.closePopup()
-        } else { // add markers
-          placeMarkerRefs[i].current = L.marker(
-            [el.geometry.location.lat, el.geometry.location.lng],
-            { icon: placeIcon }
-          ).addTo(mapRef.current).bindPopup(popupContent)
-            .addTo(mapRef.current).bindTooltip(el.name)
-        }
+        placeMarkerRefs[i].current = L.marker(
+          [el.geometry.location.lat, el.geometry.location.lng],
+          { icon: placeIcon }
+        ).addTo(mapRef.current).bindPopup(popupContent)
+          .addTo(mapRef.current).bindTooltip(el.name)
       })
     },
     [placeInfo],

@@ -9,7 +9,7 @@ const DisplayResults = ({ placeInfo, setPlaceFocusId, classNames }) => (
         <li
           title={`${el.name} : ${el.formatted_address}`}
           onClick={() => setPlaceFocusId(i)}
-          key={`${el.name}`}
+          key={`${el.formatted_address.toString()}`}
         >
           {`${el.name}`}
         </li>
