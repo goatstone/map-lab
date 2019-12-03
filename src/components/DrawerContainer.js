@@ -14,6 +14,7 @@ const DrawerContainer = ({
   title = 'Open',
   initIsOpen = false,
   classNames = null,
+  width = 250,
 }) => {
   // swap the alignments for the button
   const buttonPostion = alignX === DrawerAlign.LEFT ? DrawerAlign.RIGHT : DrawerAlign.LEFT
@@ -23,7 +24,7 @@ const DrawerContainer = ({
 
   // component state
   const buttonSymbols = { OPEN: title, CLOSED: <i className="material-icons">{buttonIcon}</i> }
-  const xPositions = { OPEN: 0, CLOSED: -250 }
+  const xPositions = { OPEN: 0, CLOSED: -(width) }
   const initState = {
     buttonSymbol: buttonSymbols.OPEN,
     xPosition: xPositions.OPEN,
@@ -49,7 +50,7 @@ const DrawerContainer = ({
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      width: 250,
+      width,
       padding: '0.5em',
       borderRadius: '0.3em',
       zIndex: 900,
@@ -68,7 +69,7 @@ const DrawerContainer = ({
   }
   // if classNames are not provided add default styles to localStyleSheet
   if (classNames === null) {
-    Object.assign(localStyleSheet.drawerContainer, { background: '#aaa' })
+    Object.assign(localStyleSheet.drawerContainer, { background: 'rgba(100, 100, 100, 0.9)' })
   }
 
   return (
@@ -99,6 +100,7 @@ DrawerContainer.propTypes = {
   title: PropTypes.string,
   initIsOpen: PropTypes.bool,
   classNames: PropTypes.object,
+  width: PropTypes.number,
 }
 
 export default DrawerContainer

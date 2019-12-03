@@ -142,8 +142,8 @@ function App() {
       <DrawerContainer
         yPosition={50}
         alignX={DrawerAlign.RIGHT}
-        title="Move To"
-        initIsOpen
+        title="Move"
+        width={180}
       >
         <MoveTo
           setCenterPanMapTo={setCenterPanMapTo}
@@ -154,7 +154,7 @@ function App() {
         yPosition={150}
         alignX={DrawerAlign.RIGHT}
         title="Motion"
-        initIsOpen
+        width={100}
       >
         <Motion
           isRunnningEngine={isRunnningEngine}
