@@ -1,6 +1,10 @@
 {
   "name": "map-lab",
-  "homepage": "https://github.com/JoseHerminioCollas/min-hooks",
+  "homepage": "https://map-lab-goatstone.appspot.com/",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/JoseHerminioCollas/map-lab"
+  },
   "version": "0.1.0",
   "dependencies": {
     "@babel/core": "7.4.3",
