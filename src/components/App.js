@@ -49,7 +49,11 @@ function App() {
       }
       const url = `${servers.remote}/places?q=${placeQuery}&latlng=${mapCenter}&radius=${searchQRadius}`
       const pI = await axios(url)
-      placeInfoPacket.message = pI.data[0].name
+      if (pI.data[0]) {
+        placeInfoPacket.message = pI.data[0].name
+      } else {
+        placeInfoPacket.message = 'No Results'
+      }
       placeInfoPacket.results = pI.data
       setPlaceInfo(placeInfoPacket)
     })()
