@@ -76,7 +76,7 @@ function Map({
   const placeMarkerRefs = [...Array(20)].map(() => useRef(null))
   useEffect(
     () => {
-      if (!placeInfo) return
+      if (!placeInfo || !placeInfo.results) return
       if (placeMarkerRefs[0].current) {
         placeMarkerRefs.forEach(el => el.current.remove())
       }

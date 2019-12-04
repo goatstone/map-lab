@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const DisplayResults = ({ placeInfo, setPlaceFocusId, classNames }) => (
   <section className={classNames.displayResults}>
     <ul>
-      {placeInfo.results.map((el, i) => (
+      {placeInfo.results && placeInfo.results.map((el, i) => (
         // eslint-disable-next-line
         <li
           title={`${el.name} : ${el.formatted_address}`}
@@ -15,6 +15,7 @@ const DisplayResults = ({ placeInfo, setPlaceFocusId, classNames }) => (
         </li>
       ))}
     </ul>
+    {placeInfo.results.length === 0 && 'No Results To Display'}
   </section>
 )
 /* eslint-disable react/forbid-prop-types */

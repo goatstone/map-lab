@@ -47,14 +47,16 @@ function App() {
         local: 'http://localhost:8080',
         remote: 'https://map-server-goatstone.appspot.com',
       }
-      const url = `${servers.remote}/places?q=${placeQuery}&latlng=${mapCenter}&radius=${searchQRadius}`
+      const url = `${servers.remote}/places?query=${placeQuery}&location=${mapCenter}&radius=${searchQRadius}`
       const pI = await axios(url)
-      if (pI.data[0]) {
+      // TODO check for 400 error
+      if (Array.isArray(pI.data)) {
         placeInfoPacket.message = pI.data[0].name
+        placeInfoPacket.results = pI.data
       } else {
         placeInfoPacket.message = 'No Results'
+        placeInfoPacket.results = []
       }
-      placeInfoPacket.results = pI.data
       setPlaceInfo(placeInfoPacket)
     })()
     return () => 1
