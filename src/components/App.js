@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 import Map from './Map'
@@ -21,8 +20,9 @@ sheet.attach()
 const initLatLng = [47.6, -122.3]
 function App() {
   //  const online = cHook()
-  const [isRunningEngine, setEngine, tick] = useEngine()
-  const one = useSearch()
+  // const [placeQuery, setPlaceQuery, placeInfo, setPlaceInfo] = useState('')
+  // const [placeInfo, setPlaceInfo] = useState(null)
+  const [setPlaceQuery, placeInfo] = useSearch()
 
   // values that reflect map state
   const [mapCenter, setMapCenter] = useState(initLatLng)
@@ -34,11 +34,13 @@ function App() {
   const [markerPosMoveTo, setMarkerPosMoveTo] = useState(initLatLng)
 
   // search
-  const [searchQRadius, setSearchQMapRadius] = useState(0)
+  const [mapRadius, setSearchQMapRadius] = useState(0)
+  console.log(mapRadius)
   const [placeQueryInput, setPlaceQueryInput] = useState('food')
 
-  const [placeQuery, setPlaceQuery] = useState('')
-  const [placeInfo, setPlaceInfo] = useState(null)
+  const [isRunningEngine, setEngine, tick] = useEngine(mapCenter, setSearchQMapRadius)
+  // const [placeQuery, setPlaceQuery] = useState('')
+  // const [placeInfo, setPlaceInfo] = useState(null)
 
   const [placeFocusId, setPlaceFocusId] = useState(null)
 
@@ -50,33 +52,35 @@ function App() {
     ])
     setCenterPanMapTo(([lat, lng]) => [lat + 0.01, lng + 0.01])
   }, [tick])
-  useEffect(() => {
-    if (placeQuery === '') return () => 1
-    const placeInfoPacket = {
-      q: placeQuery,
-      message: '',
-      results: [],
-    };
-    (async () => {
-      // get these values from the map so the results are framed in the map
-      const servers = {
-        local: 'http://localhost:8080',
-        remote: 'https://map-server-goatstone.appspot.com',
-      }
-      const url = `${servers.remote}/places?query=${placeQuery}&location=${mapCenter}&radius=${searchQRadius}`
-      const pI = await axios(url)
-      // TODO check for 400 error
-      if (Array.isArray(pI.data)) {
-        placeInfoPacket.message = pI.data[0].name
-        placeInfoPacket.results = pI.data
-      } else {
-        placeInfoPacket.message = 'No Results'
-        placeInfoPacket.results = []
-      }
-      setPlaceInfo(placeInfoPacket)
-    })()
-    return () => 1
-  }, [placeQuery])
+  // useEffect(() => {
+  //   if (placeQuery === '') return () => 1
+  //   const placeInfoPacket = {
+  //     q: placeQuery,
+  //     message: '',
+  //     results: [],
+  //   };
+  //   (async () => {
+  //     // get these values from the map so the results are framed in the map
+  //     const servers = {
+  //       local: 'http://localhost:8080',
+  //       remote: 'https://map-server-goatstone.appspot.com',
+  //     }
+  // cons
+  // t url = `${servers.remote}/places?query=${placeQuery}&loca
+  // tion=${mapCenter}&radius=${searchQRadius}`
+  //     const pI = await axios(url)
+  //     // TODO check for 400 error
+  //     if (Array.isArray(pI.data)) {
+  //       placeInfoPacket.message = pI.data[0].name
+  //       placeInfoPacket.results = pI.data
+  //     } else {
+  //       placeInfoPacket.message = 'No Results'
+  //       placeInfoPacket.results = []
+  //     }
+  //     setPlaceInfo(placeInfoPacket)
+  //   })()
+  //   return () => 1
+  // }, [placeQuery])
   useEffect(() => {
     // eslint-disable-next-line
     const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapCenter[0] * Math.PI / 180)) / Math.pow(2, mapZoomLevel + 8))
@@ -86,8 +90,6 @@ function App() {
 
   return (
     <section className={sheet.classes.mainContainer}>
-      xxx
-      {one}
       <Map
         centerPanMapTo={centerPanMapTo}
         markerPosition={markerPosMoveTo}
