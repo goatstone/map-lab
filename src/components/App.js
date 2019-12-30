@@ -18,15 +18,20 @@ sheet.attach()
 const initLatLng = [47.6, -122.3]
 
 function App() {
+  // Status Hook : values for the current state of the map
   const [mapStatus, setMapStatus] = useState(
     {
       center: initLatLng,
       zoomLevel: 12,
-      viewPortRadius: 50000, // calculated from zoomLevel
+      viewPortRadius: 5000, // calculated from zoomLevel
     },
   )
-  // values for actions on the map
-  // mapControl .moveCenter moveMarker .
+  // Control Hook, used to control the map
+  const [mapControl, setMapControl] = useState({
+    moveCenterTo: initLatLng,
+    moveMarkerTo: initLatLng,
+  })
+
   const [centerPanMapTo, setCenterPanMapTo] = useState(initLatLng)
   const [markerPosMoveTo, setMarkerPosMoveTo] = useState(initLatLng)
   // places query
@@ -37,11 +42,20 @@ function App() {
 
   useEffect(() => {
     const moveOffset = [0.001, 0.001]
-    setMarkerPosMoveTo(postion => [
-      postion[0] + moveOffset[0],
-      postion[1] + moveOffset[1],
-    ])
-    setCenterPanMapTo(([lat, lng]) => [lat + 0.01, lng + 0.01])
+    // setMarkerPosMoveTo(postion => [
+    //   postion[0] + moveOffset[0],
+    //   postion[1] + moveOffset[1],
+    // ])
+    setMapControl(config => (
+      Object.assign({}, config, {
+        moveCenterTo:
+          [
+            config.moveCenterTo[0] + moveOffset[0],
+            config.moveCenterTo[1] + moveOffset[1],
+          ],
+      })
+    ))
+    // setCenterPanMapTo(([lat, lng]) => [lat + 0.01, lng + 0.01])
   }, [tick])
 
   return (
@@ -51,6 +65,7 @@ function App() {
         markerPosition={markerPosMoveTo}
         center={mapStatus.center} // control?????? !!!!!
         placeInfo={placeInfo}
+        mapControl={mapControl}
         setMapStatus={setMapStatus}
         placeFocusId={placeFocusId}
       />
@@ -91,7 +106,8 @@ function App() {
         width={180}
       >
         <MoveTo
-          setCenterPanMapTo={setCenterPanMapTo}
+          setMapControl={setMapControl}
+          setCenterPanMapTo={setMapControl}
           moveMarker={setMarkerPosMoveTo}
         />
       </DrawerContainer>

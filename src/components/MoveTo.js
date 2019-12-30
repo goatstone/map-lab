@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const MoveTo = ({
-  setCenterPanMapTo,
+  setMapControl,
+  // setCenterPanMapTo,
   moveMarker,
 }) => (
   <section data-id="goatstone-component-moveto">
@@ -29,7 +30,22 @@ const MoveTo = ({
       </legend>
       <button
         type="button"
-        onClick={() => setCenterPanMapTo(([lat, lng]) => [lat + 0.01, lng + 0.01])}
+        onClick={() => {
+          setMapControl(config => {
+            // move by increment
+            const inc = 0.01
+            const moveCenterTo = [
+              config.moveCenterTo[0] + inc,
+              config.moveCenterTo[1] + inc,
+            ]
+            const rv = Object.assign(
+              {},
+              config,
+              { moveCenterTo },
+            )
+            return rv
+          })
+        }}
       >
         <i className="material-icons" style={{ transform: 'rotate(45deg)' }}>arrow_upward</i>
       </button>
@@ -41,7 +57,8 @@ const MoveTo = ({
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 MoveTo.propTypes = {
-  setCenterPanMapTo: PropTypes.func, // TODO take out eslint disable for this prop
+  setMapControl: PropTypes.func,
+  // setCenterPanMapTo: PropTypes.func, // TODO take out eslint disable for this prop
   moveMarker: PropTypes.func.isRequired,
 }
 

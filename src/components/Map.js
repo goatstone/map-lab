@@ -29,6 +29,7 @@ function Map({
   markerPosition,
   center = [0, 0],
   placeInfo,
+  mapControl,
   setMapStatus,
   placeFocusId }) {
   const mapRef = useRef(null)
@@ -111,13 +112,18 @@ function Map({
     },
     [placeInfo],
   )
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.panTo(mapControl.moveCenterTo)
+    }
+  }, [mapControl])
   // pan map to
   useEffect(() => {
     if (mapRef.current) {
       // will call the moveend event which will update center value
-      mapRef.current.panTo(centerPanMapTo)
+      mapRef.current.panTo(mapControl.moveCenterTo)
     }
-  }, [centerPanMapTo])
+  }, [mapControl])
   useEffect(() => {
     if (placeMarkerRefs && placeFocusId !== null) {
       placeMarkerRefs.map(pmr => pmr.current.closeTooltip())
