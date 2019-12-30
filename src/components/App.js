@@ -28,7 +28,6 @@ function App() {
   const [markerPosMoveTo, setMarkerPosMoveTo] = useState(initLatLng)
   const [mapRadius, setSearchQMapRadius] = useState(0)
 
-  const [placeQueryInput, setPlaceQueryInput] = useState('food')
   const [placeFocusId, setPlaceFocusId] = useState(null)
 
   const [setPlaceQuery, placeInfo] = useSearch(mapCenter, mapRadius)
@@ -68,8 +67,7 @@ function App() {
         classNames={sheet.classes}
       >
         <Search
-          placeQueryInput={placeQueryInput}
-          setPlaceQueryInput={setPlaceQueryInput}
+          initSearchValue="food"
           setPlaceQuery={setPlaceQuery}
         />
         {placeInfo
