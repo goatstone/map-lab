@@ -13,30 +13,27 @@ import useEngine from '../hooks/use-engine'
 import useSearch from '../hooks/use-search'
 
 jss.setup(preset())
-
 const sheet = jss.createStyleSheet(style)
 sheet.attach()
-
 const initLatLng = [47.6, -122.3]
+
 function App() {
   const [mapStatus, setMapStatus] = useState(
     {
       center: initLatLng,
       zoomLevel: 12,
-      radius: 50000,
+      viewPortRadius: 50000, // calculated from zoomLevel
     },
   )
-  const [mapRadius, setSearchQMapRadius] = useState(0)
-
   // values for actions on the map
   // mapControl .moveCenter moveMarker .
   const [centerPanMapTo, setCenterPanMapTo] = useState(initLatLng)
   const [markerPosMoveTo, setMarkerPosMoveTo] = useState(initLatLng)
-
-  const [setPlaceQuery, placeInfo] = useSearch(mapStatus.center, mapRadius)
+  // places query
+  const [setPlaceQuery, placeInfo] = useSearch(mapStatus.center, mapStatus.viewPortRadius)
   const [placeFocusId, setPlaceFocusId] = useState(null)
-
-  const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, setSearchQMapRadius)
+  // engine
+  const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
 
   useEffect(() => {
     const moveOffset = [0.001, 0.001]
@@ -46,12 +43,6 @@ function App() {
     ])
     setCenterPanMapTo(([lat, lng]) => [lat + 0.01, lng + 0.01])
   }, [tick])
-  useEffect(() => {
-    // eslint-disable-next-line
-    const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapStatus.center[0] * Math.PI / 180)) / Math.pow(2, mapStatus.zoomLevel + 8))
-    const newRadius = Math.min(150 * metresPerPixel, 50000)
-    setSearchQMapRadius(newRadius)
-  }, [mapStatus])
 
   return (
     <section className={sheet.classes.mainContainer}>

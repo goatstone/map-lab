@@ -61,12 +61,17 @@ function Map({
       })
     })
     mapRef.current.on('zoom', (z) => {
+      // eslint-disable-next-line
+      const zoomLevel = mapRef.current.getZoom()
+      const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapRef.current.getCenter().lat * Math.PI / 180)) / Math.pow(2, zoomLevel + 8))
+      const viewPortRadius = Math.min(150 * metresPerPixel, 50000)
       setMapStatus(config => {
         return Object.assign(
           {},
           config,
           {
-            zoomLevel: mapRef.current.getZoom()
+            zoomLevel,
+            viewPortRadius,
           })
       })
     })
