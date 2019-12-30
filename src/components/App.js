@@ -20,9 +20,12 @@ sheet.attach()
 const initLatLng = [47.6, -122.3]
 function App() {
   const [mapStatus, setMapStatus] = useState(
-    { center: initLatLng },
+    {
+      center: initLatLng,
+      zoomLevel: 12,
+      radius: 50000,
+    },
   )
-  const [mapZoomLevel, setMapZoomLevel] = useState(12)
   const [mapRadius, setSearchQMapRadius] = useState(0)
 
   // values for actions on the map
@@ -45,10 +48,10 @@ function App() {
   }, [tick])
   useEffect(() => {
     // eslint-disable-next-line
-    const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapStatus.center[0] * Math.PI / 180)) / Math.pow(2, mapZoomLevel + 8))
+    const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapStatus.center[0] * Math.PI / 180)) / Math.pow(2, mapStatus.zoomLevel + 8))
     const newRadius = Math.min(150 * metresPerPixel, 50000)
     setSearchQMapRadius(newRadius)
-  }, [mapZoomLevel])
+  }, [mapStatus])
 
   return (
     <section className={sheet.classes.mainContainer}>
@@ -57,8 +60,7 @@ function App() {
         markerPosition={markerPosMoveTo}
         center={mapStatus.center} // control?????? !!!!!
         placeInfo={placeInfo}
-        setSearchQCenter={setMapStatus}
-        setZoomLevel={setMapZoomLevel}
+        setMapStatus={setMapStatus}
         placeFocusId={placeFocusId}
       />
       <DrawerContainer

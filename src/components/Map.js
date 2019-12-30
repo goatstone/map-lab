@@ -29,8 +29,7 @@ function Map({
   markerPosition,
   center = [0, 0],
   placeInfo,
-  setSearchQCenter,
-  setZoomLevel,
+  setMapStatus,
   placeFocusId }) {
   const mapRef = useRef(null)
   useEffect(() => {
@@ -51,7 +50,7 @@ function Map({
     }).addTo(mapRef.current);
 
     mapRef.current.on('moveend', function (ev) {
-      setSearchQCenter(config => {
+      setMapStatus(config => {
         return Object.assign(
           {},
           config, {
@@ -62,7 +61,14 @@ function Map({
       })
     })
     mapRef.current.on('zoom', (z) => {
-      setZoomLevel(mapRef.current.getZoom())
+      setMapStatus(config => {
+        return Object.assign(
+          {},
+          config,
+          {
+            zoomLevel: mapRef.current.getZoom()
+          })
+      })
     })
   }, [])
   // marker
