@@ -51,10 +51,15 @@ function Map({
     }).addTo(mapRef.current);
 
     mapRef.current.on('moveend', function (ev) {
-      setSearchQCenter([
-        mapRef.current.getCenter().lat,
-        mapRef.current.getCenter().lng,
-      ])
+      setSearchQCenter(config => {
+        return Object.assign(
+          {},
+          config, {
+          center:
+            [mapRef.current.getCenter().lat,
+            mapRef.current.getCenter().lng]
+        })
+      })
     })
     mapRef.current.on('zoom', (z) => {
       setZoomLevel(mapRef.current.getZoom())

@@ -19,19 +19,21 @@ sheet.attach()
 
 const initLatLng = [47.6, -122.3]
 function App() {
-  // values that reflect map state
-  const [mapCenter, setMapCenter] = useState(initLatLng)
-  // const [mapMarkerPos, setMapMarkerPos] = useState(initLatLng) // TODO : use later for info
+  const [mapStatus, setMapStatus] = useState(
+    { center: initLatLng },
+  )
   const [mapZoomLevel, setMapZoomLevel] = useState(12)
-  // values for actions on the map
-  const [centerPanMapTo, setCenterPanMapTo] = useState(initLatLng)
-  const [markerPosMoveTo, setMarkerPosMoveTo] = useState(initLatLng)
   const [mapRadius, setSearchQMapRadius] = useState(0)
 
+  // values for actions on the map
+  // mapControl .moveCenter moveMarker .
+  const [centerPanMapTo, setCenterPanMapTo] = useState(initLatLng)
+  const [markerPosMoveTo, setMarkerPosMoveTo] = useState(initLatLng)
+
+  const [setPlaceQuery, placeInfo] = useSearch(mapStatus.center, mapRadius)
   const [placeFocusId, setPlaceFocusId] = useState(null)
 
-  const [setPlaceQuery, placeInfo] = useSearch(mapCenter, mapRadius)
-  const [isRunningEngine, setEngine, tick] = useEngine(mapCenter, setSearchQMapRadius)
+  const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, setSearchQMapRadius)
 
   useEffect(() => {
     const moveOffset = [0.001, 0.001]
@@ -43,7 +45,7 @@ function App() {
   }, [tick])
   useEffect(() => {
     // eslint-disable-next-line
-    const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapCenter[0] * Math.PI / 180)) / Math.pow(2, mapZoomLevel + 8))
+    const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapStatus.center[0] * Math.PI / 180)) / Math.pow(2, mapZoomLevel + 8))
     const newRadius = Math.min(150 * metresPerPixel, 50000)
     setSearchQMapRadius(newRadius)
   }, [mapZoomLevel])
@@ -53,9 +55,9 @@ function App() {
       <Map
         centerPanMapTo={centerPanMapTo}
         markerPosition={markerPosMoveTo}
-        center={mapCenter}
+        center={mapStatus.center} // control?????? !!!!!
         placeInfo={placeInfo}
-        setSearchQCenter={setMapCenter}
+        setSearchQCenter={setMapStatus}
         setZoomLevel={setMapZoomLevel}
         placeFocusId={placeFocusId}
       />
