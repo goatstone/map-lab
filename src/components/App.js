@@ -11,10 +11,7 @@ import MoveTo from './MoveTo'
 import Motion from './Motion'
 import style from '../style/main-style'
 import useEngine from '../hooks/use-engine'
-// import cHook from '../hooks/c-hook'
-
-// const [start, stop, tick] = useEngine()
-// console.log(stop, tick)
+import useSearch from '../hooks/use-search'
 
 jss.setup(preset())
 
@@ -25,6 +22,7 @@ const initLatLng = [47.6, -122.3]
 function App() {
   //  const online = cHook()
   const [isRunningEngine, setEngine, tick] = useEngine()
+  const one = useSearch()
 
   // values that reflect map state
   const [mapCenter, setMapCenter] = useState(initLatLng)
@@ -38,8 +36,10 @@ function App() {
   // search
   const [searchQRadius, setSearchQMapRadius] = useState(0)
   const [placeQueryInput, setPlaceQueryInput] = useState('food')
+
   const [placeQuery, setPlaceQuery] = useState('')
   const [placeInfo, setPlaceInfo] = useState(null)
+
   const [placeFocusId, setPlaceFocusId] = useState(null)
 
   useEffect(() => {
@@ -86,6 +86,8 @@ function App() {
 
   return (
     <section className={sheet.classes.mainContainer}>
+      xxx
+      {one}
       <Map
         centerPanMapTo={centerPanMapTo}
         markerPosition={markerPosMoveTo}
