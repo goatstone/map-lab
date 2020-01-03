@@ -33,19 +33,16 @@ function App() {
   })
 
   const [centerPanMapTo, setCenterPanMapTo] = useState(initLatLng)
-  const [markerPosMoveTo, setMarkerPosMoveTo] = useState(initLatLng)
+
   // places query
   const [setPlaceQuery, placeInfo] = useSearch(mapStatus.center, mapStatus.viewPortRadius)
   const [placeFocusId, setPlaceFocusId] = useState(null)
+
   // engine
   const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
 
   useEffect(() => {
     const moveOffset = [0.001, 0.001]
-    // setMarkerPosMoveTo(postion => [
-    //   postion[0] + moveOffset[0],
-    //   postion[1] + moveOffset[1],
-    // ])
     setMapControl(config => (
       Object.assign({}, config, {
         moveCenterTo:
@@ -53,16 +50,18 @@ function App() {
             config.moveCenterTo[0] + moveOffset[0],
             config.moveCenterTo[1] + moveOffset[1],
           ],
+        moveMarkerTo: [
+          config.moveMarkerTo[0] + moveOffset[0],
+          config.moveMarkerTo[1] + moveOffset[1],
+        ],
       })
     ))
-    // setCenterPanMapTo(([lat, lng]) => [lat + 0.01, lng + 0.01])
   }, [tick])
 
   return (
     <section className={sheet.classes.mainContainer}>
       <Map
         centerPanMapTo={centerPanMapTo}
-        markerPosition={markerPosMoveTo}
         center={mapStatus.center} // control?????? !!!!!
         placeInfo={placeInfo}
         mapControl={mapControl}
@@ -104,11 +103,10 @@ function App() {
         alignX={DrawerAlign.RIGHT}
         title="Move"
         width={180}
+        initIsOpen
       >
         <MoveTo
           setMapControl={setMapControl}
-          setCenterPanMapTo={setMapControl}
-          moveMarker={setMarkerPosMoveTo}
         />
       </DrawerContainer>
       <DrawerContainer
@@ -116,6 +114,7 @@ function App() {
         alignX={DrawerAlign.RIGHT}
         title="Motion"
         width={100}
+        initIsOpen
       >
         <Motion
           isRunnningEngine={isRunningEngine}

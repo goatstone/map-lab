@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 const MoveTo = ({
   setMapControl,
-  // setCenterPanMapTo,
-  moveMarker,
 }) => (
   <section data-id="goatstone-component-moveto">
     <fieldset>
@@ -14,11 +12,19 @@ const MoveTo = ({
       <button
         type="button"
         onClick={() => {
-          const moveOffset = [0.001, 0.001]
-          moveMarker(postion => [
-            postion[0] + moveOffset[0],
-            postion[1] + moveOffset[1],
-          ])
+          setMapControl(config => {
+            const inc = 0.01
+            const moveMarkerTo = [
+              config.moveMarkerTo[0] + inc,
+              config.moveMarkerTo[1] + inc,
+            ]
+            const rv = Object.assign(
+              {},
+              config,
+              { moveMarkerTo },
+            )
+            return rv
+          })
         }}
       >
         <i className="material-icons" style={{ transform: 'rotate(45deg)' }}>arrow_upward</i>
@@ -50,7 +56,6 @@ const MoveTo = ({
         <i className="material-icons" style={{ transform: 'rotate(45deg)' }}>arrow_upward</i>
       </button>
     </fieldset>
-
   </section>
 )
 
@@ -58,8 +63,6 @@ const MoveTo = ({
 /* eslint-disable react/require-default-props */
 MoveTo.propTypes = {
   setMapControl: PropTypes.func,
-  // setCenterPanMapTo: PropTypes.func, // TODO take out eslint disable for this prop
-  moveMarker: PropTypes.func.isRequired,
 }
 
 export default MoveTo

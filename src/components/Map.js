@@ -25,8 +25,6 @@ const baseMaps = {
 }
 /* eslint-disable */
 function Map({
-  centerPanMapTo,
-  markerPosition,
   center = [0, 0],
   placeInfo,
   mapControl,
@@ -79,16 +77,6 @@ function Map({
   }, [])
   // marker
   const markerRef = useRef(null)
-  useEffect(
-    () => {
-      if (markerRef.current) {
-        markerRef.current.setLatLng(markerPosition)
-      } else {
-        markerRef.current = L.marker(markerPosition).addTo(mapRef.current)
-      }
-    },
-    [markerPosition],
-  )
   // place search markers : expects 20 or less results
   const placeMarkerRefs = [...Array(20)].map(() => useRef(null))
   useEffect(
@@ -113,15 +101,15 @@ function Map({
     [placeInfo],
   )
   useEffect(() => {
+     // map move
     if (mapRef.current) {
       mapRef.current.panTo(mapControl.moveCenterTo)
     }
-  }, [mapControl])
-  // pan map to
-  useEffect(() => {
-    if (mapRef.current) {
-      // will call the moveend event which will update center value
-      mapRef.current.panTo(mapControl.moveCenterTo)
+     // marker move
+    if (markerRef.current) {
+      markerRef.current.setLatLng(mapControl.moveMarkerTo)
+    } else {
+      markerRef.current = L.marker(mapControl.moveMarkerTo).addTo(mapRef.current)
     }
   }, [mapControl])
   useEffect(() => {
