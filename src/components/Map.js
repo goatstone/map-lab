@@ -81,9 +81,9 @@ function Map({
   useEffect(
     () => {
       if (!placeInfo || !placeInfo.results) return
-      if (placeMarkerRefs[0].current) {
-        placeMarkerRefs.forEach(el => el.current.remove())
-      }
+      placeMarkerRefs
+        .filter(el => el.current)
+        .forEach(el => el.current.remove())
       placeInfo.results.forEach((el, i) => {
         const popupContent = `${el.name} : ${el.formatted_address}`
         const placeIcon = L.icon({
