@@ -10,7 +10,7 @@ function useSearch(initQuery = {
   const [searchQuery, setSearchQuery] = useState(initQuery)
   const [searchResults, setSearchResults] = useState([])
   useEffect(() => {
-    console.log('search qs', searchQuery)
+    // console.log('search qs', searchQuery)
     if (searchQuery.query === '') return () => 1
     const placeInfoPacket = {
       q: searchQuery,
@@ -25,7 +25,7 @@ function useSearch(initQuery = {
       }
       const url = `
       ${servers.remote}/places?query=${searchQuery.query}&location=${searchQuery.center}&radius=${searchQuery.radius}`
-      console.log(url)
+      // console.log(url)
       const pI = await axios(url)
       // TODO check for 400 error
       if (Array.isArray(pI.data)) {
