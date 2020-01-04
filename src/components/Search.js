@@ -8,6 +8,8 @@ const localStyle = {
 }
 const Search = ({
   initSearchValue = '',
+  radius,
+  center,
   setPlaceQuery,
 }) => {
   const [placeQueryInput, setPlaceQueryInput] = useState(initSearchValue)
@@ -23,7 +25,11 @@ const Search = ({
       <button
         type="button"
         onClick={() => {
-          setPlaceQuery(placeQueryInput)
+          setPlaceQuery({
+            query: placeQueryInput,
+            radius,
+            center,
+          })
           setPlaceQueryInput('')
         }}
       >
@@ -37,7 +43,8 @@ const Search = ({
 /* eslint-disable react/require-default-props */
 Search.propTypes = {
   initSearchValue: PropTypes.string.isRequired,
-  // setPlaceQueryInput: PropTypes.func.isRequired,
+  radius: PropTypes.number.isRequired,
+  center: PropTypes.array.isRequired,
   setPlaceQuery: PropTypes.func.isRequired,
 }
 

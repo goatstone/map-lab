@@ -23,7 +23,8 @@ function useSearch(initQuery = {
         local: 'http://localhost:8080',
         remote: 'https://map-server-goatstone.appspot.com',
       }
-      const url = `${servers.remote}/places?query=${'truck'}&location=${[43.333, 30.00]}&radius=${400}`
+      const url = `
+      ${servers.remote}/places?query=${searchQuery.query}&location=${searchQuery.center}&radius=${searchQuery.radius}`
       console.log(url)
       const pI = await axios(url)
       // TODO check for 400 error
