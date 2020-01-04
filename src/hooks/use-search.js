@@ -1,13 +1,19 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-function useSearch(mapCenter, searchQRadius) {
-  const [placeQuery, setPlaceQuery] = useState('')
-  const [placeInfo, setPlaceInfo] = useState(null)
+function useSearch(initQuery = {
+  query: '',
+  radius: 50000,
+  center: [0, 0],
+  server: null,
+}) {
+  const [searchQuery, setSearchQuery] = useState(initQuery)
+  const [searchResults, setSearchResults] = useState([])
   useEffect(() => {
-    if (placeQuery === '') return () => 1
+    console.log('search qs', searchQuery)
+    if (searchQuery.query === '') return () => 1
     const placeInfoPacket = {
-      q: placeQuery,
+      q: searchQuery,
       message: '',
       results: [],
     };
@@ -17,7 +23,8 @@ function useSearch(mapCenter, searchQRadius) {
         local: 'http://localhost:8080',
         remote: 'https://map-server-goatstone.appspot.com',
       }
-      const url = `${servers.remote}/places?query=${placeQuery}&location=${mapCenter}&radius=${searchQRadius}`
+      const url = `${servers.remote}/places?query=${'truck'}&location=${[43.333, 30.00]}&radius=${400}`
+      console.log(url)
       const pI = await axios(url)
       // TODO check for 400 error
       if (Array.isArray(pI.data)) {
@@ -27,12 +34,12 @@ function useSearch(mapCenter, searchQRadius) {
         placeInfoPacket.message = 'No Results'
         placeInfoPacket.results = []
       }
-      setPlaceInfo(placeInfoPacket)
+      setSearchResults(placeInfoPacket)
     })()
     return () => 1
-  }, [placeQuery])
+  }, [searchQuery])
 
-  return [setPlaceQuery, placeInfo]
+  return [setSearchQuery, searchResults]
 }
 
 export default useSearch

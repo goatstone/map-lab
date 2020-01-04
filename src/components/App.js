@@ -33,8 +33,14 @@ function App() {
     moveMarkerTo: initLatLng,
     placeFocusId: null,
   })
-  // places query
-  const [setPlaceQuery, placeInfo] = useSearch(mapStatus.center, mapStatus.viewPortRadius)
+  // places query: A search consists of a query object and searchResults
+  const initQuery = {
+    query: '',
+    radius: 50000,
+    center: [0, 0],
+    server: 'https://map-server-goatstone.appspot.com',
+  }
+  const [setQuery, searchResults] = useSearch(initQuery)
   // engine
   const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
 
@@ -58,7 +64,7 @@ function App() {
   return (
     <section className={sheet.classes.mainContainer}>
       <Map
-        placeInfo={placeInfo}
+        placeInfo={searchResults}
         mapControl={mapControl}
         setMapStatus={setMapStatus}
       />
@@ -68,12 +74,12 @@ function App() {
       >
         <Search
           initSearchValue="food"
-          setPlaceQuery={setPlaceQuery}
+          setPlaceQuery={setQuery}
         />
-        {placeInfo
+        {searchResults && searchResults.results
           && (
             <DisplayResults
-              placeInfo={placeInfo}
+              placeInfo={searchResults}
               setMapControl={setMapControl}
               classNames={sheet.classes}
             />
