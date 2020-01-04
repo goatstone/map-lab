@@ -57,7 +57,6 @@ function App() {
   return (
     <section className={sheet.classes.mainContainer}>
       <Map
-        center={mapStatus.center} // control?????? !!!!!
         placeInfo={placeInfo}
         mapControl={mapControl}
         setMapStatus={setMapStatus}

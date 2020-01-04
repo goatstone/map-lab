@@ -25,7 +25,6 @@ const baseMaps = {
 }
 /* eslint-disable */
 function Map({
-  center = [0, 0],
   placeInfo,
   mapControl,
   setMapStatus
@@ -33,7 +32,7 @@ function Map({
   const mapRef = useRef(null)
   useEffect(() => {
     mapRef.current = L.map('map', {
-      center: center,
+      center: mapControl.moveCenterTo,
       zoom: 12,
       zoomControl: false,
       layers: [
