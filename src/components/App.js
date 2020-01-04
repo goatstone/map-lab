@@ -74,8 +74,8 @@ function App() {
       >
         <Search
           initSearchValue="food"
-          radius={50000}
-          center={[47.6, -122.3]}
+          radius={mapStatus.viewPortRadius}
+          center={mapStatus.center}
           setPlaceQuery={setQuery}
         />
         {searchResults && searchResults.results
