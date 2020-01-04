@@ -32,8 +32,6 @@ function App() {
     moveMarkerTo: initLatLng,
   })
 
-  const [centerPanMapTo, setCenterPanMapTo] = useState(initLatLng)
-
   // places query
   const [setPlaceQuery, placeInfo] = useSearch(mapStatus.center, mapStatus.viewPortRadius)
   const [placeFocusId, setPlaceFocusId] = useState(null)
@@ -61,7 +59,6 @@ function App() {
   return (
     <section className={sheet.classes.mainContainer}>
       <Map
-        centerPanMapTo={centerPanMapTo}
         center={mapStatus.center} // control?????? !!!!!
         placeInfo={placeInfo}
         mapControl={mapControl}
@@ -95,7 +92,7 @@ function App() {
         initIsOpen
       >
         <GoToPlace
-          setCenterPanMapTo={setCenterPanMapTo}
+          setMapControl={setMapControl}
         />
       </DrawerContainer>
       <DrawerContainer
