@@ -4,7 +4,8 @@ import preset from 'jss-preset-default'
 import Map from './Map'
 import Search from './Search'
 import DisplayResults from './DisplayResults'
-import DrawerContainer, { DrawerAlign } from './DrawerContainer'
+import DrawerContainer from './DrawerContainer'
+import DCConfig from '../draw-container-config'
 import GoToPlace from './GoToPlace'
 import MoveTo from './MoveTo'
 import Motion from './Motion'
@@ -62,10 +63,7 @@ function App() {
         setMapStatus={setMapStatus}
       />
       <DrawerContainer
-        yPosition={0}
-        alignX={DrawerAlign.LEFT}
-        title="Search"
-        initIsOpen
+        {...DCConfig.search}
         classNames={sheet.classes}
       >
         <Search
@@ -82,32 +80,21 @@ function App() {
           )}
       </DrawerContainer>
       <DrawerContainer
-        yPosition={0}
-        alignX={DrawerAlign.RIGHT}
-        title="Go To"
-        initIsOpen
+        {...DCConfig.goToPlace}
       >
         <GoToPlace
           setMapControl={setMapControl}
         />
       </DrawerContainer>
       <DrawerContainer
-        yPosition={50}
-        alignX={DrawerAlign.RIGHT}
-        title="Move"
-        width={180}
-        initIsOpen
+        {...DCConfig.moveTo}
       >
         <MoveTo
           setMapControl={setMapControl}
         />
       </DrawerContainer>
       <DrawerContainer
-        yPosition={150}
-        alignX={DrawerAlign.RIGHT}
-        title="Motion"
-        width={100}
-        initIsOpen
+        {...DCConfig.motion}
       >
         <Motion
           isRunnningEngine={isRunningEngine}
