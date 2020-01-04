@@ -30,12 +30,10 @@ function App() {
   const [mapControl, setMapControl] = useState({
     moveCenterTo: initLatLng,
     moveMarkerTo: initLatLng,
+    placeFocusId: null,
   })
-
   // places query
   const [setPlaceQuery, placeInfo] = useSearch(mapStatus.center, mapStatus.viewPortRadius)
-  const [placeFocusId, setPlaceFocusId] = useState(null)
-
   // engine
   const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
 
@@ -63,7 +61,6 @@ function App() {
         placeInfo={placeInfo}
         mapControl={mapControl}
         setMapStatus={setMapStatus}
-        placeFocusId={placeFocusId}
       />
       <DrawerContainer
         yPosition={0}
@@ -80,7 +77,7 @@ function App() {
           && (
             <DisplayResults
               placeInfo={placeInfo}
-              setPlaceFocusId={setPlaceFocusId}
+              setMapControl={setMapControl}
               classNames={sheet.classes}
             />
           )}

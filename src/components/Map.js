@@ -28,8 +28,8 @@ function Map({
   center = [0, 0],
   placeInfo,
   mapControl,
-  setMapStatus,
-  placeFocusId }) {
+  setMapStatus
+}) {
   const mapRef = useRef(null)
   useEffect(() => {
     mapRef.current = L.map('map', {
@@ -101,24 +101,23 @@ function Map({
     [placeInfo],
   )
   useEffect(() => {
-     // map move
+    // pop up
+    if (placeMarkerRefs && mapControl.placeFocusId) {
+      placeMarkerRefs.map(pmr => pmr.current.closeTooltip())
+      placeMarkerRefs.map(pmr => pmr.current.closePopup())
+      placeMarkerRefs[mapControl.placeFocusId].current.openTooltip()
+    }
+    // map move
     if (mapRef.current) {
       mapRef.current.panTo(mapControl.moveCenterTo)
     }
-     // marker move
+    // marker move
     if (markerRef.current) {
       markerRef.current.setLatLng(mapControl.moveMarkerTo)
     } else {
       markerRef.current = L.marker(mapControl.moveMarkerTo).addTo(mapRef.current)
     }
   }, [mapControl])
-  useEffect(() => {
-    if (placeMarkerRefs && placeFocusId !== null) {
-      placeMarkerRefs.map(pmr => pmr.current.closeTooltip())
-      placeMarkerRefs.map(pmr => pmr.current.closePopup())
-      placeMarkerRefs[placeFocusId].current.openTooltip()
-    }
-  }, [placeFocusId])
 
   return (
     <div id="map" data-id="goatstone-component-leaflet-map" />
