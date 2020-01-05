@@ -2,8 +2,8 @@
   "name": "map-lab",
   "homepage": "https://map-lab-goatstone.appspot.com/",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/JoseHerminioCollas/map-lab"
+    "type": "git",
+    "url": "https://github.com/JoseHerminioCollas/map-lab"
   },
   "version": "0.1.0",
   "dependencies": {
@@ -182,6 +182,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^9.4.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.1",
     "eslint-config-airbnb-typescript": "^4.0.0",

@@ -1,36 +1,45 @@
-import React, { useEffect } from 'react'
-import Enzyme, { mount } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-import useSearch from '../hooks/use-search'
+import React, { useState } from "react"
+import { render, wait } from "@testing-library/react"
+// import useSearch from "../hooks/use-search";
+// import "jest-dom/extend-expect"
+// jest.mock("./api/posts");
 
-Enzyme.configure({ adapter: new Adapter() })
+function TC() {
+  const [s, setS] = useState(20) // search results
+  const [q, setQ] = useState('a') // query
+  return (
+    <div>
+      <div id="q">
+        {q}
+      </div>
+      <div id="state">
+        {s}
+      </div>
+      <div>xx</div>
+      abc
+      <button
+        type="button"
+        onClick={() => {
+          console.log('click')
+          setQ('999')
+          return 1
+        }}
+      >
+        xxx
+      </button>
+    </div>
+  )
+}
 
-describe('useSearch', () => {
-  it('should be a function', () => {
-    expect(typeof useSearch).toBe('function')
+test('expect hook state to update', async () => {
+  const { getByText } = render(<TC />)
+  const el = getByText('abc')
+  const sVal = el.querySelector('#state').innerHTML
+  expect(sVal).toBe('20')
+  el.querySelector('button').click()
+  await wait(() => {
+    const sVal2 = el.querySelector('#q').innerHTML
+    expect(sVal2).toBe('999')
   })
-  it('should return searchResulsts with correct information', () => {
-    const initQuery = {
-      query: '',
-      radius: 50000,
-      center: [0, 0],
-      server: 'https://map-server-goatstone.appspot.com',
-    }
-    function TestComponent() {
-      const [setQuery, searchResults] = useSearch(initQuery)
-      useEffect(() => {
-        setQuery({
-          query: 'XXX',
-          radius: 50000,
-          center: [0, 0],
-          server: 'MOCK_SERVER',
-        })
-      }, [])
-      expect(typeof searchResults).toBe('object')
-      return (<div>XXX</div>)
-    }
-    const el = mount(
-      <TestComponent />,
-    )
-  })
-})
+  console.log(el.querySelector('#state').innerHTML)
+});
