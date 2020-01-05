@@ -1,45 +1,45 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { render, wait } from "@testing-library/react"
-// import useSearch from "../hooks/use-search";
-// import "jest-dom/extend-expect"
-// jest.mock("./api/posts");
-
+/*
+  Test the state of a hook that has been updated with
+  the useHooks function
+*/
 function TC() {
-  const [s, setS] = useState(20) // search results
+  const [searchResults, setSearchResults] = useState([]) // search results
   const [q, setQ] = useState('a') // query
+  useEffect(() => {
+    // async functions go here
+    setSearchResults([{ a: 2 }, { a: 2 }, {}])
+  }, [q])
   return (
-    <div>
+    <div alt="test">
+      DIVHOOK
       <div id="q">
         {q}
       </div>
       <div id="state">
-        {s}
+        {searchResults.length}
       </div>
-      <div>xx</div>
-      abc
       <button
         type="button"
         onClick={() => {
-          console.log('click')
           setQ('999')
           return 1
         }}
       >
-        xxx
+      XXX
       </button>
     </div>
   )
 }
-
 test('expect hook state to update', async () => {
   const { getByText } = render(<TC />)
-  const el = getByText('abc')
-  const sVal = el.querySelector('#state').innerHTML
-  expect(sVal).toBe('20')
+  const el = getByText('DIVHOOK')
   el.querySelector('button').click()
   await wait(() => {
     const sVal2 = el.querySelector('#q').innerHTML
     expect(sVal2).toBe('999')
+    const sVal3 = el.querySelector('#state').innerHTML
+    expect(sVal3).toBe('3')
   })
-  console.log(el.querySelector('#state').innerHTML)
 });
