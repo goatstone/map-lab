@@ -4,30 +4,32 @@ import { render, wait } from "@testing-library/react"
   Test the state of a hook that has been updated with
   the useHooks function
 */
+const expectedQuery = 'abc'
+const expectedResults = [{ a: 2 }, { a: 2 }, {}]
 function TC() {
-  const [searchResults, setSearchResults] = useState([]) // search results
-  const [q, setQ] = useState('a') // query
+  const [searchResults, setSearchResults] = useState([])
+  const [query, setQuery] = useState('init query')
   useEffect(() => {
-    // async functions go here
-    setSearchResults([{ a: 2 }, { a: 2 }, {}])
-  }, [q])
+    //  Warning: An update to TC inside a test was not wrapped in act(...).
+    // setTimeout(() => setSearchResults(arr), 1000)
+    setSearchResults(expectedResults)
+  }, [query])
   return (
     <div alt="test">
       DIVHOOK
-      <div id="q">
-        {q}
+      <div id="query">
+        {query}
       </div>
-      <div id="state">
+      <div id="searchresults">
         {searchResults.length}
       </div>
       <button
         type="button"
         onClick={() => {
-          setQ('999')
-          return 1
+          setQuery(expectedQuery)
         }}
       >
-      XXX
+        XXX
       </button>
     </div>
   )
@@ -37,9 +39,9 @@ test('expect hook state to update', async () => {
   const el = getByText('DIVHOOK')
   el.querySelector('button').click()
   await wait(() => {
-    const sVal2 = el.querySelector('#q').innerHTML
-    expect(sVal2).toBe('999')
-    const sVal3 = el.querySelector('#state').innerHTML
-    expect(sVal3).toBe('3')
+    expect(el.querySelector('#query').innerHTML)
+      .toBe(expectedQuery)
+    expect(el.querySelector('#searchresults').innerHTML)
+      .toBe(String(expectedResults.length))
   })
-});
+})
