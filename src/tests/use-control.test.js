@@ -7,7 +7,6 @@ import useMapControl from '../hooks/use-map-control'
 Enzyme.configure({ adapter: new Adapter() })
 
 const initLatLng = [0, 0]
-const expectedLatLng = [20, 20]
 function TC() {
   const [mapControl, actions] = useMapControl({
     moveCenterTo: initLatLng,
@@ -21,21 +20,21 @@ function TC() {
         <i>{mapControl.moveCenterTo.toString()}</i>
         <button
           type="button"
-          onClick={() => actions.setMoveCenterBy(expectedLatLng)}
+          onClick={latLng => actions.setMoveCenterBy(latLng)}
         />
       </div>
       <div id="move-center-to">
         <i>{mapControl.moveCenterTo.toString()}</i>
         <button
           type="button"
-          onClick={() => actions.setMoveCenterTo(expectedLatLng)}
+          onClick={latLng => actions.setMoveCenterTo(latLng)}
         />
       </div>
       <div id="move-marker-by">
         <i>{mapControl.moveMarkerTo.toString()}</i>
         <button
           type="button"
-          onClick={() => actions.setMoveMarkerBy(expectedLatLng)}
+          onClick={latLng => actions.setMoveMarkerBy(latLng)}
         />
       </div>
     </div>
@@ -44,14 +43,20 @@ function TC() {
 describe('useControl', () => {
   test('should have certain elements', async () => {
     let wrapper
-    act(() => {
-      wrapper = mount(<TC />)
-    })
+    act(() => { wrapper = mount(<TC />) })
     expect(wrapper.find('#move-center-by').length).toBe(1)
     expect(wrapper.find('#move-center-to').length).toBe(1)
     expect(wrapper.find('#move-marker-by').length).toBe(1)
     expect(wrapper.find('#move-marker-by button').length).toBe(1)
     expect(wrapper.find('#move-marker-by i').length).toBe(1)
   })
-
+  test('should change state with action setMoveCenterBy', () => {
+    const expectedValue = [20, 40]
+    let wrapper
+    act(() => { wrapper = mount(<TC />) })
+    act(() => {
+      wrapper.find('#move-marker-by button').prop('onClick')(expectedValue)
+    })
+    expect(wrapper.find('#move-marker-by i').text()).toBe(expectedValue.toString())
+  })
 })
