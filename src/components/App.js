@@ -102,7 +102,7 @@ function App() {
           && (
             <DisplayResults
               placeInfo={searchResults}
-              setMapControl={actions.moveCenterTo} // actions.setFocusId
+              setPlaceFocusId={actions.setPlaceFocusId}
               classNames={sheet.classes}
             />
           )}
