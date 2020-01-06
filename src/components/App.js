@@ -13,6 +13,7 @@ import Motion from './Motion'
 import style from '../style/main-style'
 import useEngine from '../hooks/use-engine'
 import useMapControl from '../hooks/use-map-control'
+import useMapStatus from '../hooks/use-map-status'
 
 jss.setup(preset())
 const sheet = jss.createStyleSheet(style)
@@ -21,15 +22,11 @@ const initLatLng = [47.6, -122.3]
 
 function App() {
   // Status Hook : values for the current state of the map
-  const [mapStatus, setMapStatus] = useState(
-    {
-      center: initLatLng,
-      zoomLevel: 12,
-      viewPortRadius: 5000, // calculated from zoomLevel
-    },
-  )
-  // mapStatusActions
-  // [mapStatus, mapStatusActions] useMapStatus
+  const [mapStatus, mapStatusActions] = useMapStatus({
+    center: initLatLng,
+    zoomLevel: 12,
+    viewPortRadius: 50000,
+  })
 
   // Control Hook, used to control the map
   const [mapControl, actions] = useMapControl({
@@ -86,7 +83,7 @@ function App() {
       <Map
         placeInfo={searchResults}
         mapControl={mapControl}
-        setMapStatus={setMapStatus}
+        mapStatusActions={mapStatusActions}
       />
       <DrawerContainer
         {...DCConfig.search}

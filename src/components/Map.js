@@ -27,7 +27,7 @@ const baseMaps = {
 function Map({
   placeInfo,
   mapControl,
-  setMapStatus
+  mapStatusActions,
 }) {
   const mapRef = useRef(null)
   useEffect(() => {
@@ -47,31 +47,18 @@ function Map({
       position: 'bottomright'
     }).addTo(mapRef.current);
 
+    // set mapStatus based on map events occuring
     mapRef.current.on('moveend', function (ev) {
-      setMapStatus(config => {
-        return Object.assign(
-          {},
-          config, {
-          center:
-            [mapRef.current.getCenter().lat,
-            mapRef.current.getCenter().lng]
-        })
-      })
+      mapStatusActions.center(
+        [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng]
+      )
     })
     mapRef.current.on('zoom', (z) => {
       // eslint-disable-next-line
       const zoomLevel = mapRef.current.getZoom()
       const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapRef.current.getCenter().lat * Math.PI / 180)) / Math.pow(2, zoomLevel + 8))
       const viewPortRadius = Math.min(150 * metresPerPixel, 50000)
-      setMapStatus(config => {
-        return Object.assign(
-          {},
-          config,
-          {
-            zoomLevel,
-            viewPortRadius,
-          })
-      })
+      mapStatusActions.viewPortRadius(viewPortRadius)
     })
   }, [])
   // marker
