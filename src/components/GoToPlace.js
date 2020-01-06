@@ -2,50 +2,30 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const GoToPlace = ({
-  setMapControl,
+  setMoveCenterBy,
 }) => (
   <section data-id="goto-place">
     <button
       type="button"
       onClick={() => {
-        setMapControl(config => (
-          Object.assign(
-            {},
-            config,
-            { moveCenterTo: [47.6, -122.3] },
-          )
-        ))
+        setMoveCenterBy([47.6, -122.3])
       }}
     >
-        Seattle
+      Seattle
     </button>
     <button
       type="button"
       onClick={() => {
-        setMapControl(config => (
-          Object.assign(
-            {},
-            config,
-            { moveCenterTo: [40.7128, -74.0060] },
-          )
-        ))
+        setMoveCenterBy([40.7128, -74.0060])
       }}
     >
       New York
     </button>
     <button
       type="button"
-      onClick={() => {
-        setMapControl(config => (
-          Object.assign(
-            {},
-            config,
-            { moveCenterTo: [34.0522, -118.2437] },
-          )
-        ))
-      }}
+      onClick={() => setMoveCenterBy([34.0522, -118.2437])}
     >
-        LA
+      LA
     </button>
   </section>
 )
@@ -53,7 +33,7 @@ const GoToPlace = ({
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 GoToPlace.propTypes = {
-  setMapControl: PropTypes.func,
+  setMoveCenterBy: PropTypes.func,
 }
 
 export default GoToPlace

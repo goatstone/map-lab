@@ -40,7 +40,11 @@ function App() {
           c.moveCenterTo[0] + moveOffset[0],
           c.moveCenterTo[1] + moveOffset[1],
         ],
-
+      }))
+    ),
+    setMoveCenterTo: centerTo => (
+      setMapControl(c => Object.assign({}, c, {
+        moveCenterTo: centerTo,
       }))
     ),
     setMoveMarkerBy: moveOffset => (
@@ -127,7 +131,7 @@ function App() {
         {...DCConfig.goToPlace}
       >
         <GoToPlace
-          setMapControl={setMapControl}
+          setMoveCenterBy={actions.setMoveCenterTo}
         />
       </DrawerContainer>
       <DrawerContainer
