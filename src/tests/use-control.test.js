@@ -50,7 +50,7 @@ describe('useControl', () => {
     expect(wrapper.find('#move-marker-by button').length).toBe(1)
     expect(wrapper.find('#move-marker-by i').length).toBe(1)
   })
-  test('should change state with action setMoveCenterBy', () => {
+  test('should change state with action setMoveMarkerrBy', () => {
     const expectedValue = [20, 40]
     let wrapper
     act(() => { wrapper = mount(<TC />) })
@@ -58,5 +58,23 @@ describe('useControl', () => {
       wrapper.find('#move-marker-by button').prop('onClick')(expectedValue)
     })
     expect(wrapper.find('#move-marker-by i').text()).toBe(expectedValue.toString())
+  })
+  test('should change state with action setMoveCenterBy', () => {
+    const expectedOffset = [1, 1]
+    let wrapper
+    act(() => { wrapper = mount(<TC />) })
+    act(() => {
+      wrapper.find('#move-center-by button').prop('onClick')(expectedOffset)
+    })
+    expect(wrapper.find('#move-center-by i').text()).toBe(expectedOffset.toString())
+  })
+  test('should change state with action setMoveCenterTo', () => {
+    const expectedOffset = [1, 1]
+    let wrapper
+    act(() => { wrapper = mount(<TC />) })
+    act(() => {
+      wrapper.find('#move-center-to button').prop('onClick')(expectedOffset)
+    })
+    expect(wrapper.find('#move-center-to i').text()).toBe(expectedOffset.toString())
   })
 })
