@@ -43,8 +43,17 @@ function App() {
 
       }))
     ),
+    setMoveMarkerBy: moveOffset => (
+      setMapControl(c => Object.assign({}, c, {
+        moveMarkerTo: [
+          c.moveMarkerTo[0] + moveOffset[0],
+          c.moveMarkerTo[1] + moveOffset[1],
+        ],
+
+      }))
+    ),
   }
-  console.log(actions)
+
   // places query: A search consists of a query object and searchResults
   const [searchResults, setSearchResults] = useState({
     query: null,
@@ -79,20 +88,13 @@ function App() {
       setSearchResults(newSearchResults)
     })()
   }, [query])
+
   // engine
   const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
-
   useEffect(() => {
     const moveOffset = [0.001, 0.001]
     actions.setMoveCenterBy(moveOffset)
-    setMapControl(config => (
-      Object.assign({}, config, {
-        moveMarkerTo: [
-          config.moveMarkerTo[0] + moveOffset[0],
-          config.moveMarkerTo[1] + moveOffset[1],
-        ],
-      })
-    ))
+    actions.setMoveCenterBy(moveOffset)
   }, [tick])
 
   return (
