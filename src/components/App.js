@@ -94,7 +94,7 @@ function App() {
   useEffect(() => {
     const moveOffset = [0.001, 0.001]
     actions.setMoveCenterBy(moveOffset)
-    actions.setMoveCenterBy(moveOffset)
+    actions.setMoveMarkerBy(moveOffset)
   }, [tick])
 
   return (
