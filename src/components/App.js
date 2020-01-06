@@ -12,6 +12,7 @@ import MoveTo from './MoveTo'
 import Motion from './Motion'
 import style from '../style/main-style'
 import useEngine from '../hooks/use-engine'
+import useMapControl from '../hooks/use-map-control'
 
 jss.setup(preset())
 const sheet = jss.createStyleSheet(style)
@@ -27,36 +28,15 @@ function App() {
       viewPortRadius: 5000, // calculated from zoomLevel
     },
   )
+  // mapStatusActions
+  // [mapStatus, mapStatusActions] useMapStatus
+
   // Control Hook, used to control the map
-  const [mapControl, setMapControl] = useState({
+  const [mapControl, actions] = useMapControl({
     moveCenterTo: initLatLng,
     moveMarkerTo: initLatLng,
     placeFocusId: null,
   })
-  const actions = {
-    setMoveCenterBy: moveOffset => (
-      setMapControl(c => Object.assign({}, c, {
-        moveCenterTo: [
-          c.moveCenterTo[0] + moveOffset[0],
-          c.moveCenterTo[1] + moveOffset[1],
-        ],
-      }))
-    ),
-    setMoveCenterTo: centerTo => (
-      setMapControl(c => Object.assign({}, c, {
-        moveCenterTo: centerTo,
-      }))
-    ),
-    setMoveMarkerBy: moveOffset => (
-      setMapControl(c => Object.assign({}, c, {
-        moveMarkerTo: [
-          c.moveMarkerTo[0] + moveOffset[0],
-          c.moveMarkerTo[1] + moveOffset[1],
-        ],
-
-      }))
-    ),
-  }
 
   // places query: A search consists of a query object and searchResults
   const [searchResults, setSearchResults] = useState({
@@ -122,7 +102,7 @@ function App() {
           && (
             <DisplayResults
               placeInfo={searchResults}
-              setMapControl={setMapControl}
+              setMapControl={actions.moveCenterTo} // actions.setFocusId
               classNames={sheet.classes}
             />
           )}
@@ -138,7 +118,7 @@ function App() {
         {...DCConfig.moveTo}
       >
         <MoveTo
-          setMapControl={setMapControl}
+          setMapControl={actions.moveCenterTo}
         />
       </DrawerContainer>
       <DrawerContainer
