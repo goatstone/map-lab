@@ -31,6 +31,11 @@ function useMapControl(initConfig = {
 
       }))
     ),
+    setPlaceFocusId: focusId => (
+      setMapControl(control => Object.assign({}, control, {
+        placeFocusId: focusId,
+      }))
+    ),
   }
   return [mapControl, actions]
 }

@@ -11,7 +11,7 @@ function TC() {
   const [mapControl, actions] = useMapControl({
     moveCenterTo: initLatLng,
     moveMarkerTo: initLatLng,
-    placeFocusId: null,
+    placeFocusId: 1,
   })
 
   return (
@@ -35,6 +35,13 @@ function TC() {
         <button
           type="button"
           onClick={latLng => actions.setMoveMarkerBy(latLng)}
+        />
+      </div>
+      <div id="set-placefocus-id">
+        <i>{mapControl.placeFocusId.toString()}</i>
+        <button
+          type="button"
+          onClick={focusId => actions.setPlaceFocusId(focusId)}
         />
       </div>
     </div>
@@ -76,5 +83,14 @@ describe('useControl', () => {
       wrapper.find('#move-center-to button').prop('onClick')(expectedOffset)
     })
     expect(wrapper.find('#move-center-to i').text()).toBe(expectedOffset.toString())
+  })
+  test('should change state with action setPlaceFocusId', () => {
+    const expectedFocusId = 11
+    let wrapper
+    act(() => { wrapper = mount(<TC />) })
+    act(() => {
+      wrapper.find('#set-placefocus-id button').prop('onClick')(expectedFocusId)
+    })
+    expect(wrapper.find('#set-placefocus-id i').text()).toBe(expectedFocusId.toString())
   })
 })
