@@ -22,6 +22,13 @@ function TC() {
           onClick={latLng => mapStatusActions.center(latLng)}
         />
       </div>
+      <div id="zoom-level">
+        <i>{mapStatus.zoomLevel.toString()}</i>
+        <button
+          type="button"
+          onClick={latLng => mapStatusActions.zoomLevel(latLng)}
+        />
+      </div>
     </div>
   )
 }
@@ -39,5 +46,14 @@ describe('useStatus', () => {
       wrapper.find('#center button').prop('onClick')(expectedValue)
     })
     expect(wrapper.find('#center i').text()).toBe(expectedValue.toString())
+  })
+  test('should change state with action mapStatusActions.zoomLevel', () => {
+    const expectedValue = 1
+    let wrapper
+    act(() => { wrapper = mount(<TC />) })
+    act(() => {
+      wrapper.find('#zoom-level button').prop('onClick')(expectedValue)
+    })
+    expect(wrapper.find('#zoom-level i').text()).toBe(expectedValue.toString())
   })
 })

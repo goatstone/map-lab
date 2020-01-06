@@ -11,6 +11,11 @@ function useMapStatus(initConfig = {
         center: centerStatus,
       }))
     ),
+    zoomLevel: zoomLevelStatus => (
+      setMapStatus(status => Object.assign({}, status, {
+        zoomLevel: zoomLevelStatus,
+      }))
+    ),
   }
   return [mapStatus, mapStatusActions]
 }
