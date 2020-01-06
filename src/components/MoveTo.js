@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const MoveTo = ({
-  setMapControl,
+  setMoveCenterBy,
+  setMoveMarkerBy,
 }) => (
   <section data-id="goatstone-component-moveto">
     <fieldset>
@@ -12,19 +13,7 @@ const MoveTo = ({
       <button
         type="button"
         onClick={() => {
-          setMapControl(config => {
-            const inc = 0.01
-            const moveMarkerTo = [
-              config.moveMarkerTo[0] + inc,
-              config.moveMarkerTo[1] + inc,
-            ]
-            const rv = Object.assign(
-              {},
-              config,
-              { moveMarkerTo },
-            )
-            return rv
-          })
+          setMoveMarkerBy([0.01, 0.01])
         }}
       >
         <i className="material-icons" style={{ transform: 'rotate(45deg)' }}>arrow_upward</i>
@@ -37,20 +26,7 @@ const MoveTo = ({
       <button
         type="button"
         onClick={() => {
-          setMapControl(config => {
-            // move by increment
-            const inc = 0.01
-            const moveCenterTo = [
-              config.moveCenterTo[0] + inc,
-              config.moveCenterTo[1] + inc,
-            ]
-            const rv = Object.assign(
-              {},
-              config,
-              { moveCenterTo },
-            )
-            return rv
-          })
+          setMoveCenterBy([0.01, 0.01])
         }}
       >
         <i className="material-icons" style={{ transform: 'rotate(45deg)' }}>arrow_upward</i>
@@ -62,7 +38,8 @@ const MoveTo = ({
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 MoveTo.propTypes = {
-  setMapControl: PropTypes.func,
+  setMoveCenterBy: PropTypes.func,
+  setMoveMarkerBy: PropTypes.func,
 }
 
 export default MoveTo

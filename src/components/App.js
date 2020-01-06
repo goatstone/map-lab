@@ -118,7 +118,8 @@ function App() {
         {...DCConfig.moveTo}
       >
         <MoveTo
-          setMapControl={actions.moveCenterTo}
+          setMoveCenterBy={actions.setMoveCenterBy}
+          setMoveMarkerBy={actions.setMoveMarkerBy}
         />
       </DrawerContainer>
       <DrawerContainer
