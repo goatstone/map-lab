@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
+import axios from 'axios'
 import Map from './Map'
 import Search from './Search'
 import DisplayResults from './DisplayResults'
@@ -11,7 +12,6 @@ import MoveTo from './MoveTo'
 import Motion from './Motion'
 import style from '../style/main-style'
 import useEngine from '../hooks/use-engine'
-import useSearch from '../hooks/use-search'
 
 jss.setup(preset())
 const sheet = jss.createStyleSheet(style)
@@ -34,13 +34,29 @@ function App() {
     placeFocusId: null,
   })
   // places query: A search consists of a query object and searchResults
-  const initQuery = {
-    query: '',
+  const [searchResults, setSearchResults] = useState({
+    query: null,
+    message: null,
+    results: null,
+  })
+  const [query, setQuery] = useState({
+    query: 'truck',
     radius: 50000,
-    center: [0, 0],
+    center: initLatLng,
     server: 'https://map-server-goatstone.appspot.com',
-  }
-  const [setQuery, searchResults] = useSearch(initQuery)
+  })
+  useEffect(async () => {
+    const server = 'https://map-server-goatstone.appspot.com'
+    const url = `
+    ${server}/places?query=${query.query}&location=${query.center}&radius=${query.radius}`
+    const pI = await axios(url)
+    const placeInfoPacket = {
+      query: query.query,
+      message: '',
+      results: pI.data,
+    }
+    setSearchResults(placeInfoPacket)
+  }, [query])
   // engine
   const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
 
