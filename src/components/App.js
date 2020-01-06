@@ -33,6 +33,18 @@ function App() {
     moveMarkerTo: initLatLng,
     placeFocusId: null,
   })
+  const actions = {
+    setMoveCenterBy: moveOffset => (
+      setMapControl(c => Object.assign({}, c, {
+        moveCenterTo: [
+          c.moveCenterTo[0] + moveOffset[0],
+          c.moveCenterTo[1] + moveOffset[1],
+        ],
+
+      }))
+    ),
+  }
+  console.log(actions)
   // places query: A search consists of a query object and searchResults
   const [searchResults, setSearchResults] = useState({
     query: null,
@@ -72,13 +84,9 @@ function App() {
 
   useEffect(() => {
     const moveOffset = [0.001, 0.001]
+    actions.setMoveCenterBy(moveOffset)
     setMapControl(config => (
       Object.assign({}, config, {
-        moveCenterTo:
-          [
-            config.moveCenterTo[0] + moveOffset[0],
-            config.moveCenterTo[1] + moveOffset[1],
-          ],
         moveMarkerTo: [
           config.moveMarkerTo[0] + moveOffset[0],
           config.moveMarkerTo[1] + moveOffset[1],
