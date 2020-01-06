@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { render, wait } from "@testing-library/react"
+import React, { useState, useEffect } from 'react'
+import { render, wait } from '@testing-library/react'
 /*
   Test the state of a hook that has been updated with
   the useHooks function
@@ -15,7 +15,7 @@ function TC() {
     setSearchResults(expectedResults)
   }, [query])
   return (
-    <div alt="test">
+    <div>
       DIVHOOK
       <div id="query">
         {query}
