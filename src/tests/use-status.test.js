@@ -11,6 +11,7 @@ function TC() {
   const [mapStatus, mapStatusActions] = useMapStatus({
     center: initLatLng,
     zoomLevel: 12,
+    viewPortRadius: 0,
   })
 
   return (
@@ -27,6 +28,13 @@ function TC() {
         <button
           type="button"
           onClick={latLng => mapStatusActions.zoomLevel(latLng)}
+        />
+      </div>
+      <div id="viewport-radius">
+        <i>{mapStatus.viewPortRadius.toString()}</i>
+        <button
+          type="button"
+          onClick={latLng => mapStatusActions.viewPortRadius(latLng)}
         />
       </div>
     </div>
@@ -55,5 +63,14 @@ describe('useStatus', () => {
       wrapper.find('#zoom-level button').prop('onClick')(expectedValue)
     })
     expect(wrapper.find('#zoom-level i').text()).toBe(expectedValue.toString())
+  })
+  test('should change state with action mapStatusActions.viewPortRadius', () => {
+    const expectedValue = 50000
+    let wrapper
+    act(() => { wrapper = mount(<TC />) })
+    act(() => {
+      wrapper.find('#viewport-radius button').prop('onClick')(expectedValue)
+    })
+    expect(wrapper.find('#viewport-radius i').text()).toBe(expectedValue.toString())
   })
 })
