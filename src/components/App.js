@@ -45,17 +45,27 @@ function App() {
     center: initLatLng,
     server: 'https://map-server-goatstone.appspot.com',
   })
-  useEffect(async () => {
-    const server = 'https://map-server-goatstone.appspot.com'
-    const url = `
-    ${server}/places?query=${query.query}&location=${query.center}&radius=${query.radius}`
-    const pI = await axios(url)
-    const placeInfoPacket = {
-      query: query.query,
-      message: '',
-      results: pI.data,
-    }
-    setSearchResults(placeInfoPacket)
+  useEffect(() => {
+    const server = 'https://map-server-goatstone.appspot.com';
+    (async () => {
+      // make a call to the backend with data from the request
+      const pI = await axios({
+        method: 'get',
+        url: `${server}/places?`,
+        params: {
+          query: query.query,
+          location: query.center,
+          radius: query.radius,
+        },
+      })
+      // set up the new search results based on what has been retrieved from the server
+      const newSearchResults = {
+        query: query.query,
+        message: '',
+        results: pI.data,
+      }
+      setSearchResults(newSearchResults)
+    })()
   }, [query])
   // engine
   const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
