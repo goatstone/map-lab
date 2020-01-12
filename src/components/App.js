@@ -10,6 +10,7 @@ import DCConfig from '../draw-container-config'
 import GoToPlace from './GoToPlace'
 import MoveTo from './MoveTo'
 import Motion from './Motion'
+import StateDebug from './StateDebug'
 import style from '../style/main-style'
 import useEngine from '../hooks/use-engine'
 import useMapControl from '../hooks/use-map-control'
@@ -127,6 +128,9 @@ function App() {
           setEngine={setEngine}
         />
       </DrawerContainer>
+      <StateDebug
+        mapStatus={mapStatus}
+      />
     </section>
   )
 }
