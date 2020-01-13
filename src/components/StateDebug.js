@@ -25,7 +25,10 @@ function StateDebug({ mapStatus }) {
     zIndex: 9000,
   }
   return (
-    <div style={stateDebugStyle}>
+    <div
+      style={stateDebugStyle}
+      className="debug"
+    >
       {Object
         .entries(mapStatus)
         .map(el => (
