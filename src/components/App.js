@@ -85,6 +85,7 @@ function App() {
     <section className={sheet.classes.mainContainer}>
       <GMap
         mainClassName={sheet.classes.gMap}
+        center={[0, 1]}
       />
       <DrawerContainer
         {...DrawContainerConfig.search}
