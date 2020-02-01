@@ -10,11 +10,11 @@ const jsdom = new JSDOM('<!doctype html><html><body></body></html>')
 const { window } = jsdom
 
 const initLatLng = [47.6, -122.3]
-const mapStatus = {
-  center: [initLatLng],
-  zoomLevel: 12,
-  viewPortRadius: 50000,
-}
+// const mapStatus = {
+//   center: [initLatLng],
+//   zoomLevel: 12,
+//   viewPortRadius: 50000,
+// }
 const mapControl = {
   moveCenterTo: initLatLng,
   moveMarkerTo: initLatLng,
@@ -22,7 +22,7 @@ const mapControl = {
 }
 const mapStatusActions = {
   center: () => 1,
-  zoomLevel: () => 1
+  zoomLevel: () => 1,
 }
 const placeInfo = []
 const props = {
@@ -48,12 +48,10 @@ describe('index', () => {
       const el = document.createElement('div')
       el.setAttribute('id', 'map')
       document.body.appendChild(el)
-      const el2 = document.querySelector('#map')
       let wrapper
       act(() => { wrapper = mount(<Map {...props} />) })
       expect(wrapper).toBeTruthy()
-  } catch (error) {
-    console.log(error)
+    } catch (error) {
       // fail the test on error
       expect(false).toBe(true)
     }
