@@ -71,4 +71,4 @@ const drawerContainer = {
   },
 }
 
-export default Object.assign(style, drawerContainer)
+export default Object.assign(style, { drawerContainer })
