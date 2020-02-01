@@ -62,9 +62,13 @@ const style = {
       background: 'white',
     },
   },
-  drawerContainer: {
-    background: 'rgba(200,200,200, 0.8)',
+}
+
+const drawerContainer = {
+  background: 'rgba(200,200,200, 0.8)',
+  '& button[data-component-name="toggle"]': {
+    background: '#ccc',
   },
 }
 
-export default style
+export default Object.assign(style, drawerContainer)

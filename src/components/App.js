@@ -6,7 +6,7 @@ import Map from './Map'
 import Search from './Search'
 import DisplayResults from './DisplayResults'
 import DrawerContainer from './DrawerContainer'
-import DCConfig from '../draw-container-config'
+import DrawContainerConfig from '../draw-container-config'
 import GoToPlace from './GoToPlace'
 import MoveTo from './MoveTo'
 import Motion from './Motion'
@@ -87,7 +87,7 @@ function App() {
         mapStatusActions={mapStatusActions}
       />
       <DrawerContainer
-        {...DCConfig.search}
+        {...DrawContainerConfig.search}
         classNames={sheet.classes}
       >
         <Search
@@ -106,14 +106,16 @@ function App() {
           )}
       </DrawerContainer>
       <DrawerContainer
-        {...DCConfig.goToPlace}
+        {...DrawContainerConfig.goToPlace}
+        classNames={sheet.classes}
       >
         <GoToPlace
           setMoveCenterBy={actions.setMoveCenterTo}
         />
       </DrawerContainer>
       <DrawerContainer
-        {...DCConfig.moveTo}
+        {...DrawContainerConfig.moveTo}
+        classNames={sheet.classes}
       >
         <MoveTo
           setMoveCenterBy={actions.setMoveCenterBy}
@@ -121,7 +123,8 @@ function App() {
         />
       </DrawerContainer>
       <DrawerContainer
-        {...DCConfig.motion}
+        {...DrawContainerConfig.motion}
+        classNames={sheet.classes}
       >
         <Motion
           isRunnningEngine={isRunningEngine}
