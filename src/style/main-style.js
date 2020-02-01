@@ -1,3 +1,4 @@
+
 const buttonTextColor = '#111'
 
 const style = {
@@ -70,5 +71,14 @@ const drawerContainer = {
     background: '#ccc',
   },
 }
+const gMap = {
+  position: 'fixed',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '100%',
+  background: 'red',
+}
 
-export default Object.assign(style, { drawerContainer })
+export default Object.assign(style, { drawerContainer }, { gMap })

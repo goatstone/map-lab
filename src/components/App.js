@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 import axios from 'axios'
-import Map from './Map'
+// import Map from './Map'
 import Search from './Search'
 import DisplayResults from './DisplayResults'
 import DrawerContainer from './DrawerContainer'
@@ -15,6 +15,7 @@ import style from '../style/main-style'
 import useEngine from '../hooks/use-engine'
 import useMapControl from '../hooks/use-map-control'
 import useMapStatus from '../hooks/use-map-status'
+import GMap from './GMap'
 
 jss.setup(preset())
 const sheet = jss.createStyleSheet(style)
@@ -35,6 +36,7 @@ function App() {
     moveMarkerTo: initLatLng,
     placeFocusId: null,
   })
+  console.log(mapStatusActions, mapControl)
 
   // places query: A search consists of a query object and searchResults
   const [searchResults, setSearchResults] = useState({
@@ -43,7 +45,7 @@ function App() {
     results: null,
   })
   const [query, setQuery] = useState({
-    query: 'truck',
+    query: '',
     radius: 50000,
     center: initLatLng,
     server: 'https://map-server-goatstone.appspot.com',
@@ -81,22 +83,20 @@ function App() {
 
   return (
     <section className={sheet.classes.mainContainer}>
-      <Map
-        placeInfo={searchResults}
-        mapControl={mapControl}
-        mapStatusActions={mapStatusActions}
+      <GMap
+        mainClassName={sheet.classes.gMap}
       />
       <DrawerContainer
         {...DrawContainerConfig.search}
         classNames={sheet.classes}
       >
         <Search
-          initSearchValue="food"
+          initSearchValue=""
           radius={mapStatus.viewPortRadius}
           center={mapStatus.center}
           setPlaceQuery={setQuery}
         />
-        {searchResults && searchResults.results
+        {searchResults && Array.isArray(searchResults.results)
           && (
             <DisplayResults
               placeInfo={searchResults}
