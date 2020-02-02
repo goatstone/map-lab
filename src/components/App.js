@@ -36,7 +36,6 @@ function App() {
     moveMarkerTo: initLatLng,
     placeFocusId: null,
   })
-  console.log(mapStatusActions, mapControl)
 
   // places query: A search consists of a query object and searchResults
   const [searchResults, setSearchResults] = useState({
@@ -85,7 +84,8 @@ function App() {
     <section className={sheet.classes.mainContainer}>
       <GMap
         mainClassName={sheet.classes.gMap}
-        center={[0, 1]}
+        mapControl={mapControl}
+        mapStatusActions={mapStatusActions}
       />
       <DrawerContainer
         {...DrawContainerConfig.search}
@@ -133,6 +133,7 @@ function App() {
         />
       </DrawerContainer>
       <StateDebug
+        isShow
         mapStatus={mapStatus}
       />
     </section>
