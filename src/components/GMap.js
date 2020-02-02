@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Loader } from '@googlemaps/loader'
 import config from '../config'
 
+let map
 const GMap = ({
   mapControl,
   mapStatusActions,
@@ -25,7 +26,7 @@ const GMap = ({
       .load()
       .then(() => {
         // eslint-disable-next-line
-        const map = new window.google.maps.Map(document.getElementById("map"), mapOptions)
+        map = new window.google.maps.Map(document.getElementById("map"), mapOptions)
         map.setCenter({ lat: 43, lng: -120 })
 
         // set init status values
@@ -33,7 +34,7 @@ const GMap = ({
         const center = map.getCenter()
         const centerArr = Object.entries(center).map(e => e[1]())
         mapStatusActions.center(centerArr)
-
+        // set events
         map.addListener('zoom_changed', () => {
           mapStatusActions.zoomLevel(map.getZoom())
         })
@@ -50,7 +51,8 @@ const GMap = ({
   }, [])
   // mapControl
   useEffect(() => {
-    console.log('map control', mapControl)
+    if (!map) return
+    map.setCenter({ lat: mapControl.moveCenterTo[0], lng: mapControl.moveCenterTo[1] })
   }, [mapControl])
 
   return (
@@ -68,7 +70,6 @@ const GMap = ({
 GMap.propTypes = {
   mapControl: PropTypes.object.isRequired,
   mapStatusActions: PropTypes.object.isRequired,
-  // center: PropTypes.array.isRequired,
   mainClassName: PropTypes.string.isRequired,
 }
 
