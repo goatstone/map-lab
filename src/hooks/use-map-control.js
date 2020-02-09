@@ -4,6 +4,7 @@ function useMapControl(initConfig = {
   moveCenterTo: [0, 0],
   moveMarkerTo: [0, 0],
   placeFocusId: null,
+  places: null,
 }) {
   // Control Hook, used to control the map
   // [ mapControl, actions ] = useMapControl({})
@@ -30,6 +31,10 @@ function useMapControl(initConfig = {
         ],
 
       }))
+    ),
+    setPlaces: places => (
+      setMapControl(control => Object.assign({}, control,
+        { places }))
     ),
     setPlaceFocusId: focusId => (
       setMapControl(control => Object.assign({}, control, {

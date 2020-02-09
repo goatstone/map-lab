@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 import axios from 'axios'
-// import Map from './Map'
 import Search from './Search'
 import DisplayResults from './DisplayResults'
 import DrawerContainer from './DrawerContainer'
@@ -68,10 +67,19 @@ function App() {
         message: '',
         results: pI.data,
       }
+      actions.setPlaces(pI.data)
       setSearchResults(newSearchResults)
     })()
   }, [query])
-
+  // DEV make an initial call to the search engine to display results
+  useEffect(() => {
+    setQuery({
+      query: 'truck',
+      radius: 50000,
+      center: initLatLng,
+      server: 'https://map-server-goatstone.appspot.com',
+    })
+  }, [])
   // engine
   const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
   useEffect(() => {
@@ -82,6 +90,7 @@ function App() {
 
   return (
     <section className={sheet.classes.mainContainer}>
+      {mapControl.places && mapControl.places.length}
       <GMap
         mainClassName={sheet.classes.gMap}
         mapControl={mapControl}

@@ -30,7 +30,7 @@ function StateDebug({ mapStatus, isShow = false }) {
       {Object
         .entries(mapStatus)
         .map(el => (
-          <div>
+          <div key={el[0]}>
             {el[0]}
             :
             {el[1]}
