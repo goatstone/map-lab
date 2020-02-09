@@ -17,27 +17,22 @@ const GMap = ({
     })
     const mapOptions = {
       center: {
-        lat: 0,
-        lng: 0,
+        lat: mapControl.moveCenterTo[0],
+        lng: mapControl.moveCenterTo[1],
       },
-      zoom: 4,
+      zoom: 7,
     }
     loader
       .load()
       .then(() => {
         // eslint-disable-next-line
         map = new window.google.maps.Map(document.getElementById("map"), mapOptions)
-        map.setCenter({ lat: 43, lng: -120 })
 
         // set init status values
         mapStatusActions.zoomLevel(map.getZoom())
         const center = map.getCenter()
         const centerArr = Object.entries(center).map(e => e[1]())
         mapStatusActions.center(centerArr)
-        const uluru = { lat: 43.344, lng: -122.036 }
-
-        // eslint-disable-next-line
-        const m = new window.google.maps.Marker({ position: uluru, map: map })
 
         // set events
         map.addListener('zoom_changed', () => {
@@ -61,9 +56,14 @@ const GMap = ({
   }, [mapControl.moveCenterTo])
   // places control
   useEffect(() => {
-    if (!map) return
-    console.log('places control')
-    // update places on map
+    if (!mapControl.places || !map) return
+    mapControl.places.forEach(place => {
+      // eslint-disable-next-line
+      new window.google.maps.Marker({
+        position: place.geometry.location,
+        map,
+      })
+    })
   }, [mapControl.places])
 
   return (

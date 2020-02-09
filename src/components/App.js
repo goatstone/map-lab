@@ -34,6 +34,7 @@ function App() {
     moveCenterTo: initLatLng,
     moveMarkerTo: initLatLng,
     placeFocusId: null,
+    places: null,
   })
 
   // places query: A search consists of a query object and searchResults
@@ -67,7 +68,9 @@ function App() {
         message: '',
         results: pI.data,
       }
-      actions.setPlaces(pI.data)
+      if (Array.isArray(pI.data)) {
+        actions.setPlaces(pI.data)
+      }
       setSearchResults(newSearchResults)
     })()
   }, [query])
