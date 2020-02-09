@@ -93,7 +93,6 @@ function App() {
 
   return (
     <section className={sheet.classes.mainContainer}>
-      {mapControl.places && mapControl.places.length}
       <GMap
         mainClassName={sheet.classes.gMap}
         mapControl={mapControl}
