@@ -1,3 +1,4 @@
+
 const buttonTextColor = '#111'
 
 const style = {
@@ -62,9 +63,21 @@ const style = {
       background: 'white',
     },
   },
-  drawerContainer: {
-    background: 'rgba(200,200,200, 0.8)',
-  },
 }
 
-export default style
+const drawerContainer = {
+  background: 'rgba(200,200,200, 0.8)',
+  '& button[data-component-name="toggle"]': {
+    background: '#ccc',
+  },
+}
+const gMap = {
+  position: 'fixed',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '100%',
+}
+
+export default Object.assign(style, { drawerContainer }, { gMap })

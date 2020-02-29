@@ -13,8 +13,9 @@ const DrawerContainer = ({
   alignX = DrawerAlign.LEFT,
   title = 'Open',
   initIsOpen = false,
-  classNames = null,
+  classNames = null, // main className value styleDefs
   width = 250,
+  id = 'default',
 }) => {
   // swap the alignments for the button
   const buttonPostion = alignX === DrawerAlign.LEFT ? DrawerAlign.RIGHT : DrawerAlign.LEFT
@@ -71,11 +72,11 @@ const DrawerContainer = ({
   if (classNames === null) {
     Object.assign(localStyleSheet.drawerContainer, { background: 'rgba(100, 100, 100, 0.9)' })
   }
-
   return (
     <section
       className={classNames && classNames.drawerContainer}
-      data-component-id="goatstone-container-drawer"
+      data-component-name="drawer-container" // lower-case dash version of component name
+      data-id={id}
       style={localStyleSheet.drawerContainer}
     >
       {children}
@@ -85,6 +86,7 @@ const DrawerContainer = ({
         onClick={() => {
           setIsOpen(isOpenState => !isOpenState)
         }}
+        data-component-name="toggle"
       >
         {state.buttonSymbol}
       </button>
@@ -101,6 +103,7 @@ DrawerContainer.propTypes = {
   initIsOpen: PropTypes.bool,
   classNames: PropTypes.object,
   width: PropTypes.number,
+  id: PropTypes.string,
 }
 
 export default DrawerContainer

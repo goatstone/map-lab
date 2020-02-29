@@ -25,17 +25,14 @@ const baseMaps = {
 }
 /* eslint-disable */
 function Map({
-  centerPanMapTo,
-  markerPosition,
-  center = [0, 0],
   placeInfo,
-  setSearchQCenter,
-  setZoomLevel,
-  placeFocusId }) {
+  mapControl,
+  mapStatusActions,
+}) {
   const mapRef = useRef(null)
   useEffect(() => {
     mapRef.current = L.map('map', {
-      center: center,
+      center: mapControl.moveCenterTo,
       zoom: 12,
       zoomControl: false,
       layers: [
@@ -50,36 +47,30 @@ function Map({
       position: 'bottomright'
     }).addTo(mapRef.current);
 
+    // set mapStatus based on map events occuring
     mapRef.current.on('moveend', function (ev) {
-      setSearchQCenter([
-        mapRef.current.getCenter().lat,
-        mapRef.current.getCenter().lng,
-      ])
+      mapStatusActions.center(
+        [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng]
+      )
     })
     mapRef.current.on('zoom', (z) => {
-      setZoomLevel(mapRef.current.getZoom())
+      // eslint-disable-next-line
+      const zoomLevel = mapRef.current.getZoom()
+      const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapRef.current.getCenter().lat * Math.PI / 180)) / Math.pow(2, zoomLevel + 8))
+      const viewPortRadius = Math.min(150 * metresPerPixel, 50000)
+      mapStatusActions.viewPortRadius(viewPortRadius)
     })
   }, [])
   // marker
   const markerRef = useRef(null)
-  useEffect(
-    () => {
-      if (markerRef.current) {
-        markerRef.current.setLatLng(markerPosition)
-      } else {
-        markerRef.current = L.marker(markerPosition).addTo(mapRef.current)
-      }
-    },
-    [markerPosition],
-  )
   // place search markers : expects 20 or less results
   const placeMarkerRefs = [...Array(20)].map(() => useRef(null))
   useEffect(
     () => {
       if (!placeInfo || !placeInfo.results) return
-      if (placeMarkerRefs[0].current) {
-        placeMarkerRefs.forEach(el => el.current.remove())
-      }
+      placeMarkerRefs
+        .filter(el => el.current)
+        .forEach(el => el.current.remove())
       placeInfo.results.forEach((el, i) => {
         const popupContent = `${el.name} : ${el.formatted_address}`
         const placeIcon = L.icon({
@@ -95,20 +86,24 @@ function Map({
     },
     [placeInfo],
   )
-  // pan map to
   useEffect(() => {
-    if (mapRef.current) {
-      // will call the moveend event which will update center value
-      mapRef.current.panTo(centerPanMapTo)
-    }
-  }, [centerPanMapTo])
-  useEffect(() => {
-    if (placeMarkerRefs && placeFocusId !== null) {
+    // pop up
+    if (placeMarkerRefs && mapControl.placeFocusId) {
       placeMarkerRefs.map(pmr => pmr.current.closeTooltip())
       placeMarkerRefs.map(pmr => pmr.current.closePopup())
-      placeMarkerRefs[placeFocusId].current.openTooltip()
+      placeMarkerRefs[mapControl.placeFocusId].current.openTooltip()
     }
-  }, [placeFocusId])
+    // map move
+    if (mapRef.current) {
+      mapRef.current.panTo(mapControl.moveCenterTo)
+    }
+    // marker move
+    if (markerRef.current) {
+      markerRef.current.setLatLng(mapControl.moveMarkerTo)
+    } else {
+      markerRef.current = L.marker(mapControl.moveMarkerTo).addTo(mapRef.current)
+    }
+  }, [mapControl])
 
   return (
     <div id="map" data-id="goatstone-component-leaflet-map" />

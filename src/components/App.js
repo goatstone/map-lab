@@ -1,172 +1,152 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import jss from 'jss'
 import preset from 'jss-preset-default'
-import Map from './Map'
+import axios from 'axios'
 import Search from './Search'
 import DisplayResults from './DisplayResults'
-import DrawerContainer, { DrawerAlign } from './DrawerContainer'
+import DrawerContainer from './DrawerContainer'
+import DrawContainerConfig from '../draw-container-config'
 import GoToPlace from './GoToPlace'
 import MoveTo from './MoveTo'
 import Motion from './Motion'
+import StateDebug from './StateDebug'
 import style from '../style/main-style'
+import useEngine from '../hooks/use-engine'
+import useMapControl from '../hooks/use-map-control'
+import useMapStatus from '../hooks/use-map-status'
+import GMap from './GMap'
 
 jss.setup(preset())
-
 const sheet = jss.createStyleSheet(style)
 sheet.attach()
-
 const initLatLng = [47.6, -122.3]
+
 function App() {
-  // values that reflect map state
-  const [mapCenter, setMapCenter] = useState(initLatLng)
-  // const [mapMarkerPos, setMapMarkerPos] = useState(initLatLng) // TODO : use later for info
-  const [mapZoomLevel, setMapZoomLevel] = useState(12)
-
-  // values for actions on the map
-  const [centerPanMapTo, setCenterPanMapTo] = useState(initLatLng)
-  const [markerPosMoveTo, setMarkerPosMoveTo] = useState(initLatLng)
-
-  // search
-  const [searchQRadius, setSearchQMapRadius] = useState(0)
-  const [placeQueryInput, setPlaceQueryInput] = useState('food')
-  const [placeQuery, setPlaceQuery] = useState('')
-  const [placeInfo, setPlaceInfo] = useState(null)
-  const [placeFocusId, setPlaceFocusId] = useState(null)
-
-  useEffect(() => {
-    if (placeQuery === '') return () => 1
-    const placeInfoPacket = {
-      q: placeQuery,
-      message: '',
-      results: [],
-    };
-    (async () => {
-      // get these values from the map so the results are framed in the map
-      const servers = {
-        local: 'http://localhost:8080',
-        remote: 'https://map-server-goatstone.appspot.com',
-      }
-      const url = `${servers.remote}/places?query=${placeQuery}&location=${mapCenter}&radius=${searchQRadius}`
-      const pI = await axios(url)
-      // TODO check for 400 error
-      if (Array.isArray(pI.data)) {
-        placeInfoPacket.message = pI.data[0].name
-        placeInfoPacket.results = pI.data
-      } else {
-        placeInfoPacket.message = 'No Results'
-        placeInfoPacket.results = []
-      }
-      setPlaceInfo(placeInfoPacket)
-    })()
-    return () => 1
-  }, [placeQuery])
-  // engine
-  const [isRunnningEngine, setEngine] = useState(false)
-  function intervalEngine(intervalCallback) {
-    return () => {
-      intervalCallback()
-    }
-  }
-
-  const engine = intervalEngine(() => {
-    const moveOffset = [0.001, 0.001]
-    setMarkerPosMoveTo(postion => [
-      postion[0] + moveOffset[0],
-      postion[1] + moveOffset[1],
-    ])
-    setCenterPanMapTo(([lat, lng]) => [lat + 0.01, lng + 0.01])
+  // Status Hook : values for the current state of the map
+  const [mapStatus, mapStatusActions] = useMapStatus({
+    center: initLatLng,
+    zoomLevel: 12,
+    viewPortRadius: 50000,
   })
-  const maximumIntervals = 100
-  const intervalSeconds = 1000
+
+  // Control Hook, used to control the map
+  const [mapControl, actions] = useMapControl({
+    moveCenterTo: initLatLng,
+    moveMarkerTo: initLatLng,
+    placeFocusId: null,
+    places: null,
+  })
+
+  // places query: A search consists of a query object and searchResults
+  const [searchResults, setSearchResults] = useState({
+    query: null,
+    message: null,
+    results: null,
+  })
+  const [query, setQuery] = useState({
+    query: '',
+    radius: 50000,
+    center: initLatLng,
+    server: 'https://map-server-goatstone.appspot.com',
+  })
   useEffect(() => {
-    let interval = null
-    if (isRunnningEngine) {
-      let engineCount = 1
-      interval = setInterval(() => {
-        engineCount += 1
-        engine()
-        if (engineCount > maximumIntervals) {
-          // clearInterval is called in componentWillUnmount return call
-          // ending the setInterval call
-          setEngine(false)
-        }
-      }, intervalSeconds)
-    }
-    // equivalent of calling componentWillUnmount in a React Class component.
-    return () => clearInterval(interval)
-  }, [isRunnningEngine])
+    const server = 'https://map-server-goatstone.appspot.com';
+    (async () => {
+      // make a call to the backend with data from the request
+      const pI = await axios({
+        method: 'get',
+        url: `${server}/places?`,
+        params: {
+          query: query.query,
+          location: query.center,
+          radius: query.radius,
+        },
+      })
+      // set up the new search results based on what has been retrieved from the server
+      const newSearchResults = {
+        query: query.query,
+        message: '',
+        results: pI.data,
+      }
+      if (Array.isArray(pI.data)) {
+        actions.setPlaces(pI.data)
+      }
+      setSearchResults(newSearchResults)
+    })()
+  }, [query])
+  // DEV make an initial call to the search engine to display results
   useEffect(() => {
-    // eslint-disable-next-line
-    const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapCenter[0] * Math.PI / 180)) / Math.pow(2, mapZoomLevel + 8))
-    const newRadius = Math.min(150 * metresPerPixel, 50000)
-    setSearchQMapRadius(newRadius)
-  }, [mapZoomLevel])
+    setQuery({
+      query: 'truck',
+      radius: 50000,
+      center: initLatLng,
+      server: 'https://map-server-goatstone.appspot.com',
+    })
+  }, [])
+  // engine
+  const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
+  useEffect(() => {
+    const moveOffset = [0.001, 0.001]
+    actions.setMoveCenterBy(moveOffset)
+    actions.setMoveMarkerBy(moveOffset)
+  }, [tick])
 
   return (
     <section className={sheet.classes.mainContainer}>
-      <Map
-        centerPanMapTo={centerPanMapTo}
-        markerPosition={markerPosMoveTo}
-        center={mapCenter}
-        placeInfo={placeInfo}
-        setSearchQCenter={setMapCenter}
-        setZoomLevel={setMapZoomLevel}
-        placeFocusId={placeFocusId}
+      <GMap
+        mainClassName={sheet.classes.gMap}
+        mapControl={mapControl}
+        mapStatusActions={mapStatusActions}
       />
       <DrawerContainer
-        yPosition={0}
-        alignX={DrawerAlign.LEFT}
-        title="Search"
-        initIsOpen
+        {...DrawContainerConfig.search}
         classNames={sheet.classes}
       >
         <Search
-          placeQueryInput={placeQueryInput}
-          setPlaceQueryInput={setPlaceQueryInput}
-          setPlaceQuery={setPlaceQuery}
+          initSearchValue=""
+          radius={mapStatus.viewPortRadius}
+          center={mapStatus.center}
+          setPlaceQuery={setQuery}
         />
-        {placeInfo
+        {searchResults && Array.isArray(searchResults.results)
           && (
             <DisplayResults
-              placeInfo={placeInfo}
-              setPlaceFocusId={setPlaceFocusId}
+              placeInfo={searchResults}
+              setPlaceFocusId={actions.setPlaceFocusId}
               classNames={sheet.classes}
             />
           )}
       </DrawerContainer>
       <DrawerContainer
-        yPosition={0}
-        alignX={DrawerAlign.RIGHT}
-        title="Go To"
-        initIsOpen
+        {...DrawContainerConfig.goToPlace}
+        classNames={sheet.classes}
       >
         <GoToPlace
-          setCenterPanMapTo={setCenterPanMapTo}
+          setMoveCenterBy={actions.setMoveCenterTo}
         />
       </DrawerContainer>
       <DrawerContainer
-        yPosition={50}
-        alignX={DrawerAlign.RIGHT}
-        title="Move"
-        width={180}
+        {...DrawContainerConfig.moveTo}
+        classNames={sheet.classes}
       >
         <MoveTo
-          setCenterPanMapTo={setCenterPanMapTo}
-          moveMarker={setMarkerPosMoveTo}
+          setMoveCenterBy={actions.setMoveCenterBy}
+          setMoveMarkerBy={actions.setMoveMarkerBy}
         />
       </DrawerContainer>
       <DrawerContainer
-        yPosition={150}
-        alignX={DrawerAlign.RIGHT}
-        title="Motion"
-        width={100}
+        {...DrawContainerConfig.motion}
+        classNames={sheet.classes}
       >
         <Motion
-          isRunnningEngine={isRunnningEngine}
+          isRunnningEngine={isRunningEngine}
           setEngine={setEngine}
         />
       </DrawerContainer>
+      <StateDebug
+        isShow
+        mapStatus={mapStatus}
+      />
     </section>
   )
 }

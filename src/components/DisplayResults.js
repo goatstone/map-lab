@@ -8,7 +8,9 @@ const DisplayResults = ({ placeInfo, setPlaceFocusId, classNames }) => (
         // eslint-disable-next-line
         <li
           title={`${el.name} : ${el.formatted_address}`}
-          onClick={() => setPlaceFocusId(i)}
+          onClick={() => {
+            setPlaceFocusId(i)
+          }}
           key={`${el.formatted_address.toString()}`}
         >
           {`${el.name}`}
