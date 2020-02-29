@@ -10,7 +10,7 @@ beforeEach(() => {
   jest.resetModules()
 })
 
-describe('index', () => {
+describe.skip('index', () => {
   beforeAll(() => {
     global.window = window
     global.document = window.document
