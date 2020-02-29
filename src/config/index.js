@@ -1,6 +1,7 @@
 const config = { gMapAPIKey: '' }
 
 try {
+  // eslint-disable-next-line
   const gKey = require('./g-key').default
   Object.assign(config, gKey)
 } catch (e) {
