@@ -25,7 +25,7 @@ function TC() {
     </div>
   )
 }
-
+jest.useFakeTimers()
 describe('use-engine', () => {
   test('should be a function', () => {
     expect(typeof useEngine).toBe('function')
@@ -45,21 +45,23 @@ describe('use-engine', () => {
       })
       expect(wrapper.find('#is-running').text()).toBe('true')
     })
-    test('should change the tick value', async () => {
+    test('should increment the tick value', async () => {
       let wrapper
+      let tickValue = 0
       act(() => { wrapper = mount(<TC />) })
       expect(wrapper.find('#tick').text()).toBe('0')
       // start the engine
       act(() => {
         wrapper.find('#set-engine-true').props().onClick()
       })
-      // wait for two seconds
-      const a = await new Promise(resolve => {
-        setTimeout(() => resolve(2), 2000)
+      // advance time
+      act(() => {
+        jest.advanceTimersByTime(2000)
       })
-      const tickValue = Number(wrapper.find('#tick').text())
+      act(() => {
+        tickValue = Number(wrapper.find('#tick').text())
+      })
       expect(tickValue).toBeGreaterThan(0)
-      expect(a).toBe(2)
     })
   })
 })
