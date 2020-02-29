@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { act } from 'react-dom/test-utils'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
@@ -11,6 +11,7 @@ function TC() {
   return (
     <div>
       <button
+        type="button"
         id="set-engine-true"
         onClick={() => setEngine(true)}
       >
@@ -53,12 +54,12 @@ describe('use-engine', () => {
         wrapper.find('#set-engine-true').props().onClick()
       })
       // wait for two seconds
-      const a = await new Promise((resolve, reject) => {
+      const a = await new Promise(resolve => {
         setTimeout(() => resolve(2), 2000)
-      });
+      })
       const tickValue = Number(wrapper.find('#tick').text())
       expect(tickValue).toBeGreaterThan(0)
-      expect(a).toBe(2);
+      expect(a).toBe(2)
     })
   })
 })
