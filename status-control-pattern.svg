@@ -158,9 +158,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="334.75337"
-     inkscape:cy="946.24191"
+     inkscape:zoom="0.35"
+     inkscape:cx="-51.093619"
+     inkscape:cy="717.83425"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -178,7 +178,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -186,28 +186,6 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="-99.664101"
-       y="117.71703"
-       id="text817"><tspan
-         sodipodi:role="line"
-         id="tspan815"
-         x="-99.664101"
-         y="117.71703"
-         style="stroke-width:0.26458332">Control</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="-138.6071"
-       y="164.29213"
-       id="text821"><tspan
-         sodipodi:role="line"
-         id="tspan819"
-         x="-138.6071"
-         y="164.29213"
-         style="stroke-width:0.26458332">Status</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.1601305px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.17900325"
@@ -322,5 +300,27 @@
        width="91.007881"
        id="rect3712-7"
        style="fill:none;fill-opacity:1;stroke:#929398;stroke-width:0.95898759;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="13.898015"
+       y="17.703342"
+       id="text953"><tspan
+         sodipodi:role="line"
+         id="tspan951"
+         x="13.898015"
+         y="17.703342"
+         style="stroke-width:0.26458332">Status Control Pattern</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="126.75636"
+       y="23.804686"
+       id="text957"><tspan
+         sodipodi:role="line"
+         id="tspan955"
+         x="126.75636"
+         y="23.804686"
+         style="font-size:4.23333311px;stroke-width:0.26458332">Jose Collas 2.2020</tspan></text>
   </g>
 </svg>
