@@ -8,14 +8,6 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function TC() {
   const [isRunningEngine, setEngine, tick] = useEngine()
-  useEffect(() => {
-    // setEngine(true)
-    // console.log('effect', tick, isRunningEngine)
-    // setTimeout(() => setEngine(false), 10000)
-  }, [])
-  useEffect(() => {
-    // console.log('effect', tick)
-  }, [tick])
   return (
     <div>
       <button
@@ -23,15 +15,18 @@ function TC() {
         onClick={() => setEngine(true)}
       >
         set engine
-    </button>
-    <div id="is-running">{isRunningEngine? 'true': 'false'}</div>
+      </button>
+      <div id="tick">
+        {tick}
+      </div>
+      <div id="is-running">{isRunningEngine ? 'true' : 'false'}</div>
       XXXXX
     </div>
   )
 }
 
 describe('use-engine', () => {
-  it('should be a function', () => {
+  test('should be a function', () => {
     expect(typeof useEngine).toBe('function')
   })
   test('should have certain elements', async () => {
@@ -39,12 +34,31 @@ describe('use-engine', () => {
     act(() => { wrapper = mount(<TC />) })
     expect(wrapper.find('button#set-engine-true').length).toBe(1)
   })
-  test('should effect the >isRunningEngine< boolean value', async () => {
-    let wrapper
-    act(() => { wrapper = mount(<TC />) })
-    act(() => { 
-      wrapper.find('#set-engine-true').props().onClick()
+  describe('setEngine function', () => {
+    test('should effect the >isRunningEngine< boolean value', async () => {
+      let wrapper
+      act(() => { wrapper = mount(<TC />) })
+      expect(wrapper.find('#is-running').text()).toBe('false')
+      act(() => {
+        wrapper.find('#set-engine-true').props().onClick()
+      })
+      expect(wrapper.find('#is-running').text()).toBe('true')
     })
-    expect(wrapper.find('#is-running').text()).toBe('true')
+    test('should change the tick value', async () => {
+      let wrapper
+      act(() => { wrapper = mount(<TC />) })
+      expect(wrapper.find('#tick').text()).toBe('0')
+      // start the engine
+      act(() => {
+        wrapper.find('#set-engine-true').props().onClick()
+      })
+      // wait for two seconds
+      const a = await new Promise((resolve, reject) => {
+        setTimeout(() => resolve(2), 2000)
+      });
+      const tickValue = Number(wrapper.find('#tick').text())
+      expect(tickValue).toBeGreaterThan(0)
+      expect(a).toBe(2);
+    })
   })
 })
