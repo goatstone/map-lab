@@ -4,7 +4,6 @@ import Adapter from 'enzyme-adapter-react-16'
 import { JSDOM } from 'jsdom'
 import { act } from 'react-dom/test-utils'
 import GMap from '../components/GMap'
-import { async } from 'q'
 
 Enzyme.configure({ adapter: new Adapter() })
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>')
@@ -13,7 +12,7 @@ const { window } = jsdom
 beforeEach(() => {
   jest.resetModules()
 })
-const mockZoomLevel = jest.fn((level) => level)
+const mockZoomLevel = jest.fn(level => level)
 const props = {
   mapControl: {
     moveCenterTo: [0, 0],
@@ -45,10 +44,11 @@ describe('Google Map', () => {
       expect(false).toBe(true)
     }
   })
-  it.skip('should update zoomLevel status on zoomLevel change', async () => {
-      let wrapper
-      act(() => { wrapper = mount(<GMap {...props} />) })
-      act(() => { wrapper.simulate('doubleClick') })
-      expect(mockZoomLevel.mock.calls.length).toBe(1)
+  // the mockZoomLevel does not get updated!!!
+  it.skip('should update zoomLevel status on zoomLevel change', () => {
+    let wrapper
+    act(() => { wrapper = mount(<GMap {...props} />) })
+    act(() => { wrapper.simulate('doubleClick') })
+    expect(mockZoomLevel.mock.calls.length).toBe(1)
   })
 })
