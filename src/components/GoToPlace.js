@@ -33,7 +33,7 @@ const GoToPlace = ({
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 GoToPlace.propTypes = {
-  setMoveCenterBy: PropTypes.func,
+  setMoveCenterBy: PropTypes.func.isRequired,
 }
 
 export default GoToPlace
