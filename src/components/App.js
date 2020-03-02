@@ -74,15 +74,6 @@ function App() {
       setSearchResults(newSearchResults)
     })()
   }, [query])
-  // DEV make an initial call to the search engine to display results
-  useEffect(() => {
-    setQuery({
-      query: 'truck',
-      radius: 50000,
-      center: initLatLng,
-      server: 'https://map-server-goatstone.appspot.com',
-    })
-  }, [])
   // engine
   const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
   useEffect(() => {
