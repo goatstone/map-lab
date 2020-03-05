@@ -17,6 +17,7 @@ const GoToPlace = ({
   </section>
 )
 
+/* eslint-disable react/forbid-prop-types */
 GoToPlace.propTypes = {
   setMoveCenterBy: PropTypes.func.isRequired,
   buttonConfig: PropTypes.array.isRequired,
