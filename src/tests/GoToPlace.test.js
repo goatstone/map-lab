@@ -48,9 +48,12 @@ describe('<GoToPlace />', () => {
         />,
       )
     })
-    // click button
-    wrapper.find('button').first().props().onClick()
-    // has setMoveCenterBy been called?
-    expect(mockMoveCenterBy.mock.calls.length).toBe(1)
+    buttonConfig.forEach((bC, i) => {
+        jest.clearAllMocks()
+
+        wrapper.find(`button[children="${bC[0]}"]`).props().onClick()
+        expect(mockMoveCenterBy.mock.calls.length).toBe(1)
+        expect(mockMoveCenterBy.mock.calls[0][0]).toBe(bC[1])
+    })
   })
 })
