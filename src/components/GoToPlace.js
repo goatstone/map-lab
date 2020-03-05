@@ -20,21 +20,14 @@ GoToPlaceButton.propTypes = {
   setMoveCenterBy: PropTypes.func.isRequired,
 }
 
-const buttons = [
-  ['Seattle', [47.6, -122.3]],
-  ['New York', [40.7128, -74.0060]],
-  ['Los Angeles', [34.0522, -118.2437]],
-]
-export { buttons }
-
 const GoToPlace = ({
-  setMoveCenterBy,
+  buttonConfig, setMoveCenterBy,
 }) => (
   <section data-id="goto-place">
-    {buttons.map(b => (
+    {buttonConfig.map(b => (
       <GoToPlaceButton
-        latLn={[47.6, -122.3]}
-        label="Seattle"
+        latLn={b[1]}
+        label={b[0]}
         setMoveCenterBy={setMoveCenterBy}
         key={b[0]}
       />
@@ -44,6 +37,7 @@ const GoToPlace = ({
 
 GoToPlace.propTypes = {
   setMoveCenterBy: PropTypes.func.isRequired,
+  buttonConfig: PropTypes.array.isRequired,
 }
 
 export default GoToPlace
