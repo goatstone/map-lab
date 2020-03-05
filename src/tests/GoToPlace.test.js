@@ -48,12 +48,12 @@ describe('<GoToPlace />', () => {
         />,
       )
     })
-    buttonConfig.forEach((bC, i) => {
-        jest.clearAllMocks()
+    buttonConfig.forEach((bC) => {
+      jest.clearAllMocks()
 
-        wrapper.find(`button[children="${bC[0]}"]`).props().onClick()
-        expect(mockMoveCenterBy.mock.calls.length).toBe(1)
-        expect(mockMoveCenterBy.mock.calls[0][0]).toBe(bC[1])
+      wrapper.find(`button[children="${bC[0]}"]`).props().onClick()
+      expect(mockMoveCenterBy.mock.calls.length).toBe(1)
+      expect(mockMoveCenterBy.mock.calls[0][0]).toBe(bC[1])
     })
   })
 })
