@@ -48,7 +48,7 @@ describe('<GoToPlace />', () => {
         />,
       )
     })
-    buttonConfig.forEach((bC) => {
+    buttonConfig.forEach(bC => {
       jest.clearAllMocks()
 
       wrapper.find(`button[children="${bC[0]}"]`).props().onClick()

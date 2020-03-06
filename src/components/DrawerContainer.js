@@ -17,41 +17,13 @@ const DrawerContainer = ({
   width = 250,
   id = 'default',
 }) => {
-  // swap the alignments for the button
-  const buttonPostion = alignX === DrawerAlign.LEFT ? DrawerAlign.RIGHT : DrawerAlign.LEFT
-  const buttonIcon = alignX === DrawerAlign.LEFT ? 'chevron_left' : 'chevron_right'
-  // control hook: open closed state
-  const [isOpen, setIsOpen] = useState(initIsOpen)
-
-  // component state
-  const buttonSymbols = { OPEN: title, CLOSED: <i className="material-icons">{buttonIcon}</i> }
-  const xPositions = { OPEN: 0, CLOSED: -(width) }
-  const initState = {
-    buttonSymbol: buttonSymbols.OPEN,
-    xPosition: xPositions.OPEN,
-  }
-  const [state, setState] = useState(initState)
-
-  // on isOpen change, state is updated
-  useEffect(() => {
-    const buttonSymbol = isOpen ? buttonSymbols.CLOSED : buttonSymbols.OPEN
-    const xPosition = isOpen ? xPositions.OPEN : xPositions.CLOSED
-    setState(stateCurr => Object.assign({}, stateCurr, {
-      buttonSymbol,
-      xPosition,
-    }))
-  }, [isOpen])
-
   const localStyleSheet = {
     drawerContainer: {
-      top: yPosition,
-      [alignX]: state.xPosition,
       position: 'absolute',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      width,
       padding: '0.5em',
       borderRadius: '0.3em',
       zIndex: 900,
@@ -65,9 +37,66 @@ const DrawerContainer = ({
       padding: 0,
       boxShadow: '10px 10px 10px rgba(100, 100, 100, 0.8)',
       zIndex: 1000,
-      [buttonPostion]: -40,
     },
   }
+
+  // swap the alignments for the button
+  // const buttonPosition = alignX === DrawerAlign.LEFT ? DrawerAlign.RIGHT : DrawerAlign.LEFT
+  // control hook: open closed state
+  const [isOpen, setIsOpen] = useState(initIsOpen)
+
+  // component state
+  const buttonIcon = alignX === DrawerAlign.LEFT ? 'chevron_left' : 'chevron_right'
+  const buttonSymbols = { OPEN: title, CLOSED: <i className="material-icons">{buttonIcon}</i> }
+  const xPositions = { OPEN: 0, CLOSED: -(width) }
+  const initState = {
+    buttonSymbol: buttonSymbols.OPEN,
+    xPosition: xPositions.OPEN,
+  }
+  const [state, setState] = useState(initState)
+
+  // update style sheet
+  if (alignX === DrawerAlign.LEFT) {
+    Object.assign(localStyleSheet,
+      {
+        drawerContainer:
+          Object.assign(
+            {},
+            localStyleSheet.drawerContainer,
+            { left: state.xPosition },
+          ),
+      })
+  } else {
+    Object.assign(localStyleSheet,
+      {
+        drawerContainer:
+          Object.assign(
+            {},
+            localStyleSheet.drawerContainer,
+            { right: state.xPosition },
+          ),
+      })
+  }
+  Object.assign(localStyleSheet,
+    {
+      drawerContainer:
+        Object.assign(
+          {},
+          localStyleSheet.drawerContainer,
+          { top: yPosition, width },
+        ),
+    })
+
+  // on isOpen change, state is updated
+  useEffect(() => {
+    const buttonSymbol = isOpen ? buttonSymbols.CLOSED : buttonSymbols.OPEN
+    const xPosition = isOpen ? xPositions.OPEN : xPositions.CLOSED
+    setState(stateCurr => Object.assign({}, stateCurr, {
+      buttonSymbol,
+      xPosition,
+    }))
+  }, [isOpen])
+
   // if classNames are not provided add default styles to localStyleSheet
   if (classNames === null) {
     Object.assign(localStyleSheet.drawerContainer, { background: 'rgba(100, 100, 100, 0.9)' })
