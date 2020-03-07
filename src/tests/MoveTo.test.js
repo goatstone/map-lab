@@ -6,16 +6,26 @@ import MoveTo from '../components/MoveTo'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+const mockSetMoveCenterBy = jest.fn()
+const mockSetMoveMarkerBy = jest.fn()
+
 describe('<MoveTo />', () => {
   it('should mount', () => {
     let wrapper
     act(() => {
       wrapper = shallow(
         <MoveTo
-          mapCenter={[0, 0]}
+          setMoveCenterBy={mockSetMoveCenterBy}
+          setMoveMarkerBy={mockSetMoveMarkerBy}
         />,
       )
     })
+    act(() => {
+      wrapper.find('button').get(0).props.onClick()
+      wrapper.find('button').get(1).props.onClick()
+    })
     expect(wrapper).toBeTruthy()
+    expect(mockSetMoveCenterBy.mock.calls.length).toBe(1)
+    expect(mockSetMoveMarkerBy.mock.calls.length).toBe(1)
   })
 })
