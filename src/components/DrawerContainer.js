@@ -17,13 +17,13 @@ const DrawerContainer = ({
   width = 300,
   id = 'default',
 }) => {
+  const drawerContainerStyle = {
+    position: 'absolute',
+    zIndex: 900,
+    transitionProperty: 'right, left',
+    transitionDuration: '1s',
+  }
   const localStyleSheet = {
-    drawerContainer: {
-      position: 'absolute',
-      zIndex: 900,
-      transitionProperty: 'right, left',
-      transitionDuration: '1s',
-    },
     setIsOpenbutton: {
       position: 'absolute',
       top: 0,
@@ -57,6 +57,7 @@ const DrawerContainer = ({
   const [state, setState] = useState(initState)
 
   // update style sheet
+  drawerContainerStyle.top = yPosition
   Object.assign(localStyleSheet,
     {
       drawerContainer:
@@ -67,6 +68,7 @@ const DrawerContainer = ({
         ),
     })
   if (alignX === DrawerAlign.LEFT) {
+    drawerContainerStyle.left = state.xPosition
     Object.assign(localStyleSheet,
       {
         setIsOpenbutton: Object.assign(
@@ -75,16 +77,8 @@ const DrawerContainer = ({
           { right: -10 },
         ),
       })
-    Object.assign(localStyleSheet,
-      {
-        drawerContainer:
-          Object.assign(
-            {},
-            localStyleSheet.drawerContainer,
-            { left: state.xPosition },
-          ),
-      })
   } else {
+    drawerContainerStyle.right = state.xPosition
     Object.assign(localStyleSheet,
       {
         setIsOpenbutton: Object.assign(
@@ -92,15 +86,6 @@ const DrawerContainer = ({
           localStyleSheet.setIsOpenbutton,
           { left: -10 },
         ),
-      })
-    Object.assign(localStyleSheet,
-      {
-        drawerContainer:
-          Object.assign(
-            {},
-            localStyleSheet.drawerContainer,
-            { right: state.xPosition },
-          ),
       })
   }
 
@@ -117,7 +102,7 @@ const DrawerContainer = ({
       className={classNames.drawerContainer}
       data-component-name="drawer-container"
       data-id={id}
-      style={localStyleSheet.drawerContainer}
+      style={drawerContainerStyle}
     >
       {children}
       <button
