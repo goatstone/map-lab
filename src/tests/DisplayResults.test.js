@@ -23,4 +23,24 @@ describe('<DisplayResults />', () => {
     })
     expect(wrapper).toBeTruthy()
   })
+  it('should call setPlaceFocusId on button press', () => {
+    const mockSetPlaceFocusId = jest.fn()
+    const props = {
+      placeInfo: { results: [{ name: 'X', formatted_address: 'X' }] },
+      setPlaceFocusId: mockSetPlaceFocusId,
+      classNames: { displayResults: {} },
+    }
+    let wrapper
+    act(() => {
+      wrapper = shallow(
+        <DisplayResults
+          {...props}
+        />,
+      )
+    })
+    act(() => {
+      wrapper.find('li').first().props().onClick()
+    })
+    expect(mockSetPlaceFocusId.mock.calls.length).toBe(1)
+  })
 })

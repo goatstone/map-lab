@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 
-function useEngine() {
+function useEngine(maximumIntervals = 50) {
   const [isRunnningEngine, setEngine] = useState(false)
   const [tick, setTick] = useState(0)
-  const maximumIntervals = 100
   const intervalSeconds = 1000
   let interval = null
   useEffect(() => {

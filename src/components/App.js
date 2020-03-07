@@ -74,15 +74,6 @@ function App() {
       setSearchResults(newSearchResults)
     })()
   }, [query])
-  // DEV make an initial call to the search engine to display results
-  useEffect(() => {
-    setQuery({
-      query: 'truck',
-      radius: 50000,
-      center: initLatLng,
-      server: 'https://map-server-goatstone.appspot.com',
-    })
-  }, [])
   // engine
   const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
   useEffect(() => {
@@ -120,8 +111,14 @@ function App() {
       <DrawerContainer
         {...DrawContainerConfig.goToPlace}
         classNames={sheet.classes}
+        initIsOpen={false}
       >
         <GoToPlace
+          buttonConfig={[
+            ['Seattle', [47.6, -122.3]],
+            ['New York', [40.7128, -74.0060]],
+            ['Los Angeles', [34.0522, -118.2437]],
+          ]}
           setMoveCenterBy={actions.setMoveCenterTo}
         />
       </DrawerContainer>
