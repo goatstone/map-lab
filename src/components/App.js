@@ -111,6 +111,7 @@ function App() {
       <DrawerContainer
         {...DrawContainerConfig.goToPlace}
         classNames={sheet.classes}
+        initIsOpen={false}
       >
         <GoToPlace
           buttonConfig={[

@@ -66,11 +66,20 @@ const style = {
 }
 
 const drawerContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
   background: 'rgba(200,200,200, 0.8)',
   '& button[data-component-name="toggle"]': {
     background: '#ccc',
+    boxShadow: '10px 10px 10px rgba(100, 100, 100, 0.8)',
   },
+  padding: '0.5em',
+  borderRadius: '0.3em',
+  boxShadow: '10px 10px 10px rgba(100, 100, 100, 0.8)',
 }
+
 const gMap = {
   position: 'fixed',
   display: 'flex',

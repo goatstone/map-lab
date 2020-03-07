@@ -14,41 +14,42 @@ const DrawerContainer = ({
   title = 'Open',
   initIsOpen = false,
   classNames = null, // main className value styleDefs
-  width = 250,
+  width = 300,
   id = 'default',
 }) => {
   const localStyleSheet = {
     drawerContainer: {
       position: 'absolute',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: '0.5em',
-      borderRadius: '0.3em',
       zIndex: 900,
       transitionProperty: 'right, left',
       transitionDuration: '1s',
-      boxShadow: '10px 10px 10px rgba(100, 100, 100, 0.8)',
     },
     setIsOpenbutton: {
       position: 'absolute',
       top: 0,
       padding: 0,
-      boxShadow: '10px 10px 10px rgba(100, 100, 100, 0.8)',
       zIndex: 1000,
     },
   }
 
-  // swap the alignments for the button
-  // const buttonPosition = alignX === DrawerAlign.LEFT ? DrawerAlign.RIGHT : DrawerAlign.LEFT
-  // control hook: open closed state
   const [isOpen, setIsOpen] = useState(initIsOpen)
 
   // component state
-  const buttonIcon = alignX === DrawerAlign.LEFT ? 'chevron_left' : 'chevron_right'
-  const buttonSymbols = { OPEN: title, CLOSED: <i className="material-icons">{buttonIcon}</i> }
-  const xPositions = { OPEN: 0, CLOSED: -(width) }
+  const buttonSymbols = {
+    OPEN: title,
+    CLOSED: (
+      <i className="material-icons">
+        {
+          alignX === DrawerAlign.LEFT ? 'chevron_left' : 'chevron_right'
+        }
+      </i>
+    ),
+  }
+  const xPositions = {
+    OPEN: 0,
+    CLOSED: -(width),
+  }
+  // isOpen? set initial state based on this TODO
   const initState = {
     buttonSymbol: buttonSymbols.OPEN,
     xPosition: xPositions.OPEN,
@@ -56,7 +57,24 @@ const DrawerContainer = ({
   const [state, setState] = useState(initState)
 
   // update style sheet
+  Object.assign(localStyleSheet,
+    {
+      drawerContainer:
+        Object.assign(
+          {},
+          localStyleSheet.drawerContainer,
+          { top: yPosition, width },
+        ),
+    })
   if (alignX === DrawerAlign.LEFT) {
+    Object.assign(localStyleSheet,
+      {
+        setIsOpenbutton: Object.assign(
+          {},
+          localStyleSheet.setIsOpenbutton,
+          { right: -10 },
+        ),
+      })
     Object.assign(localStyleSheet,
       {
         drawerContainer:
@@ -69,6 +87,14 @@ const DrawerContainer = ({
   } else {
     Object.assign(localStyleSheet,
       {
+        setIsOpenbutton: Object.assign(
+          {},
+          localStyleSheet.setIsOpenbutton,
+          { left: -10 },
+        ),
+      })
+    Object.assign(localStyleSheet,
+      {
         drawerContainer:
           Object.assign(
             {},
@@ -77,34 +103,19 @@ const DrawerContainer = ({
           ),
       })
   }
-  Object.assign(localStyleSheet,
-    {
-      drawerContainer:
-        Object.assign(
-          {},
-          localStyleSheet.drawerContainer,
-          { top: yPosition, width },
-        ),
-    })
 
   // on isOpen change, state is updated
   useEffect(() => {
-    const buttonSymbol = isOpen ? buttonSymbols.CLOSED : buttonSymbols.OPEN
-    const xPosition = isOpen ? xPositions.OPEN : xPositions.CLOSED
     setState(stateCurr => Object.assign({}, stateCurr, {
-      buttonSymbol,
-      xPosition,
+      buttonSymbol: isOpen ? buttonSymbols.CLOSED : buttonSymbols.OPEN,
+      xPosition: isOpen ? xPositions.OPEN : xPositions.CLOSED,
     }))
   }, [isOpen])
 
-  // if classNames are not provided add default styles to localStyleSheet
-  if (classNames === null) {
-    Object.assign(localStyleSheet.drawerContainer, { background: 'rgba(100, 100, 100, 0.9)' })
-  }
   return (
     <section
-      className={classNames && classNames.drawerContainer}
-      data-component-name="drawer-container" // lower-case dash version of component name
+      className={classNames.drawerContainer}
+      data-component-name="drawer-container"
       data-id={id}
       style={localStyleSheet.drawerContainer}
     >
@@ -130,7 +141,7 @@ DrawerContainer.propTypes = {
   alignX: PropTypes.string,
   title: PropTypes.string,
   initIsOpen: PropTypes.bool,
-  classNames: PropTypes.object,
+  classNames: PropTypes.object.isRequired,
   width: PropTypes.number,
   id: PropTypes.string,
 }
