@@ -23,18 +23,13 @@ const DrawerContainer = ({
     transitionProperty: 'right, left',
     transitionDuration: '1s',
   }
-  const localStyleSheet = {
-    setIsOpenbutton: {
-      position: 'absolute',
-      top: 0,
-      padding: 0,
-      zIndex: 1000,
-    },
+  const setIsOpenbuttonStyle = {
+    position: 'absolute',
+    top: 0,
+    padding: 0,
+    zIndex: 1000,
   }
 
-  const [isOpen, setIsOpen] = useState(initIsOpen)
-
-  // component state
   const buttonSymbols = {
     OPEN: title,
     CLOSED: (
@@ -49,44 +44,22 @@ const DrawerContainer = ({
     OPEN: 0,
     CLOSED: -(width),
   }
-  // isOpen? set initial state based on this TODO
-  const initState = {
+
+  const [isOpen, setIsOpen] = useState(initIsOpen)
+  const [state, setState] = useState({
     buttonSymbol: buttonSymbols.OPEN,
     xPosition: xPositions.OPEN,
-  }
-  const [state, setState] = useState(initState)
+  })
 
   // update style sheet
   drawerContainerStyle.top = yPosition
-  Object.assign(localStyleSheet,
-    {
-      drawerContainer:
-        Object.assign(
-          {},
-          localStyleSheet.drawerContainer,
-          { top: yPosition, width },
-        ),
-    })
+  drawerContainerStyle.width = width
   if (alignX === DrawerAlign.LEFT) {
     drawerContainerStyle.left = state.xPosition
-    Object.assign(localStyleSheet,
-      {
-        setIsOpenbutton: Object.assign(
-          {},
-          localStyleSheet.setIsOpenbutton,
-          { right: -10 },
-        ),
-      })
+    setIsOpenbuttonStyle.right = -10
   } else {
     drawerContainerStyle.right = state.xPosition
-    Object.assign(localStyleSheet,
-      {
-        setIsOpenbutton: Object.assign(
-          {},
-          localStyleSheet.setIsOpenbutton,
-          { left: -10 },
-        ),
-      })
+    setIsOpenbuttonStyle.left = -10
   }
 
   // on isOpen change, state is updated
@@ -106,7 +79,7 @@ const DrawerContainer = ({
     >
       {children}
       <button
-        style={localStyleSheet.setIsOpenbutton}
+        style={setIsOpenbuttonStyle}
         type="button"
         onClick={() => {
           setIsOpen(isOpenState => !isOpenState)
