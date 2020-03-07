@@ -56,10 +56,10 @@ const DrawerContainer = ({
   drawerContainerStyle.width = width
   if (alignX === DrawerAlign.LEFT) {
     drawerContainerStyle.left = state.xPosition
-    setIsOpenbuttonStyle.right = -10
+    setIsOpenbuttonStyle.left = 'calc(100% - 3px)'
   } else {
     drawerContainerStyle.right = state.xPosition
-    setIsOpenbuttonStyle.left = -10
+    setIsOpenbuttonStyle.right = 'calc(100% - 3px)'
   }
 
   // on isOpen change, state is updated
