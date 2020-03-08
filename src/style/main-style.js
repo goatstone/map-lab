@@ -31,12 +31,12 @@ const style = {
       display: 'flex',
       justifyContent: 'flex-start',
     },
-    '& [data-id=goatstone-component-leaflet-map]': {
-      position: 'relative',
-      width: '100%',
-      height: '100%',
-      background: 'gray',
-    },
+    // '& [data-id=goatstone-component-leaflet-map]': {
+    //   position: 'relative',
+    //   width: '100%',
+    //   height: '100%',
+    //   background: 'gray',
+    // },
   },
   displayResults: {
     display: 'flex',
@@ -85,8 +85,18 @@ const gMap = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '100%',
+  width: '50%',
+  height: '100%',
+}
+const lMap = {
+  position: 'absolute',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  left: '50%',
+  top: '20px',
+  width: '50%',
   height: '100%',
 }
 
-export default Object.assign(style, { drawerContainer }, { gMap })
+export default Object.assign(style, { drawerContainer }, { gMap }, { lMap })

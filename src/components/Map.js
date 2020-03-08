@@ -28,10 +28,13 @@ function Map({
   placeInfo,
   mapControl,
   mapStatusActions,
+  mainClassName,
 }) {
+  const idName = 'leaflet-map'
+
   const mapRef = useRef(null)
   useEffect(() => {
-    mapRef.current = L.map('map', {
+    mapRef.current = L.map(idName, {
       center: mapControl.moveCenterTo,
       zoom: 12,
       zoomControl: false,
@@ -106,7 +109,11 @@ function Map({
   }, [mapControl])
 
   return (
-    <div id="map" data-id="goatstone-component-leaflet-map" />
+    <div
+      id={idName}
+      data-id="goatstone-component-leaflet-map" 
+      className={mainClassName}
+    />
   )
 }
 

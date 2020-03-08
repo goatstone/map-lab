@@ -15,6 +15,7 @@ import useEngine from '../hooks/use-engine'
 import useMapControl from '../hooks/use-map-control'
 import useMapStatus from '../hooks/use-map-status'
 import GMap from './GMap'
+import LMap from './Map'
 
 jss.setup(preset())
 const sheet = jss.createStyleSheet(style)
@@ -86,6 +87,11 @@ function App() {
     <section className={sheet.classes.mainContainer}>
       <GMap
         mainClassName={sheet.classes.gMap}
+        mapControl={mapControl}
+        mapStatusActions={mapStatusActions}
+      />
+      <LMap
+        mainClassName={sheet.classes.lMap}
         mapControl={mapControl}
         mapStatusActions={mapStatusActions}
       />

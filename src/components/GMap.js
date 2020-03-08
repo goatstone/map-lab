@@ -9,6 +9,8 @@ const GMap = ({
   mapStatusActions,
   mainClassName,
 }) => {
+  const idName = 'google-map'
+
   useEffect(() => {
     const loader = new Loader({
       apiKey: config.gMapAPIKey,
@@ -26,7 +28,7 @@ const GMap = ({
       .load()
       .then(() => {
         // eslint-disable-next-line
-        map = new window.google.maps.Map(document.getElementById("map"), mapOptions)
+        map = new window.google.maps.Map(document.getElementById(idName), mapOptions)
 
         // set init status values
         mapStatusActions.zoomLevel(map.getZoom())
@@ -68,7 +70,7 @@ const GMap = ({
 
   return (
     <div
-      id="map"
+      id={idName}
       className={mainClassName}
       data-component-name="gmap"
     >
