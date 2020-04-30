@@ -7,11 +7,8 @@ import DisplayResults from './DisplayResults'
 import DrawerContainer from './DrawerContainer'
 import DrawContainerConfig from '../draw-container-config'
 import GoToPlace from './GoToPlace'
-import MoveTo from './MoveTo'
-import Motion from './Motion'
 import StateDebug from './StateDebug'
 import style from '../style/main-style'
-import useEngine from '../hooks/use-engine'
 import useMapControl from '../hooks/use-map-control'
 import useMapStatus from '../hooks/use-map-status'
 import GMap from './GMap'
@@ -75,13 +72,6 @@ function App() {
       setSearchResults(newSearchResults)
     })()
   }, [query])
-  // engine
-  const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
-  useEffect(() => {
-    const moveOffset = [0.001, 0.001]
-    actions.setMoveCenterBy(moveOffset)
-    actions.setMoveMarkerBy(moveOffset)
-  }, [tick])
 
   return (
     <section className={sheet.classes.mainContainer}>
@@ -126,24 +116,6 @@ function App() {
             ['Los Angeles', [34.0522, -118.2437]],
           ]}
           setMoveCenterBy={actions.setMoveCenterTo}
-        />
-      </DrawerContainer>
-      <DrawerContainer
-        {...DrawContainerConfig.moveTo}
-        classNames={sheet.classes}
-      >
-        <MoveTo
-          setMoveCenterBy={actions.setMoveCenterBy}
-          setMoveMarkerBy={actions.setMoveMarkerBy}
-        />
-      </DrawerContainer>
-      <DrawerContainer
-        {...DrawContainerConfig.motion}
-        classNames={sheet.classes}
-      >
-        <Motion
-          isRunnningEngine={isRunningEngine}
-          setEngine={setEngine}
         />
       </DrawerContainer>
       <StateDebug

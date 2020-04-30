@@ -27,3 +27,13 @@ function useEngine(maximumIntervals = 50) {
   return [isRunnningEngine, setEngine, tick]
 }
 export default useEngine
+/*
+  // engine
+  const [isRunningEngine, setEngine, tick] = useEngine(mapStatus.center, mapStatus.viewPortRadius)
+  useEffect(() => {
+    const moveOffset = [0.001, 0.001]
+    actions.setMoveCenterBy(moveOffset)
+    actions.setMoveMarkerBy(moveOffset)
+  }, [tick])
+
+*/
