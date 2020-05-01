@@ -1,49 +1,66 @@
-import React from 'react'
+import React, { useReducer, useEffect } from 'react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 import StateDebug from './StateDebug'
 import style from '../style/main-style'
-import useMapControl from '../hooks/use-map-control'
-import useMapStatus from '../hooks/use-map-status'
 import GMap from './GMap'
 import LMap from './Map'
 
 jss.setup(preset())
 const sheet = jss.createStyleSheet(style)
 sheet.attach()
-const initLatLng = [47.6, -122.3]
 
 function App() {
-  // Status Hook : values for the current state of the map
-  const [mapStatus, mapStatusActions] = useMapStatus({
-    center: initLatLng,
-    zoomLevel: 12,
-    viewPortRadius: 50000,
-  })
+  const initState = { center: [47.6, -122.3], callerId: null }
+  const statusReducer = (state, action) => {
+    switch (action.type) {
+      case 'center': return Object.assign(
+        {},
+        state,
+        { center: action.center, callerId: action.callerId },
+      )
+      default: return state
+    }
+  }
+  const [status, statusDispatch] = useReducer(statusReducer, initState)
+  const controlReducer = (state, action) => {
+    switch (action.type) {
+      case 'center': return Object.assign(
+        {},
+        state,
+        { center: action.center, callerId: action.callerId },
+      )
+      default: return state
+    }
+  }
+  const [control, controlDispatch] = useReducer(controlReducer, initState)
+  useEffect(() => {
+    controlDispatch({ type: 'center', center: status.center, callerId: status.callerId })
+  }, [status])
 
-  // Control Hook, used to control the map
-  const [mapControl, actions] = useMapControl({
-    moveCenterTo: initLatLng,
-    moveMarkerTo: initLatLng,
-    placeFocusId: null,
-    places: null,
-  })
-  console.log(actions)
   return (
     <section className={sheet.classes.mainContainer}>
+      <button
+        type="button"
+        onClick={() => (
+          controlDispatch({ type: 'center', center: [47.01, -122.01] })
+        )}
+      >
+        Control
+      </button>
       <GMap
         mainClassName={sheet.classes.gMap}
-        mapControl={mapControl}
-        mapStatusActions={mapStatusActions}
+        control={control}
+        statusDispatch={statusDispatch}
       />
       <LMap
         mainClassName={sheet.classes.lMap}
-        mapControl={mapControl}
-        mapStatusActions={mapStatusActions}
+        control={control}
+        statusDispatch={statusDispatch}
       />
       <StateDebug
         isShow
-        mapStatus={mapStatus}
+        status={status}
       />
     </section>
   )

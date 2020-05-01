@@ -26,16 +26,16 @@ const baseMaps = {
 /* eslint-disable */
 function Map({
   placeInfo,
-  mapControl,
-  mapStatusActions,
+  control,
+  statusDispatch,
   mainClassName,
 }) {
   const idName = 'leaflet-map'
-
+  const callerId = 2
   const mapRef = useRef(null)
   useEffect(() => {
     mapRef.current = L.map(idName, {
-      center: mapControl.moveCenterTo,
+      center: control.center,
       zoom: 12,
       zoomControl: false,
       layers: [
@@ -50,63 +50,27 @@ function Map({
       position: 'bottomright'
     }).addTo(mapRef.current);
 
-    // set mapStatus based on map events occuring
-    mapRef.current.on('moveend', function (ev) {
-      mapStatusActions.center(
-        [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng]
-      )
+    mapRef.current.on('mouseup', function (ev) {
+      statusDispatch({
+        type: 'center', 
+        center: [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng],
+        callerId,
+      })
     })
     mapRef.current.on('zoom', (z) => {
       // eslint-disable-next-line
       const zoomLevel = mapRef.current.getZoom()
       const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapRef.current.getCenter().lat * Math.PI / 180)) / Math.pow(2, zoomLevel + 8))
       const viewPortRadius = Math.min(150 * metresPerPixel, 50000)
-      mapStatusActions.viewPortRadius(viewPortRadius)
     })
   }, [])
-  // marker
-  const markerRef = useRef(null)
-  // place search markers : expects 20 or less results
-  const placeMarkerRefs = [...Array(20)].map(() => useRef(null))
-  useEffect(
-    () => {
-      if (!placeInfo || !placeInfo.results) return
-      placeMarkerRefs
-        .filter(el => el.current)
-        .forEach(el => el.current.remove())
-      placeInfo.results.forEach((el, i) => {
-        const popupContent = `${el.name} : ${el.formatted_address}`
-        const placeIcon = L.icon({
-          iconUrl: el.icon || '',
-          iconSize: [25, 25],
-        })
-        placeMarkerRefs[i].current = L.marker(
-          [el.geometry.location.lat, el.geometry.location.lng],
-          { icon: placeIcon }
-        ).addTo(mapRef.current).bindPopup(popupContent)
-          .addTo(mapRef.current).bindTooltip(el.name)
-      })
-    },
-    [placeInfo],
-  )
+  
   useEffect(() => {
-    // pop up
-    if (placeMarkerRefs && mapControl.placeFocusId) {
-      placeMarkerRefs.map(pmr => pmr.current.closeTooltip())
-      placeMarkerRefs.map(pmr => pmr.current.closePopup())
-      placeMarkerRefs[mapControl.placeFocusId].current.openTooltip()
-    }
     // map move
     if (mapRef.current) {
-      mapRef.current.panTo(mapControl.moveCenterTo)
+      mapRef.current.panTo(control.center)
     }
-    // marker move
-    if (markerRef.current) {
-      markerRef.current.setLatLng(mapControl.moveMarkerTo)
-    } else {
-      markerRef.current = L.marker(mapControl.moveMarkerTo).addTo(mapRef.current)
-    }
-  }, [mapControl])
+  }, [control])
 
   return (
     <div

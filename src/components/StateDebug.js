@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function StateDebug({ mapStatus, isShow = false }) {
+function StateDebug({ status, isShow = false }) {
   let debugId = ''
   // eslint-disable-next-line
   if (window.location.search) {
@@ -28,7 +28,7 @@ function StateDebug({ mapStatus, isShow = false }) {
       className="debug"
     >
       {Object
-        .entries(mapStatus)
+        .entries(status)
         .map(el => (
           <div key={el[0]}>
             {el[0]}
@@ -43,7 +43,7 @@ function StateDebug({ mapStatus, isShow = false }) {
 }
 /* eslint-disable react/forbid-prop-types */
 StateDebug.propTypes = {
-  mapStatus: PropTypes.object.isRequired,
+  status: PropTypes.object.isRequired,
   isShow: PropTypes.bool.isRequired,
 }
 
