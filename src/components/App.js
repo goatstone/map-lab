@@ -1,7 +1,6 @@
 import React, { useReducer, useEffect } from 'react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
-import StateDebug from './StateDebug'
 import style from '../style/main-style'
 import GMap from './GMap'
 import LMap from './Map'
@@ -42,21 +41,22 @@ function App() {
 
   return (
     <section className={sheet.classes.mainContainer}>
-      <GMap
-        mainClassName={sheet.classes.gMap}
-        control={control}
-        statusDispatch={statusDispatch}
-      />
-      <LMap
-        mainClassName={sheet.classes.lMap}
-        control={control}
-        statusDispatch={statusDispatch}
-        idName="leaflet"
-      />
-      <StateDebug
-        isShow
-        status={status}
-      />
+      <div className={sheet.classes.frame}>
+        <GMap
+          mainClassName={sheet.classes.gMap}
+          control={control}
+          statusDispatch={statusDispatch}
+        />
+        <LMap
+          mainClassName={sheet.classes.lMap}
+          control={control}
+          statusDispatch={statusDispatch}
+          idName="leaflet"
+        />
+      </div>
+      <footer>
+        Navigate Maps
+      </footer>
     </section>
   )
 }

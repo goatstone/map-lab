@@ -23,10 +23,22 @@ const GMap = ({
         lng: control.center[1],
       },
       zoom: 7,
+      // disableDefaultUI: true,
+      zoomControl: true,
+      zoomControlOptions: {
+        position: null,
+      },
+      mapTypeControl: false,
+      scaleControl: false,
+      streetViewControl: false,
+      rotateControl: false,
+      fullscreenControl: false,
     }
     loader
       .load()
       .then(() => {
+        // eslint-disable-next-line
+        mapOptions.zoomControlOptions.position = window.google.maps.ControlPosition.TOP_RIGHT
         // eslint-disable-next-line
         map = new window.google.maps.Map(document.getElementById(idName), mapOptions)
         map.addListener('mouseup', () => {

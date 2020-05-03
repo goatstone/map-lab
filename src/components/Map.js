@@ -32,18 +32,14 @@ function Map({
   useEffect(() => {
     mapRef.current = L.map(idName, {
       center: control.center,
-      zoom: 12,
-      zoomControl: false,
+      zoom: 7,
       layers: [
         grayscale, streets,
       ],
     })
-
     L.control.zoom({
-      position: 'bottomright'
-    }).addTo(mapRef.current)
-    .addTo(mapRef.current);
-
+      position: 'topleft'
+    })
     mapRef.current.on('mouseup', function (ev) {
       statusDispatch({
         type: 'center', 

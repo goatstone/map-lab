@@ -4,10 +4,11 @@ const buttonTextColor = '#111'
 const style = {
   mainContainer: {
     display: 'flex',
+    flexDirection: 'column',
     fontSize: '0.9em',
     fontFamily: 'sans-serif',
-    color: 'white',
-    background: 'black',
+    color: '#eee',
+    background: 'gray',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -79,13 +80,23 @@ const gMap = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '50%',
+  width: '100%',
+  height: '100%',
 }
 const lMap = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '50%',
+  width: '100%',
+  height: '100%',
 }
-
-export default Object.assign(style, { drawerContainer }, { gMap }, { lMap })
+const frame = {
+  display: 'flex',
+  width: '100%',
+  height: '100%',
+}
+export default Object.assign(style,
+  { drawerContainer },
+  { gMap },
+  { lMap },
+  { frame })
