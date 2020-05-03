@@ -19,18 +19,14 @@ const streets = L.tileLayer(
     attribution,
   },
 )
-const baseMaps = {
-  Grayscale: grayscale,
-  Streets: streets,
-}
 /* eslint-disable */
 function Map({
   placeInfo,
   control,
   statusDispatch,
   mainClassName,
+  idName = 'leaflet-map',
 }) {
-  const idName = 'leaflet-map'
   const callerId = 2
   const mapRef = useRef(null)
   useEffect(() => {
@@ -46,9 +42,7 @@ function Map({
     L.control.zoom({
       position: 'bottomright'
     }).addTo(mapRef.current)
-    L.control.layers(null, baseMaps, {
-      position: 'bottomright'
-    }).addTo(mapRef.current);
+    .addTo(mapRef.current);
 
     mapRef.current.on('mouseup', function (ev) {
       statusDispatch({
@@ -64,10 +58,10 @@ function Map({
       const viewPortRadius = Math.min(150 * metresPerPixel, 50000)
     })
   }, [])
-  
   useEffect(() => {
-    // map move
-    if (mapRef.current) {
+    // prevent calls from self to used in control !!!!
+    const isControllable = (control.callerId !== callerId && mapRef.current)
+    if (isControllable) {
       mapRef.current.panTo(control.center)
     }
   }, [control])

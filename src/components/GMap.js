@@ -10,7 +10,7 @@ const GMap = ({
   mainClassName,
 }) => {
   const idName = 'google-map'
-  const id = 1
+  const callerId = 1
   useEffect(() => {
     const loader = new Loader({
       apiKey: config.gMapAPIKey,
@@ -33,24 +33,23 @@ const GMap = ({
           const centerArr = Object
             .entries(map.getCenter())
             .map(e => e[1]())
-          statusDispatch({ type: 'center', center: centerArr, callerId: id })
+          statusDispatch({ type: 'center', center: centerArr, callerId })
         })
         map.addListener('center_changed', () => {
           const centerArr = Object
             .entries(map.getCenter())
             .map(e => e[1]())
-          statusDispatch({ type: 'center', center: centerArr, callerId: id })
+          statusDispatch({ type: 'center', center: centerArr, callerId })
         })
       })
       .catch(e => {
         throw new Error(`Library Not Loaded ${e}`)
       })
   }, [])
-  // mapControl
   useEffect(() => {
-    if (!map) return
     // prevent calls from self to used in control !!!!
-    if (control.callerId !== id) {
+    const isControllable = (control.callerId !== callerId && map)
+    if (isControllable) {
       map.setCenter({ lat: control.center[0], lng: control.center[1] })
     }
   }, [control])

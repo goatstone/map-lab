@@ -37,10 +37,29 @@ const controlReducer = ( state, action ) => {
 const [ control, controlDispatcher ] = useReducer(controlReducer, initState)
 ```
 ### Reconcile the controler to the status
+Circular updates are prevented in the component
 ```
 useEffect(() => {
 	controlDispatcher({type: 'center',  payload: status.center})
 }, [status.center])
+```
+### Component 
+The component prevents circular calls
+```
+useEffect(() => {
+  // prevent calls from self
+  const isControllable = (control.callerId !== id)
+  if (isControllable) {
+    map.setCenter({ lat: control.center[0], lng: control.center[1] })
+  }
+}, [control])
+
+map.addListener('mouseup', () => {
+  const center = Object
+    .entries(map.getCenter())
+    .map(e => e[1]())
+  statusDispatch({ type: 'center', center, callerId })
+})
 ```
 ### Component Usage
 ```

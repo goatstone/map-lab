@@ -34,20 +34,14 @@ function App() {
     }
   }
   const [control, controlDispatch] = useReducer(controlReducer, initState)
+
+  // circular updates are prevented in the component
   useEffect(() => {
     controlDispatch({ type: 'center', center: status.center, callerId: status.callerId })
   }, [status])
 
   return (
     <section className={sheet.classes.mainContainer}>
-      <button
-        type="button"
-        onClick={() => (
-          controlDispatch({ type: 'center', center: [47.01, -122.01] })
-        )}
-      >
-        Control
-      </button>
       <GMap
         mainClassName={sheet.classes.gMap}
         control={control}
@@ -57,6 +51,7 @@ function App() {
         mainClassName={sheet.classes.lMap}
         control={control}
         statusDispatch={statusDispatch}
+        idName="leaflet"
       />
       <StateDebug
         isShow

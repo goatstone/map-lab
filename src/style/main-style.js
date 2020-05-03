@@ -3,6 +3,7 @@ const buttonTextColor = '#111'
 
 const style = {
   mainContainer: {
+    display: 'flex',
     fontSize: '0.9em',
     fontFamily: 'sans-serif',
     color: 'white',
@@ -31,12 +32,6 @@ const style = {
       display: 'flex',
       justifyContent: 'flex-start',
     },
-    // '& [data-id=goatstone-component-leaflet-map]': {
-    //   position: 'relative',
-    //   width: '100%',
-    //   height: '100%',
-    //   background: 'gray',
-    // },
   },
   displayResults: {
     display: 'flex',
@@ -81,22 +76,16 @@ const drawerContainer = {
 }
 
 const gMap = {
-  position: 'fixed',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   width: '50%',
-  height: '100%',
 }
 const lMap = {
-  position: 'absolute',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  left: '50%',
-  top: '20px',
   width: '50%',
-  height: '100%',
 }
 
 export default Object.assign(style, { drawerContainer }, { gMap }, { lMap })
