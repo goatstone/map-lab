@@ -21,7 +21,6 @@ const streets = L.tileLayer(
 )
 /* eslint-disable */
 function Map({
-  placeInfo,
   control,
   statusDispatch,
   mainClassName,
@@ -29,6 +28,13 @@ function Map({
 }) {
   const callerId = 2
   const mapRef = useRef(null)
+  const moveList = function (ev) {
+    statusDispatch({
+      type: 'center',
+      center: [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng],
+      callerId,
+    })
+  }
   useEffect(() => {
     mapRef.current = L.map(idName, {
       center: control.center,
@@ -40,19 +46,7 @@ function Map({
     L.control.zoom({
       position: 'topleft'
     })
-    mapRef.current.on('mouseup', function (ev) {
-      statusDispatch({
-        type: 'center', 
-        center: [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng],
-        callerId,
-      })
-    })
-    mapRef.current.on('zoom', (z) => {
-      // eslint-disable-next-line
-      const zoomLevel = mapRef.current.getZoom()
-      const metresPerPixel = Math.round(40075016.686 * Math.abs(Math.cos(mapRef.current.getCenter().lat * Math.PI / 180)) / Math.pow(2, zoomLevel + 8))
-      const viewPortRadius = Math.min(150 * metresPerPixel, 50000)
-    })
+    mapRef.current.on('drag', moveList)
   }, [])
   useEffect(() => {
     // prevent calls from self to used in control !!!!
@@ -65,7 +59,7 @@ function Map({
   return (
     <div
       id={idName}
-      data-id="goatstone-component-leaflet-map" 
+      data-id="goatstone-component-leaflet-map"
       className={mainClassName}
     />
   )

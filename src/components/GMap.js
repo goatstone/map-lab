@@ -23,7 +23,7 @@ const GMap = ({
         lng: control.center[1],
       },
       zoom: 7,
-      // disableDefaultUI: true,
+      disableDefaultUI: true,
       zoomControl: true,
       zoomControlOptions: {
         position: null,
@@ -41,18 +41,13 @@ const GMap = ({
         mapOptions.zoomControlOptions.position = window.google.maps.ControlPosition.TOP_RIGHT
         // eslint-disable-next-line
         map = new window.google.maps.Map(document.getElementById(idName), mapOptions)
-        map.addListener('mouseup', () => {
+        const centerChanged = () => {
           const centerArr = Object
             .entries(map.getCenter())
             .map(e => e[1]())
           statusDispatch({ type: 'center', center: centerArr, callerId })
-        })
-        map.addListener('center_changed', () => {
-          const centerArr = Object
-            .entries(map.getCenter())
-            .map(e => e[1]())
-          statusDispatch({ type: 'center', center: centerArr, callerId })
-        })
+        }
+        map.addListener('drag', centerChanged)
       })
       .catch(e => {
         throw new Error(`Library Not Loaded ${e}`)
