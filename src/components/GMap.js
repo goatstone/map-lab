@@ -4,6 +4,7 @@ import { Loader } from '@googlemaps/loader'
 import config from '../config'
 
 let map
+let listener
 const GMap = ({
   control,
   statusDispatch,
@@ -41,13 +42,19 @@ const GMap = ({
         mapOptions.zoomControlOptions.position = window.google.maps.ControlPosition.TOP_RIGHT
         // eslint-disable-next-line
         map = new window.google.maps.Map(document.getElementById(idName), mapOptions)
-        const centerChanged = () => {
+        const userCenterChanged = () => {
           const centerArr = Object
             .entries(map.getCenter())
             .map(e => e[1]())
           statusDispatch({ type: 'center', center: centerArr, callerId })
         }
-        map.addListener('drag', centerChanged)
+        map.addListener('mousedown', () => {
+          listener = map.addListener('center_changed', userCenterChanged)
+        })
+        map.addListener('mouseup', () => {
+          // eslint-disable-next-line
+          window.google.maps.event.removeListener(listener);
+        })
       })
       .catch(e => {
         throw new Error(`Library Not Loaded ${e}`)

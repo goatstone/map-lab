@@ -28,7 +28,7 @@ function Map({
 }) {
   const callerId = 2
   const mapRef = useRef(null)
-  const moveList = function (ev) {
+  const userMoveListener = function (ev) {
     statusDispatch({
       type: 'center',
       center: [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng],
@@ -46,10 +46,16 @@ function Map({
     L.control.zoom({
       position: 'topleft'
     })
-    mapRef.current.on('drag', moveList)
-  }, [])
+    // capture only user map chage to dispatch status
+    mapRef.current.on('mousedown', () => {
+        mapRef.current.on('move', userMoveListener)
+    })
+    mapRef.current.on('mouseup', () => {
+      mapRef.current.off('move')
+  })
+}, [])
   useEffect(() => {
-    // prevent calls from self to used in control !!!!
+  // prevent calls from self to used in control !!!!
     const isControllable = (control.callerId !== callerId && mapRef.current)
     if (isControllable) {
       mapRef.current.panTo(control.center)
