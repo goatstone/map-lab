@@ -14,12 +14,10 @@ beforeEach(() => {
 })
 const mockZoomLevel = jest.fn(level => level)
 const props = {
-  mapControl: {
-    moveCenterTo: [0, 0],
-    places: [],
+  control: {
+    center: [0, 0],
   },
-  mapStatusActions: {
-    zoomLevel: mockZoomLevel,
+  statusDispatch: {
     center: () => null,
   },
   mainClassName: '',

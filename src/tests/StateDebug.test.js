@@ -12,7 +12,7 @@ describe('<StateDebug />', () => {
     act(() => {
       wrapper = shallow(
         <StateDebug
-          mapStatus={{ a: 1 }}
+          status={{ a: 1 }}
           isShow={false}
         />,
       )

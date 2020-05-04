@@ -10,25 +10,15 @@ const jsdom = new JSDOM('<!doctype html><html><body></body></html>')
 const { window } = jsdom
 
 const initLatLng = [47.6, -122.3]
-// const mapStatus = {
-//   center: [initLatLng],
-//   zoomLevel: 12,
-//   viewPortRadius: 50000,
-// }
-const mapControl = {
-  moveCenterTo: initLatLng,
-  moveMarkerTo: initLatLng,
-  placeFocusId: null,
+const control = {
+  center: initLatLng,
 }
-const mapStatusActions = {
+const statusDispatch = {
   center: () => 1,
-  zoomLevel: () => 1,
 }
-const placeInfo = []
 const props = {
-  placeInfo,
-  mapControl,
-  mapStatusActions,
+  control,
+  statusDispatch,
 }
 
 beforeEach(() => {
