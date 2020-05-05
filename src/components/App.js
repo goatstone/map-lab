@@ -58,7 +58,7 @@ function App() {
         <span>
           Navigate A Map With A Map
         </span>
-        <a href="https:www.goatstone.com" target="new">
+        <a href="https://www.goatstone.com" target="new">
           Goatstone
         </a>
         <a href="https://github.com/JoseHerminioCollas/map-lab" target="new">
