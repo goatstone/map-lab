@@ -1,8 +1,11 @@
-# MapLab
+# MapLab  <img src="art/map-lab-logo.svg" width="100">
+
+***
 
 [![CircleCI](https://circleci.com/gh/JoseHerminioCollas/map-lab.svg?style=svg)](https://circleci.com/gh/JoseHerminioCollas/map-lab)
 
 Map Lab is a place to establish examples of web mapping libraries. 
+
 
 ## Installing
 
