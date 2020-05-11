@@ -15,7 +15,7 @@ git clone https://github.com/JoseHerminioCollas/map-lab.git
 ```
 ### Install
 ```
-npm run install
+npm install
 ```
 ### Start
 ```
