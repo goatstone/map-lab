@@ -1,5 +1,9 @@
-import React, { useReducer, useEffect } from 'react'
-import { CommandBar, initializeIcons } from '@fluentui/react'
+import React, { useReducer, useEffect, useState } from 'react'
+import {
+  CommandBar,
+  initializeIcons,
+  Modal,
+} from '@fluentui/react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 import style from '../style/main-style'
@@ -20,17 +24,7 @@ const items = [
     href: 'https://github.com/JoseHerminioCollas/map-lab',
   },
 ]
-const farItems = [
-  {
-    key: 'info',
-    text: 'Info',
-    // This needs an ariaLabel since it's icon-only
-    ariaLabel: 'Info',
-    iconOnly: true,
-    iconProps: { iconName: 'Info' },
-    href: 'https://www.goatstone.com',
-  },
-]
+
 function App() {
   const initState = { center: [47.6, -122.3], callerId: null }
   const statusReducer = (state, action) => {
@@ -55,7 +49,18 @@ function App() {
     }
   }
   const [control, controlDispatch] = useReducer(controlReducer, initState)
-
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const farItems = [
+    {
+      key: 'info',
+      text: 'Info',
+      // This needs an ariaLabel since it's icon-only
+      ariaLabel: 'Info',
+      iconOnly: true,
+      iconProps: { iconName: 'Info' },
+      onClick: () => setIsModalOpen(true),
+    },
+  ]
   // circular updates are prevented in the component
   useEffect(() => {
     controlDispatch({ type: 'center', center: status.center, callerId: status.callerId })
@@ -64,6 +69,17 @@ function App() {
   return (
     <>
       <section className={sheet.classes.mainContainer}>
+        <Modal
+          // titleAriaId={titleId}
+          isOpen={isModalOpen}
+          onDismiss={() => setIsModalOpen(false)}
+          isBlocking={false}
+          // containerClassName={contentStyles.container}
+          // dragOptions={isDraggable ? dragOptions : undefined}
+          dragOptions={false}
+        >
+          <h2>Map Lab</h2>
+        </Modal>
         <header>
           <h1>
             Map Lab
