@@ -14,43 +14,12 @@ sheet.attach()
 
 const items = [
   {
-    key: 'newItem',
-    text: 'A',
-    cacheKey: 'a', // changing this key will invalidate this item's cache
-    iconProps: { iconName: 'Add' },
-    subMenuProps: {
-      items: [
-        {
-          key: 'b',
-          text: 'B',
-          iconProps: { iconName: 'Mail' },
-          onClick: () => console.log('b'),
-        },
-        {
-          key: 'c',
-          text: 'C',
-          iconProps: { iconName: 'Calendar' },
-        },
-      ],
-    },
-  },
-  {
     key: 'd',
-    text: 'D',
-    iconProps: { iconName: 'Share' },
-    onClick: () => console.log('d'),
+    text: 'Git',
+    iconProps: { iconName: 'repo' },
+    href: 'https://github.com/JoseHerminioCollas/map-lab',
   },
 ]
-
-const overflowItems = [
-  {
-    key: 'move',
-    text: 'Z',
-    onClick: () => console.log('z'),
-    iconProps: { iconName: 'MoveToFolder' },
-  },
-]
-
 const farItems = [
   {
     key: 'info',
@@ -59,11 +28,9 @@ const farItems = [
     ariaLabel: 'Info',
     iconOnly: true,
     iconProps: { iconName: 'Info' },
-    onClick: () => console.log('Info'),
+    href: 'https://www.goatstone.com',
   },
 ]
-const overflowProps = { ariaLabel: 'More commands' }
-
 function App() {
   const initState = { center: [47.6, -122.3], callerId: null }
   const statusReducer = (state, action) => {
@@ -97,13 +64,16 @@ function App() {
   return (
     <>
       <section className={sheet.classes.mainContainer}>
-        <CommandBar
-          items={items}
-          overflowItems={overflowItems}
-          overflowButtonProps={overflowProps}
-          farItems={farItems}
-          ariaLabel="Use left and right arrow keys to navigate between commands"
-        />
+        <header>
+          <h1>
+            Map Lab
+          </h1>
+          <CommandBar
+            items={items}
+            farItems={farItems}
+            ariaLabel="Use left and right arrow keys to navigate between commands"
+          />
+        </header>
         <div className={sheet.classes.frame}>
           <GMap
             mainClassName={sheet.classes.gMap}
@@ -117,17 +87,6 @@ function App() {
             idName="leaflet"
           />
         </div>
-        <footer>
-          <span>
-            Navigate A Map With A Map
-          </span>
-          <a href="https://www.goatstone.com" target="new">
-            Goatstone
-          </a>
-          <a href="https://github.com/JoseHerminioCollas/map-lab" target="new">
-            More Information
-          </a>
-        </footer>
       </section>
     </>
   )
