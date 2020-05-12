@@ -1,59 +1,14 @@
 import React, { useReducer, useEffect, useState } from 'react'
 import {
   CommandBar,
-  IconButton,
   initializeIcons,
-  Modal,
-  getTheme,
-  mergeStyleSets,
 } from '@fluentui/react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 import style from '../style/main-style'
 import GMap from './GMap'
 import LMap from './Map'
-
-const theme = getTheme()
-const contentStyles = mergeStyleSets({
-  container: {
-    display: 'flex',
-    flexFlow: 'column nowrap',
-    alignItems: 'stretch',
-    fontSize: '1.4em',
-    padding: '1em',
-  },
-  header: [
-    theme.fonts.xLargePlus,
-    {
-      flex: '1 1 auto',
-      display: 'flex',
-      alignItems: 'center',
-      padding: 0,
-    },
-  ],
-  body: {
-    flex: '4 4 auto',
-    padding: '0 24px 24px 24px',
-    overflowY: 'hidden',
-    selectors: {
-      p: { margin: '14px 0' },
-      'p:first-child': { marginTop: 0 },
-      'p:last-child': { marginBottom: 0 },
-    },
-  },
-})
-const iconButtonStyles = {
-  root: {
-    color: theme.palette.neutralPrimary,
-    marginLeft: 'auto',
-    marginTop: '4px',
-    marginRight: '2px',
-  },
-  rootHovered: {
-    color: theme.palette.neutralDark,
-  },
-}
-const cancelIcon = { iconName: 'Cancel' }
+import InfoModal from './InfoModal'
 
 initializeIcons()
 
@@ -114,46 +69,10 @@ function App() {
   return (
     <>
       <section className={sheet.classes.mainContainer}>
-        <Modal
-          // titleAriaId={titleId}
-          isOpen={isModalOpen}
-          onDismiss={() => setIsModalOpen(false)}
-          isBlocking={false}
-          containerClassName={contentStyles.container}
-          dragOptions={false}
-        >
-          <div className={contentStyles.header}>
-            <IconButton
-              styles={iconButtonStyles}
-              iconProps={cancelIcon}
-              ariaLabel="Close popup modal"
-              onClick={() => setIsModalOpen(false)}
-            />
-          </div>
-          <h2>MapLab</h2>
-          <p>
-            MapLab is a place to establish examples of web mapping libraries.
-            Currently, the libraries used are
-            &nbsp;
-            <a href="https://cloud.google.com/maps-platform" target="new">Google Maps Platform</a>
-            &nbsp;
-            and
-            &nbsp;
-            <a href="https://leafletjs.com/" target="new">Leaflet</a>
-            &nbsp;
-            in the context of a
-            &nbsp;
-            <a href="https://reactjs.org/" target="new">React</a>
-            &nbsp;
-            application.
-          </p>
-          <p>
-            &copy;&nbsp;
-            <a href="https://www.goatstone.com" target="new">Goatstone</a>
-            &nbsp;
-            2020
-          </p>
-        </Modal>
+        <InfoModal
+          setIsModalOpen={setIsModalOpen}
+          isModalOpen={isModalOpen}
+        />
         <header>
           <h1>
             MapLab
