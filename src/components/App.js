@@ -7,10 +7,9 @@ import {
   GMap,
   LMap,
   InfoModal,
-  MainHeader,
 } from '.'
+import MainHeader, { commandItemsWithAction } from './MainHeader'
 import { statusReducer, controlReducer, initState } from '../status-control'
-import commandItems from '../settings/command-items'
 
 initializeIcons()
 jss.setup(preset())
@@ -22,7 +21,7 @@ function App() {
   const [status, statusDispatch] = useReducer(statusReducer, initState)
   const [control, controlDispatch] = useReducer(controlReducer, initState)
 
-  Object.assign(commandItems.far[0], { onClick: () => setIsModalOpen(true) })
+  const commandItems = commandItemsWithAction(setIsModalOpen, controlDispatch)
 
   // circular updates are prevented in the component
   useEffect(() => {
