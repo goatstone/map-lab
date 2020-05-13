@@ -20,7 +20,6 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [status, statusDispatch] = useReducer(statusReducer, initState)
   const [control, controlDispatch] = useReducer(controlReducer, initState)
-
   const commandItems = commandItemsWithAction(setIsModalOpen, controlDispatch)
 
   // circular updates are prevented in the component

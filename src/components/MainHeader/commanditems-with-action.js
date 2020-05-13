@@ -17,13 +17,13 @@ const commandItemsWithAction = (setIsModalOpen, controlDispatch) => {
       onClick: () => setIsModalOpen(true),
     },
   )
-  cities.forEach(city => {
-    const o = {
+  cities.forEach((city, i) => {
+    const commandItem = {
       key: city[0],
       onClick: () => controlDispatch({ type: 'center', center: city[1] }),
       text: city[0],
     }
-    commandItems.main[1].subMenuProps.items.push(o)
+    commandItems.main[1].subMenuProps.items[i] = commandItem
   })
 
   return commandItems
