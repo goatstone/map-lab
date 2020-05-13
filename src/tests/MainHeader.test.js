@@ -27,18 +27,17 @@ const commandItems =
     },
   ]
 }
-const farItems =
-  describe('<MainHeader />', () => {
-    it('should mount', () => {
-      let wrapper
-      act(() => {
-        wrapper = shallow(
-          <MainHeader
-            title="X"
-            commandItems={commandItems}
-          />,
-        )
-      })
-      expect(wrapper).toBeTruthy()
+describe('<MainHeader />', () => {
+  it('should mount', () => {
+    let wrapper
+    act(() => {
+      wrapper = shallow(
+        <MainHeader
+          title="X"
+          commandItems={commandItems}
+        />,
+      )
     })
+    expect(wrapper).toBeTruthy()
   })
+})
