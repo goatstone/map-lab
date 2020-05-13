@@ -10,14 +10,7 @@ const main = [
     text: 'Go To',
     iconProps: { iconName: 'arrow' },
     subMenuProps: {
-      items: [{
-        key: 'c',
-        text: 'Seattle',
-      },
-      {
-        key: 'd',
-        text: 'Los Angeles',
-      }],
+      items: [],
     },
   },
 ]

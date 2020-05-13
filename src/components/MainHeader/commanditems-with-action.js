@@ -2,12 +2,12 @@ import commandItems from './command-items'
 
 const cities = [
   ['Seattle', [47.6062, -122.3321]],
-  ['Los Angeles', [32.965557, -96.715836]],
-  ['Miami', [25.47, 80.13]],
-  ['Austin', [30.15, 97.45]],
-  ['Vancouver', [49.15, 123.06]],
-  ['Madrid', [40.23, 3.43]],
-  ['Paris', [48.51, 2.21]],
+  ['Los Angeles', [34.05349, -118.24532]],
+  ['Miami', [25.77481, -80.1977]],
+  ['Austin', [30.26759, -97.74299]],
+  ['Vancouver', [49.26038, -123.11336]],
+  ['Madrid', [40.42028, -3.70577]],
+  ['Paris', [48.863186, 2.339754]],
 ]
 
 const commandItemsWithAction = (setIsModalOpen, controlDispatch) => {
