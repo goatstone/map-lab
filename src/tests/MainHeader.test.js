@@ -5,8 +5,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import MainHeader from '../components/MainHeader'
 
 Enzyme.configure({ adapter: new Adapter() })
-const commandItems =
-{
+const commandItems = {
   main: [
     {
       key: 'a',
@@ -25,7 +24,7 @@ const commandItems =
       iconProps: { iconName: 'Info' },
       onClick: () => true,
     },
-  ]
+  ],
 }
 describe('<MainHeader />', () => {
   it('should mount', () => {
