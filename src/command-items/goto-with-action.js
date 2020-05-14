@@ -7,7 +7,7 @@ const goToWithAction = (gotoCommandItems, cities, controlDispatch) => {
     const latLng = cities[key]
     Object.assign(
       gotoCommandItems.subMenuProps.items[i],
-      { onClick: () => controlDispatch({ type: 'center', center: latLng }) },
+      { onClick: () => controlDispatch({ type: 'center', center: latLng, callerId: 100 }) },
     )
     i += 1
   }

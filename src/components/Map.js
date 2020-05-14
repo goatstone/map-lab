@@ -59,6 +59,7 @@ function Map({
     const isControllable = (control.callerId !== callerId && mapRef.current)
     if (isControllable) {
       mapRef.current.panTo(control.center)
+      mapRef.current.setZoom(control.zoom)
     }
   }, [control])
 

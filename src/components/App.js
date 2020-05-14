@@ -13,8 +13,10 @@ import {
   repoCommandItem,
   gotoCommandItems,
   infoCommandItem,
+  zoomCommandItem,
   infoWithAction,
   goToWithAction,
+  withAction,
 } from '../command-items'
 import { statusReducer, controlReducer, initState } from '../status-control'
 import { cities } from '../data'
@@ -31,6 +33,18 @@ function App() {
 
   infoWithAction(infoCommandItem, setIsModalOpen)
   goToWithAction(gotoCommandItems, cities, controlDispatch)
+  withAction(zoomCommandItem, () => {
+    console.log('zoom', control)
+    controlDispatch({
+      type: 'zoom',
+      zoom: 7,
+      callerId: 1000,
+    })
+  })
+
+  useEffect(() => {
+    console.log('effect', control)
+  }, [control])
 
   // circular updates are prevented in the component
   useEffect(() => {
@@ -46,7 +60,7 @@ function App() {
         />
         <MainHeader
           title="MapLab"
-          items={[repoCommandItem, gotoCommandItems]}
+          items={[repoCommandItem, gotoCommandItems, zoomCommandItem]}
           farItems={[infoCommandItem]}
         />
         <div className={sheet.classes.frame}>
