@@ -3,9 +3,6 @@ import PropTypes from 'prop-types'
 import {
   CommandBar,
 } from '@fluentui/react'
-import commandItemsWithAction from './commanditems-with-action'
-
-export { commandItemsWithAction }
 
 const MainHeader = ({ title = '', commandItems }) => (
   <header>

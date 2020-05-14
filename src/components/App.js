@@ -8,8 +8,19 @@ import {
   LMap,
   InfoModal,
 } from '.'
-import MainHeader, { commandItemsWithAction } from './MainHeader'
+import MainHeader from './MainHeader'
+import {
+  repoCommandItem,
+  gotoCommandItems,
+  infoCommandItem,
+  infoWithAction,
+  goToWithAction,
+} from '../command-items'
+
 import { statusReducer, controlReducer, initState } from '../status-control'
+import { cities } from '../data'
+
+const commandItems = { main: [repoCommandItem, gotoCommandItems], far: [infoCommandItem] }
 
 initializeIcons()
 jss.setup(preset())
@@ -20,7 +31,9 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [status, statusDispatch] = useReducer(statusReducer, initState)
   const [control, controlDispatch] = useReducer(controlReducer, initState)
-  const commandItems = commandItemsWithAction(setIsModalOpen, controlDispatch)
+
+  infoWithAction(infoCommandItem, setIsModalOpen)
+  goToWithAction(gotoCommandItems, cities, controlDispatch)
 
   // circular updates are prevented in the component
   useEffect(() => {
