@@ -2,7 +2,7 @@
 export default {
   key: 'goto',
   text: 'Go To',
-  iconProps: { iconName: 'arrow' },
+  iconProps: { iconName: 'ArrowUpRight' },
   subMenuProps: {
     items: [
       { key: 'seattle', text: 'Seattle' },

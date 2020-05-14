@@ -17,9 +17,7 @@ const props = {
   control: {
     center: [0, 0],
   },
-  statusDispatch: {
-    center: () => null,
-  },
+  statusDispatch: () => null,
   mainClassName: '',
 }
 describe('Google Map', () => {
