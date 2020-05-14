@@ -16,11 +16,8 @@ import {
   infoWithAction,
   goToWithAction,
 } from '../command-items'
-
 import { statusReducer, controlReducer, initState } from '../status-control'
 import { cities } from '../data'
-
-const commandItems = { main: [repoCommandItem, gotoCommandItems], far: [infoCommandItem] }
 
 initializeIcons()
 jss.setup(preset())
@@ -49,7 +46,8 @@ function App() {
         />
         <MainHeader
           title="MapLab"
-          commandItems={commandItems}
+          items={[repoCommandItem, gotoCommandItems]}
+          farItems={[infoCommandItem]}
         />
         <div className={sheet.classes.frame}>
           <GMap

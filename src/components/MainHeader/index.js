@@ -4,21 +4,22 @@ import {
   CommandBar,
 } from '@fluentui/react'
 
-const MainHeader = ({ title = '', commandItems }) => (
+const MainHeader = ({ title = '', items, farItems = [] }) => (
   <header>
     <h1>
       {title}
     </h1>
     <CommandBar
-      items={commandItems.main}
-      farItems={commandItems.far}
+      items={items}
+      farItems={farItems}
       ariaLabel="Use left and right arrow keys to navigate between commands"
     />
   </header>
 )
 /* eslint-disable react/forbid-prop-types */
 MainHeader.propTypes = {
-  commandItems: PropTypes.object.isRequired,
+  items: PropTypes.array.isRequired,
+  farItems: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
 }
 
