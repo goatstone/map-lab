@@ -27,7 +27,7 @@ function Map({
   idName = 'leaflet-map',
 }) {
   const callerId = 2
-  const resetZoom = 9
+  const resetZoomLevel = 9
   const mapRef = useRef(null)
   const userMoveListener = function (ev) {
     statusDispatch({
@@ -39,7 +39,7 @@ function Map({
   useEffect(() => {
     mapRef.current = L.map(idName, {
       center: control.center,
-      zoom: resetZoom,
+      zoom: resetZoomLevel,
       layers: [
         grayscale, streets,
       ],
@@ -59,7 +59,7 @@ function Map({
         type: 'zoomReset',
         zoomReset: false,
         callerId,
-      })  
+      })
     })
   }, [])
   useEffect(() => {
@@ -71,7 +71,7 @@ function Map({
   }, [control.center])
   useEffect(() => {
     if(control.zoomReset) {
-      mapRef.current.setZoom(resetZoom)
+      mapRef.current.setZoom(resetZoomLevel)
     }
   }, [control.zoomReset])
 

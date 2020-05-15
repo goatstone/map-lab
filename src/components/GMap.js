@@ -12,6 +12,7 @@ const GMap = ({
 }) => {
   const idName = 'google-map'
   const callerId = 1
+  const resetZoomLevel = 9
   useEffect(() => {
     const loader = new Loader({
       apiKey: config.gMapAPIKey,
@@ -23,7 +24,7 @@ const GMap = ({
         lat: control.center[0],
         lng: control.center[1],
       },
-      zoom: 7,
+      zoom: resetZoomLevel,
       disableDefaultUI: true,
       zoomControl: true,
       zoomControlOptions: {
@@ -55,6 +56,13 @@ const GMap = ({
           // eslint-disable-next-line
           window.google.maps.event.removeListener(listener);
         })
+        map.addListener('zoom', () => {
+          statusDispatch({
+            type: 'zoomReset',
+            zoomReset: false,
+            callerId,
+          })
+        })
       })
       .catch(e => {
         throw new Error(`Library Not Loaded ${e}`)
@@ -66,7 +74,12 @@ const GMap = ({
     if (isControllable) {
       map.setCenter({ lat: control.center[0], lng: control.center[1] })
     }
-  }, [control])
+  }, [control.center])
+  useEffect(() => {
+    if (map && control.zoomReset) {
+      map.setZoom(resetZoomLevel)
+    }
+  }, [control.zoomReset])
 
   return (
     <div
