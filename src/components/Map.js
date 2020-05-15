@@ -27,6 +27,7 @@ function Map({
   idName = 'leaflet-map',
 }) {
   const callerId = 2
+  const resetZoom = 9
   const mapRef = useRef(null)
   const userMoveListener = function (ev) {
     statusDispatch({
@@ -38,7 +39,7 @@ function Map({
   useEffect(() => {
     mapRef.current = L.map(idName, {
       center: control.center,
-      zoom: 7,
+      zoom: resetZoom,
       layers: [
         grayscale, streets,
       ],
@@ -48,20 +49,31 @@ function Map({
     })
     // capture only user map chage to dispatch status
     mapRef.current.on('mousedown', () => {
-        mapRef.current.on('move', userMoveListener)
+      mapRef.current.on('move', userMoveListener)
     })
     mapRef.current.on('mouseup', () => {
       mapRef.current.off('move')
-  })
-}, [])
+    })
+    mapRef.current.on('zoom', () => {
+      statusDispatch({
+        type: 'zoomReset',
+        zoomReset: false,
+        callerId,
+      })  
+    })
+  }, [])
   useEffect(() => {
-  // prevent calls from self to used in control !!!!
+    // prevent calls from self to used in control !!!!
     const isControllable = (control.callerId !== callerId && mapRef.current)
     if (isControllable) {
       mapRef.current.panTo(control.center)
-      mapRef.current.setZoom(control.zoom)
     }
-  }, [control])
+  }, [control.center])
+  useEffect(() => {
+    if(control.zoomReset) {
+      mapRef.current.setZoom(resetZoom)
+    }
+  }, [control.zoomReset])
 
   return (
     <div

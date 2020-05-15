@@ -1,7 +1,7 @@
 const initState = {
   center: [47.6, -122.3],
   callerId: null,
-  zoom: 8,
+  zoomReset: true,
 }
 const statusReducer = (state, action) => {
   switch (action.type) {
@@ -10,10 +10,10 @@ const statusReducer = (state, action) => {
       state,
       { center: action.center, callerId: action.callerId },
     )
-    case 'zoom': return Object.assign(
+    case 'zoomReset': return Object.assign(
       {},
       state,
-      { zoom: action.zoom, callerId: action.callerId },
+      { zoomReset: action.zoomReset, callerId: action.callerId },
     )
     default: return state
   }
@@ -25,10 +25,10 @@ const controlReducer = (state, action) => {
       state,
       { center: action.center, callerId: action.callerId },
     )
-    case 'zoom': return Object.assign(
+    case 'zoomReset': return Object.assign(
       {},
       state,
-      { zoom: action.zoom, callerId: action.callerId },
+      { zoomReset: action.zoomReset, callerId: action.callerId },
     )
     default: return state
   }

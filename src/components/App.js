@@ -34,21 +34,17 @@ function App() {
   infoWithAction(infoCommandItem, setIsModalOpen)
   goToWithAction(gotoCommandItems, cities, controlDispatch)
   withAction(zoomCommandItem, () => {
-    console.log('zoom', control)
     controlDispatch({
-      type: 'zoom',
-      zoom: 7,
+      type: 'zoomReset',
+      zoomReset: true,
       callerId: 1000,
     })
   })
 
-  useEffect(() => {
-    console.log('effect', control)
-  }, [control])
-
   // circular updates are prevented in the component
   useEffect(() => {
     controlDispatch({ type: 'center', center: status.center, callerId: status.callerId })
+    controlDispatch({ type: 'zoomReset', zoomReset: status.zoomReset, callerId: status.callerId })
   }, [status])
 
   return (
