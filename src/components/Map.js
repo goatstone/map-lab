@@ -40,14 +40,12 @@ function Map({
     mapRef.current = L.map(idName, {
       center: control.center,
       zoom: resetZoomLevel,
+      zoomControl: false,
       layers: [
         grayscale, streets,
       ],
       scrollWheelZoom: false,
       keyboard: false,
-    })
-    L.control.zoom({
-      position: 'topleft'
     })
     // capture only user map chage to dispatch status
     mapRef.current.on('mousedown', e => {
@@ -79,6 +77,9 @@ function Map({
       mapRef.current.setZoom(resetZoomLevel)
     }
   }, [control.zoomReset])
+  useEffect(() => {
+    mapRef.current.setZoom(control.zoom.leaflet)
+  }, [control.zoom.leaflet])
 
   return (
     <div

@@ -34,18 +34,45 @@ function App() {
   infoWithAction(infoCommandItem, setIsModalOpen)
   goToWithAction(gotoCommandItems, cities, statusDispatch)
   withAction(zoomCommandItem, () => {
-    controlDispatch({
+    statusDispatch({
       type: 'zoomReset',
       zoomReset: true,
       callerId: 1000,
+    })
+  })
+  const zoomOut = {
+    key: 'zoomOut',
+    text: 'Zoom Out',
+    iconProps: { iconName: 'zoomout' },
+  }
+  withAction(zoomOut, () => {
+    statusDispatch({
+      type: 'zoomOut',
+      callerId: 2000,
+    })
+  })
+  const zoomIn = { key: 'zoom-in', text: 'Zoom In', iconProps: { iconName: 'zoomin' } }
+  withAction(zoomIn, () => {
+    statusDispatch({
+      type: 'zoomIn',
+      callerId: 3000,
     })
   })
 
   // circular updates are prevented in the component
   useEffect(() => {
     controlDispatch({ type: 'center', center: status.center, callerId: status.callerId })
+  }, [status.center])
+  useEffect(() => {
     controlDispatch({ type: 'zoomReset', zoomReset: status.zoomReset, callerId: status.callerId })
-  }, [status])
+  }, [status.zoomReset])
+  useEffect(() => {
+    controlDispatch({
+      type: 'zoomLeaflet',
+      zoom: status.zoom.leaflet,
+      callerId: status.callerId,
+    })
+  }, [status.zoom.leaflet])
 
   return (
     <>
@@ -56,7 +83,7 @@ function App() {
         />
         <MainHeader
           title="MapLab"
-          items={[repoCommandItem, gotoCommandItems, zoomCommandItem]}
+          items={[repoCommandItem, gotoCommandItems, zoomCommandItem, zoomOut, zoomIn]}
           farItems={[infoCommandItem]}
         />
         <div className={sheet.classes.frame}>
