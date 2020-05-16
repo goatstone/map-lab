@@ -32,7 +32,7 @@ function App() {
   const [control, controlDispatch] = useReducer(controlReducer, initState)
 
   infoWithAction(infoCommandItem, setIsModalOpen)
-  goToWithAction(gotoCommandItems, cities, controlDispatch)
+  goToWithAction(gotoCommandItems, cities, statusDispatch)
   withAction(zoomCommandItem, () => {
     controlDispatch({
       type: 'zoomReset',

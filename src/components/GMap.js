@@ -56,7 +56,7 @@ const GMap = ({
           // eslint-disable-next-line
           window.google.maps.event.removeListener(listener);
         })
-        map.addListener('zoom', () => {
+        map.addListener('zoom_changed', () => {
           statusDispatch({
             type: 'zoomReset',
             zoomReset: false,

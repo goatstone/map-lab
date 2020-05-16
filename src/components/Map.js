@@ -43,12 +43,14 @@ function Map({
       layers: [
         grayscale, streets,
       ],
+      scrollWheelZoom: false,
+      keyboard: false,
     })
     L.control.zoom({
       position: 'topleft'
     })
     // capture only user map chage to dispatch status
-    mapRef.current.on('mousedown', () => {
+    mapRef.current.on('mousedown', e => {
       mapRef.current.on('move', userMoveListener)
     })
     mapRef.current.on('mouseup', () => {
@@ -61,6 +63,9 @@ function Map({
         callerId,
       })
     })
+    mapRef.current.off('dblclick')
+    mapRef.current.off('doubleClickZoom')
+    mapRef.current.off('move')
   }, [])
   useEffect(() => {
     // prevent calls from self to used in control !!!!
@@ -70,7 +75,7 @@ function Map({
     }
   }, [control.center])
   useEffect(() => {
-    if(control.zoomReset) {
+    if (control.zoomReset) {
       mapRef.current.setZoom(resetZoomLevel)
     }
   }, [control.zoomReset])
