@@ -14,6 +14,8 @@ import {
   gotoCommandItems,
   infoCommandItem,
   zoomCommandItem,
+  zoomIn,
+  zoomOut,
   infoWithAction,
   goToWithAction,
   withAction,
@@ -40,18 +42,12 @@ function App() {
       callerId: 1000,
     })
   })
-  const zoomOut = {
-    key: 'zoomOut',
-    text: 'Zoom Out',
-    iconProps: { iconName: 'zoomout' },
-  }
   withAction(zoomOut, () => {
     statusDispatch({
       type: 'zoomOut',
       callerId: 2000,
     })
   })
-  const zoomIn = { key: 'zoom-in', text: 'Zoom In', iconProps: { iconName: 'zoomin' } }
   withAction(zoomIn, () => {
     statusDispatch({
       type: 'zoomIn',

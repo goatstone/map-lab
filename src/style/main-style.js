@@ -14,6 +14,12 @@ const style = {
     left: 0,
     right: 0,
     bottom: 0,
+    '& .zoom-command-item': {
+      background: '#ccc',
+    },
+    '& .zoom-command-item: before': {
+      content: 'gray',
+    },
     '& header': {
       display: 'flex',
       justifyContent: 'center',
