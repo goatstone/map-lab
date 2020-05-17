@@ -7,17 +7,29 @@ import goToWithAction from './goto-with-action'
 import withAction from './with-action'
 
 const zoomOutLeaflet = {
-  key: 'zoomOut',
-  text: 'Zoom Out',
+  key: 'zoom-out-leaflet',
+  // text: 'Zoom Out',
   iconProps: { iconName: 'zoomout' },
   split: true,
-  className: 'zoom-command-item',
+  className: 'zoom-command-item-leaflet',
 }
 const zoomInLeaflet = {
-  key: 'zoom-in',
-  text: 'Zoom In',
+  key: 'zoom-in-leaflet',
+  // text: 'Zoom In',
   iconProps: { iconName: 'zoomin' },
-  className: 'zoom-command-item',
+  className: 'zoom-command-item-leaflet',
+}
+const zoomOutGmap = {
+  key: 'zoom-out-gmap',
+  // text: 'Zoom Out',
+  iconProps: { iconName: 'zoomout' },
+  className: 'zoom-command-item-gmap',
+}
+const zoomInGMap = {
+  key: 'zoom-in-gmap',
+  // text: 'Zoom In',
+  iconProps: { iconName: 'zoomin' },
+  className: 'zoom-command-item-gmap',
 }
 
 export {
@@ -27,6 +39,8 @@ export {
   zoomCommandItem,
   zoomInLeaflet,
   zoomOutLeaflet,
+  zoomInGMap,
+  zoomOutGmap,
   infoWithAction,
   goToWithAction,
   withAction,

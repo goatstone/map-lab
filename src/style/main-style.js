@@ -14,8 +14,11 @@ const style = {
     left: 0,
     right: 0,
     bottom: 0,
-    '& .zoom-command-item': {
+    '& .zoom-command-item-leaflet': {
       background: '#ccc',
+    },
+    '& .zoom-command-item-gmap': {
+      background: '#eee',
     },
     '& .zoom-command-item: before': {
       content: 'gray',

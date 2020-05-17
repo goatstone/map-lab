@@ -16,6 +16,8 @@ import {
   zoomCommandItem,
   zoomInLeaflet,
   zoomOutLeaflet,
+  zoomInGMap,
+  zoomOutGmap,
   infoWithAction,
   goToWithAction,
   withAction,
@@ -44,13 +46,13 @@ function App() {
   })
   withAction(zoomOutLeaflet, () => {
     statusDispatch({
-      type: 'zoomOut',
+      type: 'zoomOutLeaflet',
       callerId: 2000,
     })
   })
   withAction(zoomInLeaflet, () => {
     statusDispatch({
-      type: 'zoomIn',
+      type: 'zoomInLeaflet',
       callerId: 3000,
     })
   })
@@ -83,6 +85,8 @@ function App() {
             repoCommandItem,
             gotoCommandItems,
             zoomCommandItem,
+            zoomInGMap,
+            zoomOutGmap,
             zoomOutLeaflet,
             zoomInLeaflet,
           ]}
