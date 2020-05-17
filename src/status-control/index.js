@@ -1,10 +1,10 @@
+const initZoom = 9
 const initState = {
   center: [47.6, -122.3],
   callerId: null,
-  zoomReset: true,
   zoom: {
-    leaflet: 9,
-    gmap: 9,
+    leaflet: initZoom,
+    gmap: initZoom,
   },
 }
 const statusReducer = (state, action) => {
@@ -17,7 +17,7 @@ const statusReducer = (state, action) => {
     case 'zoomReset': return Object.assign(
       {},
       state,
-      { zoomReset: action.zoomReset, callerId: action.callerId },
+      { zoom: { leaflet: initZoom, gmap: initZoom } },
     )
     case 'zoomOutLeaflet': {
       const MIN_ZOOM = 0
@@ -60,11 +60,6 @@ const controlReducer = (state, action) => {
       {},
       state,
       { center: action.center, callerId: action.callerId },
-    )
-    case 'zoomReset': return Object.assign(
-      {},
-      state,
-      { zoomReset: action.zoomReset, callerId: action.callerId },
     )
     case 'zoom': return Object.assign({}, state,
       { zoom: action.zoom, callerId: action.callerId })

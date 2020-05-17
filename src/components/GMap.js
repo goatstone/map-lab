@@ -56,13 +56,6 @@ const GMap = ({
           // eslint-disable-next-line
           window.google.maps.event.removeListener(listener);
         })
-        map.addListener('zoom_changed', () => {
-          statusDispatch({
-            type: 'zoomReset',
-            zoomReset: false,
-            callerId,
-          })
-        })
       })
       .catch(e => {
         throw new Error(`Library Not Loaded ${e}`)
@@ -75,11 +68,6 @@ const GMap = ({
       map.setCenter({ lat: control.center[0], lng: control.center[1] })
     }
   }, [control.center])
-  useEffect(() => {
-    if (map && control.zoomReset) {
-      map.setZoom(resetZoomLevel)
-    }
-  }, [control.zoomReset])
   useEffect(() => {
     if (map) {
       map.setZoom(control.zoom.gmap)

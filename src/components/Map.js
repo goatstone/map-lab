@@ -54,13 +54,6 @@ function Map({
     mapRef.current.on('mouseup', () => {
       mapRef.current.off('move')
     })
-    mapRef.current.on('zoom', () => {
-      statusDispatch({
-        type: 'zoomReset',
-        zoomReset: false,
-        callerId,
-      })
-    })
     mapRef.current.off('dblclick')
     mapRef.current.off('doubleClickZoom')
     mapRef.current.off('move')
@@ -72,11 +65,6 @@ function Map({
       mapRef.current.panTo(control.center)
     }
   }, [control.center])
-  useEffect(() => {
-    if (control.zoomReset) {
-      mapRef.current.setZoom(resetZoomLevel)
-    }
-  }, [control.zoomReset])
   useEffect(() => {
     mapRef.current.setZoom(control.zoom.leaflet)
   }, [control.zoom.leaflet])

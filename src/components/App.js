@@ -74,9 +74,6 @@ function App() {
     controlDispatch({ type: 'center', center: status.center, callerId: status.callerId })
   }, [status.center])
   useEffect(() => {
-    controlDispatch({ type: 'zoomReset', zoomReset: status.zoomReset, callerId: status.callerId })
-  }, [status.zoomReset])
-  useEffect(() => {
     controlDispatch({
       type: 'zoom',
       zoom: status.zoom,
@@ -99,8 +96,8 @@ function App() {
             zoomCommandItem,
             zoomInGMap,
             zoomOutGMap,
-            zoomOutLeaflet,
             zoomInLeaflet,
+            zoomOutLeaflet,
           ]}
           farItems={[infoCommandItem]}
         />
