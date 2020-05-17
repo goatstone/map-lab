@@ -43,8 +43,8 @@ const controlReducer = (state, action) => {
       state,
       { zoomReset: action.zoomReset, callerId: action.callerId },
     )
-    case 'zoomLeaflet': return Object.assign({}, state,
-      { zoom: { leaflet: action.zoom }, callerId: action.callerId })
+    case 'zoom': return Object.assign({}, state,
+      { zoom: action.zoom, callerId: action.callerId })
     default: return state
   }
 }

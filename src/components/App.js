@@ -64,11 +64,11 @@ function App() {
   }, [status.zoomReset])
   useEffect(() => {
     controlDispatch({
-      type: 'zoomLeaflet',
-      zoom: status.zoom.leaflet,
+      type: 'zoom',
+      zoom: status.zoom,
       callerId: status.callerId,
     })
-  }, [status.zoom.leaflet])
+  }, [status.zoom])
 
   return (
     <>
