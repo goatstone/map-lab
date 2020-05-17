@@ -35,20 +35,22 @@ const statusReducer = (state, action) => {
         { zoom },
         { callerId: action.callerId })
     }
-    // case 'zoomOutGMap': {
-    //   const MIN_ZOOM = 0
-    //   const newNum = (state.zoom.gmap <= MIN_ZOOM) ? MIN_ZOOM : state.zoom.gmap - 1
-    //   const zoom = Object.assign({}, state.zoom, { gmap: newNum })
-    //   return Object.assign({}, state,
-    //     { zoom },
-    //     { callerId: action.callerId })
-    // }
-    // case 'zoomInGMap': {
-    //   const MAX_ZOOM = 18
-    //   const newNum = (state.zoom.gmap >= MAX_ZOOM) ? MAX_ZOOM : state.zoom.gmap + 1
-    //   return Object.assign({}, state,
-    //     { zoom: { gmap: newNum }, callerId: action.callerId })
-    // }
+    case 'zoomOutGMap': {
+      const MIN_ZOOM = 0
+      const newNum = (state.zoom.gmap <= MIN_ZOOM) ? MIN_ZOOM : state.zoom.gmap - 1
+      const zoom = Object.assign({}, state.zoom, { gmap: newNum })
+      return Object.assign({}, state,
+        { zoom },
+        { callerId: action.callerId })
+    }
+    case 'zoomInGMap': {
+      const MAX_ZOOM = 18
+      const newNum = (state.zoom.gmap >= MAX_ZOOM) ? MAX_ZOOM : state.zoom.gmap + 1
+      const zoom = Object.assign({}, state.zoom, { gmap: newNum })
+      return Object.assign({}, state,
+        { zoom },
+        { callerId: action.callerId })
+    }
     default: return state
   }
 }

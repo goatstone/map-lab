@@ -26,7 +26,7 @@ const GMap = ({
       },
       zoom: resetZoomLevel,
       disableDefaultUI: true,
-      zoomControl: true,
+      zoomControl: false,
       zoomControlOptions: {
         position: null,
       },
@@ -80,6 +80,11 @@ const GMap = ({
       map.setZoom(resetZoomLevel)
     }
   }, [control.zoomReset])
+  useEffect(() => {
+    if (map) {
+      map.setZoom(control.zoom.gmap)
+    }
+  }, [control.zoom.gmap])
 
   return (
     <div

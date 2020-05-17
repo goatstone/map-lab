@@ -64,8 +64,8 @@ function App() {
   })
   withAction(zoomInGMap, () => {
     statusDispatch({
-      type: 'zoomOutGMap',
-      callerId: 4000,
+      type: 'zoomInGMap',
+      callerId: 5000,
     })
   })
 
