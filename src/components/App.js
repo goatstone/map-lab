@@ -17,7 +17,7 @@ import {
   zoomInLeaflet,
   zoomOutLeaflet,
   zoomInGMap,
-  zoomOutGmap,
+  zoomOutGMap,
   infoWithAction,
   goToWithAction,
   withAction,
@@ -56,6 +56,18 @@ function App() {
       callerId: 3000,
     })
   })
+  withAction(zoomOutGMap, () => {
+    statusDispatch({
+      type: 'zoomOutGMap',
+      callerId: 4000,
+    })
+  })
+  withAction(zoomInGMap, () => {
+    statusDispatch({
+      type: 'zoomOutGMap',
+      callerId: 4000,
+    })
+  })
 
   // circular updates are prevented in the component
   useEffect(() => {
@@ -86,7 +98,7 @@ function App() {
             gotoCommandItems,
             zoomCommandItem,
             zoomInGMap,
-            zoomOutGmap,
+            zoomOutGMap,
             zoomOutLeaflet,
             zoomInLeaflet,
           ]}

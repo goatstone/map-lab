@@ -19,7 +19,7 @@ const zoomInLeaflet = {
   iconProps: { iconName: 'zoomin' },
   className: 'zoom-command-item-leaflet',
 }
-const zoomOutGmap = {
+const zoomOutGMap = {
   key: 'zoom-out-gmap',
   // text: 'Zoom Out',
   iconProps: { iconName: 'zoomout' },
@@ -40,7 +40,7 @@ export {
   zoomInLeaflet,
   zoomOutLeaflet,
   zoomInGMap,
-  zoomOutGmap,
+  zoomOutGMap,
   infoWithAction,
   goToWithAction,
   withAction,
