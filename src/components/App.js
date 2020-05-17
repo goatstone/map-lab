@@ -14,8 +14,8 @@ import {
   gotoCommandItems,
   infoCommandItem,
   zoomCommandItem,
-  zoomIn,
-  zoomOut,
+  zoomInLeaflet,
+  zoomOutLeaflet,
   infoWithAction,
   goToWithAction,
   withAction,
@@ -42,13 +42,13 @@ function App() {
       callerId: 1000,
     })
   })
-  withAction(zoomOut, () => {
+  withAction(zoomOutLeaflet, () => {
     statusDispatch({
       type: 'zoomOut',
       callerId: 2000,
     })
   })
-  withAction(zoomIn, () => {
+  withAction(zoomInLeaflet, () => {
     statusDispatch({
       type: 'zoomIn',
       callerId: 3000,
@@ -79,7 +79,13 @@ function App() {
         />
         <MainHeader
           title="MapLab"
-          items={[repoCommandItem, gotoCommandItems, zoomCommandItem, zoomOut, zoomIn]}
+          items={[
+            repoCommandItem,
+            gotoCommandItems,
+            zoomCommandItem,
+            zoomOutLeaflet,
+            zoomInLeaflet,
+          ]}
           farItems={[infoCommandItem]}
         />
         <div className={sheet.classes.frame}>
