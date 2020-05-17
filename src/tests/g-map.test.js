@@ -16,6 +16,7 @@ const mockZoomLevel = jest.fn(level => level)
 const props = {
   control: {
     center: [0, 0],
+    zoom: { leaflet: 0, gmap: 0 },
   },
   statusDispatch: () => null,
   mainClassName: '',

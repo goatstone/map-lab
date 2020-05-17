@@ -12,6 +12,7 @@ const { window } = jsdom
 const initLatLng = [47.6, -122.3]
 const control = {
   center: initLatLng,
+  zoom: { leaflet: 0, gmap: 0 },
 }
 const statusDispatch = {
   center: () => 1,
