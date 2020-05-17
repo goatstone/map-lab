@@ -2,7 +2,10 @@ const initState = {
   center: [47.6, -122.3],
   callerId: null,
   zoomReset: true,
-  zoom: { leaflet: 9 },
+  zoom: {
+    leaflet: 9,
+    gmap: 9,
+  },
 }
 const statusReducer = (state, action) => {
   switch (action.type) {
@@ -19,15 +22,33 @@ const statusReducer = (state, action) => {
     case 'zoomOutLeaflet': {
       const MIN_ZOOM = 0
       const newNum = (state.zoom.leaflet <= MIN_ZOOM) ? MIN_ZOOM : state.zoom.leaflet - 1
+      const zoom = Object.assign({}, state.zoom, { leaflet: newNum })
       return Object.assign({}, state,
-        { zoom: { leaflet: newNum }, callerId: action.callerId })
+        { zoom },
+        { callerId: action.callerId })
     }
     case 'zoomInLeaflet': {
       const MAX_ZOOM = 18
       const newNum = (state.zoom.leaflet >= MAX_ZOOM) ? MAX_ZOOM : state.zoom.leaflet + 1
+      const zoom = Object.assign({}, state.zoom, { leaflet: newNum })
       return Object.assign({}, state,
-        { zoom: { leaflet: newNum }, callerId: action.callerId })
+        { zoom },
+        { callerId: action.callerId })
     }
+    // case 'zoomOutGMap': {
+    //   const MIN_ZOOM = 0
+    //   const newNum = (state.zoom.gmap <= MIN_ZOOM) ? MIN_ZOOM : state.zoom.gmap - 1
+    //   const zoom = Object.assign({}, state.zoom, { gmap: newNum })
+    //   return Object.assign({}, state,
+    //     { zoom },
+    //     { callerId: action.callerId })
+    // }
+    // case 'zoomInGMap': {
+    //   const MAX_ZOOM = 18
+    //   const newNum = (state.zoom.gmap >= MAX_ZOOM) ? MAX_ZOOM : state.zoom.gmap + 1
+    //   return Object.assign({}, state,
+    //     { zoom: { gmap: newNum }, callerId: action.callerId })
+    // }
     default: return state
   }
 }
