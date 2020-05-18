@@ -19,6 +19,7 @@ import {
   zoomOutLeaflet,
   zoomInGMap,
   zoomOutGMap,
+  zoomBingMap,
   infoWithAction,
   goToWithAction,
   withAction,
@@ -70,7 +71,18 @@ function App() {
       callerId: 5000,
     })
   })
-
+  withAction(zoomBingMap[0], () => {
+    statusDispatch({
+      type: 'zoomInBingMap',
+      callerId: 6000,
+    })
+  })
+  withAction(zoomBingMap[1], () => {
+    statusDispatch({
+      type: 'zoomOutBingMap',
+      callerId: 7000,
+    })
+  })
   // circular updates are prevented in the component
   useEffect(() => {
     controlDispatch({ type: 'center', center: status.center, callerId: status.callerId })
@@ -96,6 +108,7 @@ function App() {
             repoCommandItem,
             gotoCommandItems,
             zoomCommandItem,
+            ...zoomBingMap,
             zoomInGMap,
             zoomOutGMap,
             zoomInLeaflet,

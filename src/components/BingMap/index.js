@@ -34,10 +34,10 @@ const sampleStyle = {
   },
   settings: { landColor: '#F6F4E3' },
 }
-
+let map
 const BingMap = ({ config, control }) => {
+  const callerId = 9000
   const url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
-  let map
   // eslint-disable-next-line
   window.GetBingMap = () => {
     // eslint-disable-next-line
@@ -58,14 +58,24 @@ const BingMap = ({ config, control }) => {
     node.src = url
     document.getElementById('bing-map').appendChild(node)
   }, [])
-  const callerId = 9000
   useEffect(() => {
     // prevent calls from self to used in control !!!!
     const isControllable = (control.callerId !== callerId && map)
     if (isControllable) {
-      // map.setCenter({ lat: control.center[0], lng: control.center[1] })
+      map.setView({
+      // eslint-disable-next-line
+      center: new window.Microsoft.Maps.Location(...control.center),
+      })
     }
   }, [control.center])
+  useEffect(() => {
+    if (map) {
+      map.setView({
+        // eslint-disable-next-line
+        zoom: new window.Microsoft.Maps.Location(...control.zoom),
+      })
+    }
+  }, [control.zoom])
 
   return (
     <div id="bing-map">&nbsp;</div>
