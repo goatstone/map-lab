@@ -7,6 +7,7 @@ import {
   GMap,
   LMap,
   InfoModal,
+  BingMap,
 } from '.'
 import MainHeader from './MainHeader'
 import {
@@ -24,6 +25,7 @@ import {
 } from '../command-items'
 import { statusReducer, controlReducer, initState } from '../status-control'
 import { cities } from '../data'
+import config from '../config'
 
 initializeIcons()
 jss.setup(preset())
@@ -102,6 +104,9 @@ function App() {
           farItems={[infoCommandItem]}
         />
         <div className={sheet.classes.frame}>
+          <BingMap
+            config={config}
+          />
           <GMap
             mainClassName={sheet.classes.gMap}
             control={control}

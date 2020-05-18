@@ -14,6 +14,9 @@ const style = {
     left: 0,
     right: 0,
     bottom: 0,
+    '& #bing-map': {
+      width: '100%',
+    },
     '& .zoom-command-item-leaflet': {
       background: '#ccc',
     },
