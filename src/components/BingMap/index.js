@@ -39,6 +39,7 @@ let map
 const BingMap = ({ config, control, statusDispatch }) => {
   const callerId = 9000
   const url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
+  let userCenterChangeHangler
   const userCenterChanged = () => {
     const centerArr = Object.entries(map.getCenter())
       .filter(e => e[0] === 'latitude' || e[0] === 'longitude')
@@ -61,14 +62,14 @@ const BingMap = ({ config, control, statusDispatch }) => {
     })
     map.setOptions({ customMapStyle: sampleStyle })
     // eslint-disable-next-line
-    let userViewChangeHandler = window.Microsoft.Maps.Events.addHandler(map, 'mousedown', function () { 
+    window.Microsoft.Maps.Events.addHandler(map, 'mousedown', function () { 
       // eslint-disable-next-line
-      window.Microsoft.Maps.Events.addHandler(map, 'viewchange', userCenterChanged)
+      userCenterChangeHangler = window.Microsoft.Maps.Events.addHandler(map, 'viewchange', userCenterChanged)
     })
     // eslint-disable-next-line
     window.Microsoft.Maps.Events.addHandler(map, 'mouseup', function () { 
       // eslint-disable-next-line
-      window.Microsoft.Maps.Events.removeHandler(userViewChangeHandler)
+      window.Microsoft.Maps.Events.removeHandler(userCenterChangeHangler)
     })
   }
   useEffect(() => {
