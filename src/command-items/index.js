@@ -29,12 +29,12 @@ const zoomInGMap = {
 }
 const zoomBingMap = [{
   key: 'zoom-in-bingmap',
-  iconProps: { iconName: 'zoomout' },
+  iconProps: { iconName: 'zoomin' },
   className: 'zoom-command-item-bingmap',
 },
 {
   key: 'zoom-out-bingmap',
-  iconProps: { iconName: 'zoomin' },
+  iconProps: { iconName: 'zoomout' },
   className: 'zoom-command-item-bingmap',
 },
 ]

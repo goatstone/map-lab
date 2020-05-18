@@ -64,7 +64,7 @@ const statusReducer = (state, action) => {
     case 'zoomOutBingMap': {
       const newNum = (state.zoom.bingmap <= MIN_ZOOM) ? MIN_ZOOM : state.zoom.bingmap - 1
       const zoom = Object.assign({}, state.zoom, { bingmap: newNum })
-      return Object.assign({}, state, zoom)
+      return Object.assign({}, state, { zoom })
     }
     default: return state
   }

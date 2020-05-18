@@ -120,6 +120,7 @@ function App() {
           <BingMap
             config={config}
             control={control}
+            statusDispatch={statusDispatch}
           />
           <GMap
             mainClassName={sheet.classes.gMap}

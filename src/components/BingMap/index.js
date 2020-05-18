@@ -35,9 +35,16 @@ const sampleStyle = {
   settings: { landColor: '#F6F4E3' },
 }
 let map
-const BingMap = ({ config, control }) => {
+
+const BingMap = ({ config, control, statusDispatch }) => {
   const callerId = 9000
   const url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
+  const userCenterChanged = () => {
+    const centerArr = Object.entries(map.getCenter())
+      .filter(e => e[0] === 'latitude' || e[0] === 'longitude')
+      .map(e => e[1])
+    statusDispatch({ type: 'center', center: centerArr, callerId })
+  }
   // eslint-disable-next-line
   window.GetBingMap = () => {
     // eslint-disable-next-line
@@ -50,8 +57,19 @@ const BingMap = ({ config, control }) => {
       showLocateMeButton: false,
       disableStreetside: true,
       disableBirdseye: true,
+      showZoomButtons: false,
     })
     map.setOptions({ customMapStyle: sampleStyle })
+    // eslint-disable-next-line
+    let userViewChangeHandler = window.Microsoft.Maps.Events.addHandler(map, 'mousedown', function () { 
+      // eslint-disable-next-line
+      window.Microsoft.Maps.Events.addHandler(map, 'viewchange', userCenterChanged)
+    })
+    // eslint-disable-next-line
+    window.Microsoft.Maps.Events.addHandler(map, 'mouseup', function () { 
+      // eslint-disable-next-line
+      window.Microsoft.Maps.Events.removeHandler(userViewChangeHandler)
+    })
   }
   useEffect(() => {
     const node = document.createElement('script')
@@ -71,11 +89,10 @@ const BingMap = ({ config, control }) => {
   useEffect(() => {
     if (map) {
       map.setView({
-        // eslint-disable-next-line
-        zoom: new window.Microsoft.Maps.Location(...control.zoom),
+        zoom: control.zoom.bingmap,
       })
     }
-  }, [control.zoom])
+  }, [control.zoom.bingmap])
 
   return (
     <div id="bing-map">&nbsp;</div>
@@ -84,6 +101,7 @@ const BingMap = ({ config, control }) => {
 /* eslint-disable react/forbid-prop-types */
 BingMap.propTypes = {
   config: PropTypes.object.isRequired,
+  statusDispatch: PropTypes.func.isRequired,
   control: PropTypes.object.isRequired,
 }
 
