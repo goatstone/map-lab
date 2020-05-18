@@ -35,13 +35,22 @@ const sampleStyle = {
   settings: { landColor: '#F6F4E3' },
 }
 
-const BingMap = ({ config }) => {
+const BingMap = ({ config, control }) => {
   const url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
   let map
   // eslint-disable-next-line
   window.GetBingMap = () => {
     // eslint-disable-next-line
-    map = new window.Microsoft.Maps.Map('#bing-map', {});
+    map = new window.Microsoft.Maps.Map('#bing-map', {
+      // eslint-disable-next-line
+      center: new window.Microsoft.Maps.Location(...control.center),
+      // eslint-disable-next-line
+      mapTypeId: window.Microsoft.Maps.MapTypeId.aerial,
+      zoom: control.zoom.bingmap,
+      showLocateMeButton: false,
+      disableStreetside: true,
+      disableBirdseye: true,
+    })
     map.setOptions({ customMapStyle: sampleStyle })
   }
   useEffect(() => {
@@ -49,6 +58,14 @@ const BingMap = ({ config }) => {
     node.src = url
     document.getElementById('bing-map').appendChild(node)
   }, [])
+  const callerId = 9000
+  useEffect(() => {
+    // prevent calls from self to used in control !!!!
+    const isControllable = (control.callerId !== callerId && map)
+    if (isControllable) {
+      // map.setCenter({ lat: control.center[0], lng: control.center[1] })
+    }
+  }, [control.center])
 
   return (
     <div id="bing-map">&nbsp;</div>
@@ -57,6 +74,7 @@ const BingMap = ({ config }) => {
 /* eslint-disable react/forbid-prop-types */
 BingMap.propTypes = {
   config: PropTypes.object.isRequired,
+  control: PropTypes.object.isRequired,
 }
 
 export default BingMap

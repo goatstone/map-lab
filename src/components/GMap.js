@@ -12,7 +12,7 @@ const GMap = ({
 }) => {
   const idName = 'google-map'
   const callerId = 1
-  const resetZoomLevel = 9
+  const resetZoomLevel = control.zoom.gmap
   useEffect(() => {
     const loader = new Loader({
       apiKey: config.gMapAPIKey,

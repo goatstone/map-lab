@@ -106,6 +106,7 @@ function App() {
         <div className={sheet.classes.frame}>
           <BingMap
             config={config}
+            control={control}
           />
           <GMap
             mainClassName={sheet.classes.gMap}
