@@ -70,7 +70,7 @@ const GMap = ({
     if (map) {
       map.setZoom(control.zoom.gmap)
     }
-  }, [control.zoom.gmap])
+  }, [control.zoom])
 
   return (
     <div

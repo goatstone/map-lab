@@ -15,11 +15,11 @@ import {
   gotoCommandItems,
   infoCommandItem,
   zoomCommandItem,
-  zoomInLeaflet,
-  zoomOutLeaflet,
-  zoomInGMap,
-  zoomOutGMap,
-  zoomBingMap,
+  // zoomInLeaflet,
+  // zoomOutLeaflet,
+  // zoomInGMap,
+  // zoomOutGMap,
+  // zoomBingMap,
   infoWithAction,
   goToWithAction,
   withAction,
@@ -40,61 +40,61 @@ function App() {
   const controlIds = { BING: 'BING', GMAP: 'GMAP', LEAFLET: 'LEAFLET' }
   const controls = {}
   const controlsDispatch = {}
-  const [controlA, controlDispatchA] = useReducer(controlReducer, initState)
-  const [controlB, controlDispatchB] = useReducer(controlReducer, initState)
-  const [controlC, controlDispatchC] = useReducer(controlReducer, initState)
-  controls[controlIds.BING] = controlA
-  controls[controlIds.GMAP] = controlB
-  controls[controlIds.LEAFLET] = controlC
-  controlsDispatch[controlIds.BING] = controlDispatchA
-  controlsDispatch[controlIds.GMAP] = controlDispatchB
-  controlsDispatch[controlIds.LEAFLET] = controlDispatchC
+  const [controlBingMap, controlDispatchBingMap] = useReducer(controlReducer, initState)
+  const [controlGMap, controlDispatchGMap] = useReducer(controlReducer, initState)
+  const [controlLeaflet, controlDispatchLeaflet] = useReducer(controlReducer, initState)
+  controls[controlIds.BING] = controlBingMap
+  controls[controlIds.GMAP] = controlGMap
+  controls[controlIds.LEAFLET] = controlLeaflet
+  controlsDispatch[controlIds.BING] = controlDispatchBingMap
+  controlsDispatch[controlIds.GMAP] = controlDispatchGMap
+  controlsDispatch[controlIds.LEAFLET] = controlDispatchLeaflet
 
   infoWithAction(infoCommandItem, setIsModalOpen)
   goToWithAction(gotoCommandItems, cities, statusDispatch)
   withAction(zoomCommandItem, () => {
     statusDispatch({
-      type: 'zoomReset',
-      zoomReset: true,
+      type: 'zoom',
+      zoom: 5,
       callerId: 1000,
     })
   })
-  withAction(zoomOutLeaflet, () => {
-    statusDispatch({
-      type: 'zoomOutLeaflet',
-      callerId: 2000,
-    })
-  })
-  withAction(zoomInLeaflet, () => {
-    statusDispatch({
-      type: 'zoomInLeaflet',
-      callerId: 3000,
-    })
-  })
-  withAction(zoomOutGMap, () => {
-    statusDispatch({
-      type: 'zoomOutGMap',
-      callerId: 4000,
-    })
-  })
-  withAction(zoomInGMap, () => {
-    statusDispatch({
-      type: 'zoomInGMap',
-      callerId: 5000,
-    })
-  })
-  withAction(zoomBingMap[0], () => {
-    statusDispatch({
-      type: 'zoomInBingMap',
-      callerId: 6000,
-    })
-  })
-  withAction(zoomBingMap[1], () => {
-    statusDispatch({
-      type: 'zoomOutBingMap',
-      callerId: 7000,
-    })
-  })
+  // withAction(zoomOutLeaflet, () => {
+  //   statusDispatch({
+  //     type: 'zoomOutLeaflet',
+  //     callerId: 2000,
+  //   })
+  // })
+  // withAction(zoomInLeaflet, () => {
+  //   statusDispatch({
+  //     type: 'zoomInLeaflet',
+  //     callerId: 3000,
+  //   })
+  // })
+  // withAction(zoomOutGMap, () => {
+  //   statusDispatch({
+  //     type: 'zoomOutGMap',
+  //     callerId: 4000,
+  //   })
+  // })
+  // withAction(zoomInGMap, () => {
+  //   statusDispatch({
+  //     type: 'zoomInGMap',
+  //     callerId: 5000,
+  //   })
+  // })
+  // withAction(zoomBingMap[0], () => {
+  //   statusDispatch({
+  //     type: 'zoomInBingMap',
+  //     callerId: 6000,
+  //   })
+  // })
+  // withAction(zoomBingMap[1], () => {
+  //   statusDispatch({
+  //     type: 'zoomOutBingMap',
+  //     callerId: 7000,
+  //   })
+  // })
 
   useEffect(() => {
     Object.entries(controlsDispatch)
@@ -104,8 +104,16 @@ function App() {
       })
   }, [status.center])
   useEffect(() => {
+    console.log('zoom', status)
+    controlsDispatch.BING(
+      {
+        type: 'zoom',
+        zoom: status.zoom,
+      },
+    )
     Object.values(controlsDispatch)
       .forEach(e => {
+        console.log('zoom e', e)
         e({
           type: 'zoom',
           zoom: status.zoom,
@@ -126,11 +134,11 @@ function App() {
             repoCommandItem,
             gotoCommandItems,
             zoomCommandItem,
-            ...zoomBingMap,
-            zoomInGMap,
-            zoomOutGMap,
-            zoomInLeaflet,
-            zoomOutLeaflet,
+            // ...zoomBingMap,
+            // zoomInGMap,
+            // zoomOutGMap,
+            // zoomInLeaflet,
+            // zoomOutLeaflet,
           ]}
           farItems={[infoCommandItem]}
         />

@@ -92,10 +92,10 @@ const BingMap = ({
   useEffect(() => {
     if (map) {
       map.setView({
-        zoom: control.zoom.bingmap,
+        zoom: control.zoom,
       })
     }
-  }, [control.zoom.bingmap])
+  }, [control.zoom])
 
   return (
     <div id="bing-map">&nbsp;</div>

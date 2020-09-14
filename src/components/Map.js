@@ -64,8 +64,8 @@ function Map({
     }
   }, [control.center])
   useEffect(() => {
-    mapRef.current.setZoom(control.zoom.leaflet)
-  }, [control.zoom.leaflet])
+    mapRef.current.setZoom(control.zoom)
+  }, [control.zoom])
 
   return (
     <div
