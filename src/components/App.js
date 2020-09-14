@@ -15,11 +15,11 @@ import {
   gotoCommandItems,
   infoCommandItem,
   zoomCommandItem,
-  // zoomInLeaflet,
-  // zoomOutLeaflet,
-  // zoomInGMap,
-  // zoomOutGMap,
-  // zoomBingMap,
+  zoomInLeaflet,
+  zoomOutLeaflet,
+  zoomInGMap,
+  zoomOutGMap,
+  zoomBingMap,
   infoWithAction,
   goToWithAction,
   withAction,
@@ -56,45 +56,41 @@ function App() {
     statusDispatch({
       type: 'zoom',
       zoom: 5,
-      callerId: 1000,
+      targetId: controlIds.BING,
     })
   })
-  // withAction(zoomOutLeaflet, () => {
-  //   statusDispatch({
-  //     type: 'zoomOutLeaflet',
-  //     callerId: 2000,
-  //   })
-  // })
-  // withAction(zoomInLeaflet, () => {
-  //   statusDispatch({
-  //     type: 'zoomInLeaflet',
-  //     callerId: 3000,
-  //   })
-  // })
-  // withAction(zoomOutGMap, () => {
-  //   statusDispatch({
-  //     type: 'zoomOutGMap',
-  //     callerId: 4000,
-  //   })
-  // })
-  // withAction(zoomInGMap, () => {
-  //   statusDispatch({
-  //     type: 'zoomInGMap',
-  //     callerId: 5000,
-  //   })
-  // })
-  // withAction(zoomBingMap[0], () => {
-  //   statusDispatch({
-  //     type: 'zoomInBingMap',
-  //     callerId: 6000,
-  //   })
-  // })
-  // withAction(zoomBingMap[1], () => {
-  //   statusDispatch({
-  //     type: 'zoomOutBingMap',
-  //     callerId: 7000,
-  //   })
-  // })
+  withAction(zoomOutLeaflet, () => {
+    controlDispatchLeaflet({
+      type: 'zoomOut',
+    })
+  })
+  withAction(zoomInLeaflet, () => {
+    controlDispatchLeaflet({
+      type: 'zoomIn',
+    })
+  })
+  withAction(zoomOutGMap, () => {
+    controlDispatchGMap({
+      type: 'zoomOut',
+      callerId: 4000,
+    })
+  })
+  withAction(zoomInGMap, () => {
+    controlDispatchGMap({
+      type: 'zoomIn',
+      callerId: 5000,
+    })
+  })
+  withAction(zoomBingMap[0], () => {
+    controlDispatchBingMap({
+      type: 'zoomIn',
+    })
+  })
+  withAction(zoomBingMap[1], () => {
+    controlDispatchBingMap({
+      type: 'zoomOut',
+    })
+  })
 
   useEffect(() => {
     Object.entries(controlsDispatch)
@@ -104,12 +100,13 @@ function App() {
       })
   }, [status.center])
   useEffect(() => {
-    controlsDispatch.BING(
-      {
-        type: 'zoom',
-        zoom: status.zoom,
-      },
-    )
+    // const { targetId } = status
+    // if (targetId) {
+    //   controlsDispatch[targetId]({
+    //     type: 'zoom',
+    //     zoom: status.zoom,
+    //   })
+    // }
     Object.values(controlsDispatch)
       .forEach(e => {
         e({
@@ -132,11 +129,11 @@ function App() {
             repoCommandItem,
             gotoCommandItems,
             zoomCommandItem,
-            // ...zoomBingMap,
-            // zoomInGMap,
-            // zoomOutGMap,
-            // zoomInLeaflet,
-            // zoomOutLeaflet,
+            ...zoomBingMap,
+            zoomInGMap,
+            zoomOutGMap,
+            zoomInLeaflet,
+            zoomOutLeaflet,
           ]}
           farItems={[infoCommandItem]}
         />
