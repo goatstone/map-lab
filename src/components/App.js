@@ -57,6 +57,7 @@ function App() {
       type: 'zoom',
       zoom: 5,
       targetId: controlIds.BING,
+      callerId: 1000,
     })
   })
   withAction(zoomOutLeaflet, () => {
@@ -100,21 +101,20 @@ function App() {
       })
   }, [status.center])
   useEffect(() => {
-    // const { targetId } = status
-    // if (targetId) {
-    //   controlsDispatch[targetId]({
-    //     type: 'zoom',
-    //     zoom: status.zoom,
-    //   })
-    // }
-    Object.values(controlsDispatch)
-      .forEach(e => {
-        e({
-          type: 'zoom',
-          zoom: status.zoom,
+    const { callerId } = status
+    if (callerId) {
+      Object.values(controlsDispatch)
+        .forEach(e => {
+          e({
+            type: 'zoom',
+            zoom: status.zoom,
+          })
         })
-      })
+    }
   }, [status.zoom])
+  useEffect(() => {
+    statusDispatch({ type: 'zoom', zoom: null })
+  }, [controlBingMap.zoom])
 
   return (
     <>
