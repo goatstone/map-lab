@@ -36,15 +36,19 @@ const sampleStyle = {
 }
 let map
 
-const BingMap = ({ config, control, statusDispatch }) => {
-  const callerId = 9000
+const BingMap = ({
+  config,
+  control,
+  statusDispatch,
+  controlId,
+}) => {
   const url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
   let userCenterChangeHangler
   const userCenterChanged = () => {
     const centerArr = Object.entries(map.getCenter())
       .filter(e => e[0] === 'latitude' || e[0] === 'longitude')
       .map(e => e[1])
-    statusDispatch({ type: 'center', center: centerArr, callerId })
+    statusDispatch({ type: 'center', center: centerArr, callerId: controlId })
   }
   // eslint-disable-next-line
   window.GetBingMap = () => {
@@ -78,12 +82,10 @@ const BingMap = ({ config, control, statusDispatch }) => {
     document.getElementById('bing-map').appendChild(node)
   }, [])
   useEffect(() => {
-    // prevent calls from self to used in control !!!!
-    const isControllable = (control.callerId !== callerId && map)
-    if (isControllable) {
+    if (map) {
       map.setView({
-      // eslint-disable-next-line
-      center: new window.Microsoft.Maps.Location(...control.center),
+        // eslint-disable-next-line
+        center: new window.Microsoft.Maps.Location(...control.center),
       })
     }
   }, [control.center])
@@ -101,6 +103,7 @@ const BingMap = ({ config, control, statusDispatch }) => {
 }
 /* eslint-disable react/forbid-prop-types */
 BingMap.propTypes = {
+  controlId: PropTypes.string.isRequired,
   config: PropTypes.object.isRequired,
   statusDispatch: PropTypes.func.isRequired,
   control: PropTypes.object.isRequired,

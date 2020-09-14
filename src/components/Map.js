@@ -25,15 +25,15 @@ function Map({
   statusDispatch,
   mainClassName,
   idName = 'leaflet-map',
+  controlId,
 }) {
-  const callerId = 2
   const resetZoomLevel = 9
   const mapRef = useRef(null)
   const userMoveListener = function (ev) {
     statusDispatch({
       type: 'center',
       center: [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng],
-      callerId,
+      callerId: controlId,
     })
   }
   useEffect(() => {
@@ -59,9 +59,7 @@ function Map({
     mapRef.current.off('move')
   }, [])
   useEffect(() => {
-    // prevent calls from self to used in control !!!!
-    const isControllable = (control.callerId !== callerId && mapRef.current)
-    if (isControllable) {
+    if (mapRef.current) {
       mapRef.current.panTo(control.center)
     }
   }, [control.center])

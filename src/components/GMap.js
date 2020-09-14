@@ -9,9 +9,9 @@ const GMap = ({
   control,
   statusDispatch,
   mainClassName,
+  controlId,
 }) => {
   const idName = 'google-map'
-  const callerId = 1
   const resetZoomLevel = control.zoom.gmap
   useEffect(() => {
     const loader = new Loader({
@@ -47,7 +47,7 @@ const GMap = ({
           const centerArr = Object
             .entries(map.getCenter())
             .map(e => e[1]())
-          statusDispatch({ type: 'center', center: centerArr, callerId })
+          statusDispatch({ type: 'center', center: centerArr, callerId: controlId })
         }
         map.addListener('mousedown', () => {
           listener = map.addListener('center_changed', userCenterChanged)
@@ -62,9 +62,7 @@ const GMap = ({
       })
   }, [])
   useEffect(() => {
-    // prevent calls from self to used in control !!!!
-    const isControllable = (control.callerId !== callerId && map)
-    if (isControllable) {
+    if (map) {
       map.setCenter({ lat: control.center[0], lng: control.center[1] })
     }
   }, [control.center])
@@ -87,6 +85,7 @@ const GMap = ({
 
 /* eslint-disable react/forbid-prop-types */
 GMap.propTypes = {
+  controlId: PropTypes.string.isRequired,
   control: PropTypes.object.isRequired,
   statusDispatch: PropTypes.func.isRequired,
   mainClassName: PropTypes.string.isRequired,

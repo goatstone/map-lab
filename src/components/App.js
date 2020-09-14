@@ -36,7 +36,19 @@ sheet.attach()
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [status, statusDispatch] = useReducer(statusReducer, initState)
-  const [control, controlDispatch] = useReducer(controlReducer, initState)
+
+  const controlIds = { BING: 'BING', GMAP: 'GMAP', LEAFLET: 'LEAFLET' }
+  const controls = {}
+  const controlsDispatch = {}
+  const [controlA, controlDispatchA] = useReducer(controlReducer, initState)
+  const [controlB, controlDispatchB] = useReducer(controlReducer, initState)
+  const [controlC, controlDispatchC] = useReducer(controlReducer, initState)
+  controls[controlIds.BING] = controlA
+  controls[controlIds.GMAP] = controlB
+  controls[controlIds.LEAFLET] = controlC
+  controlsDispatch[controlIds.BING] = controlDispatchA
+  controlsDispatch[controlIds.GMAP] = controlDispatchB
+  controlsDispatch[controlIds.LEAFLET] = controlDispatchC
 
   infoWithAction(infoCommandItem, setIsModalOpen)
   goToWithAction(gotoCommandItems, cities, statusDispatch)
@@ -83,16 +95,22 @@ function App() {
       callerId: 7000,
     })
   })
-  // circular updates are prevented in the component
+
   useEffect(() => {
-    controlDispatch({ type: 'center', center: status.center, callerId: status.callerId })
+    Object.entries(controlsDispatch)
+      .filter(e => e[0] !== status.callerId)
+      .forEach(element => {
+        element[1]({ type: 'center', center: status.center })
+      })
   }, [status.center])
   useEffect(() => {
-    controlDispatch({
-      type: 'zoom',
-      zoom: status.zoom,
-      callerId: status.callerId,
-    })
+    Object.values(controlsDispatch)
+      .forEach(e => {
+        e({
+          type: 'zoom',
+          zoom: status.zoom,
+        })
+      })
   }, [status.zoom])
 
   return (
@@ -118,18 +136,21 @@ function App() {
         />
         <div className={sheet.classes.frame}>
           <BingMap
+            controlId={controlIds.BING}
             config={config}
-            control={control}
+            control={controls[controlIds.BING]}
             statusDispatch={statusDispatch}
           />
           <GMap
+            controlId={controlIds.GMAP}
             mainClassName={sheet.classes.gMap}
-            control={control}
+            control={controls[controlIds.GMAP]}
             statusDispatch={statusDispatch}
           />
           <LMap
+            controlId={controlIds.LEAFLET}
             mainClassName={sheet.classes.lMap}
-            control={control}
+            control={controls[controlIds.LEAFLET]}
             statusDispatch={statusDispatch}
             idName="leaflet"
           />
