@@ -12,7 +12,7 @@ const GMap = ({
   controlId,
 }) => {
   const idName = 'google-map'
-  const resetZoomLevel = control.zoom.gmap
+  const resetZoomLevel = control.zoom
   useEffect(() => {
     const loader = new Loader({
       apiKey: config.gMapAPIKey,
@@ -68,7 +68,7 @@ const GMap = ({
   }, [control.center])
   useEffect(() => {
     if (map) {
-      map.setZoom(control.zoom.gmap)
+      map.setZoom(control.zoom)
     }
   }, [control.zoom])
 

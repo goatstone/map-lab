@@ -104,7 +104,6 @@ function App() {
       })
   }, [status.center])
   useEffect(() => {
-    console.log('zoom', status)
     controlsDispatch.BING(
       {
         type: 'zoom',
@@ -113,7 +112,6 @@ function App() {
     )
     Object.values(controlsDispatch)
       .forEach(e => {
-        console.log('zoom e', e)
         e({
           type: 'zoom',
           zoom: status.zoom,
