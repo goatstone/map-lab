@@ -27,6 +27,8 @@ import {
 import { statusReducer, controlReducer, initState } from '../status-control'
 import { cities } from '../data'
 import config from '../config'
+import AppService, { AppServiceInstanceI } from '../app-service'
+
 
 initializeIcons()
 jss.setup(preset())
@@ -34,12 +36,28 @@ const sheet = jss.createStyleSheet(style)
 sheet.attach()
 
 function App() {
+  const id = 0
+  const [userMessage, setUserMessage] = useState('Welcome')
+
+  const aS: AppServiceInstanceI = AppService()
+  aS.addMessageEventListener(message => {
+    // eslint-disable-next-line no-console
+    console.log('abc', message)
+    setUserMessage(message)
+  }, id)
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    // console.log('xxx')
+    aS.addMessage('welcome 0', id)
+    aS.addMessage('Welcome 1', 1)
+  }, [])
+
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [status, statusDispatch] = useReducer(statusReducer, initState)
 
   const controlIds = { BING: 'BING', GMAP: 'GMAP', LEAFLET: 'LEAFLET' }
-  const controls = {}
-  const controlsDispatch = {}
+  const controls: any = {}
+  const controlsDispatch: any = {}
   const [controlBingMap, controlDispatchBingMap] = useReducer(controlReducer, initState)
   const [controlGMap, controlDispatchGMap] = useReducer(controlReducer, initState)
   const [controlLeaflet, controlDispatchLeaflet] = useReducer(controlReducer, initState)
@@ -96,7 +114,7 @@ function App() {
   useEffect(() => {
     Object.entries(controlsDispatch)
       .filter(e => e[0] !== status.callerId)
-      .forEach(element => {
+      .forEach((element: any) => {
         element[1]({ type: 'center', center: status.center })
       })
   }, [status.center])
@@ -104,7 +122,7 @@ function App() {
     const { callerId } = status
     if (callerId) {
       Object.values(controlsDispatch)
-        .forEach(e => {
+        .forEach((e: any) => {
           e({
             type: 'zoom',
             zoom: status.zoom,
@@ -119,6 +137,7 @@ function App() {
   return (
     <>
       <section className={sheet.classes.mainContainer}>
+        {userMessage}
         <InfoModal
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
