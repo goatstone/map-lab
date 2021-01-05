@@ -42,15 +42,10 @@ function App() {
   const [userMessage, setUserMessage] = useState('Welcome')
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    // console.log('xxx')
-    // aS = AppService()
     aS.addMessageEventListener(message => {
-      // eslint-disable-next-line no-console
-      // console.log(message)
       setUserMessage(message)
     }, id)
-    // aS.addMessage('welcome 0', id)
+    aS.addMessage('12.00, 45.00', id)
     // aS.addMessage('Welcome 1', 1)
   }, [])
 
@@ -160,10 +155,8 @@ function App() {
         />
         <div className={sheet.classes.frame}>
           <BingMap
-            controlId={controlIds.BING}
             config={config}
             control={controls[controlIds.BING]}
-            statusDispatch={statusDispatch}
             appService={aS}
           />
           <GMap

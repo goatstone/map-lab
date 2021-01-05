@@ -63,13 +63,10 @@ const GMap = ({
       })
   }, [])
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    // console.log('xxx')
-    // aS = AppService()
     appService.addMessageEventListener(message => {
       if (map) {
         // eslint-disable-next-line no-console
-        console.log('SSS')
+        console.log('GMap')
         const arr = JSON.parse(message)
         const arg = { lat: arr[0], lng: arr[1] }
         map.setCenter(arg)

@@ -26,25 +26,18 @@ export interface MessageEventListener {
   id: number;
 }
 
-const sendToSubjects = (subjects: MessageEventListener[], message: Message) => {
-  subjects
-    .filter((e: any) => e.id !== message.id)
-    .forEach((element: any) => {
-      element.listener.next(message.message)
-    })
-}
 const AppService: AppServiceI = () => {
   const delay = 1000
   const messages$: Subject<Message> = new Subject()
   const timer$ = timer(0, delay)
-  const messageEventListeners: MessageEventListener[] = []
-  zip(messages$, timer$).pipe(
+  const mT = zip(messages$, timer$).pipe(
     map(([message]) => message),
   )
-    .subscribe((message: Message) => {
+  mT.subscribe(
+    (message: Message) => {
       // eslint-disable-next-line no-console
-      console.log('---- ')
-      sendToSubjects(messageEventListeners, message)
+      console.log('---- ', message)
+      // sendToSubjects(messageEventListeners, message)
     },
     err => {
       // eslint-disable-next-line no-console
@@ -53,20 +46,17 @@ const AppService: AppServiceI = () => {
     () => {
       // eslint-disable-next-line no-console
       console.log('Completed')
-    })
+    },
+  )
   const addMessage: AddMessage = (message, id) => {
     messages$.next({ message, id })
   }
   const addMessageEventListener: AddMessageEventListener = (listener, id) => {
-    const mEL: MessageEventListener = {
-      listener: new Subject()
-        .asObservable()
-        .subscribe((e: any) => {
-          listener(e)
-        }),
-      id,
-    }
-    messageEventListeners.push(mEL)
+    mT.subscribe((message: Message) => {
+      // eslint-disable-next-line no-console
+      console.log('---- ', id)
+      listener(message.message)
+    })
   }
   return {
     addMessageEventListener,
