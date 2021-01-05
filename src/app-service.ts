@@ -36,8 +36,7 @@ const AppService: AppServiceI = () => {
   mT.subscribe(
     (message: Message) => {
       // eslint-disable-next-line no-console
-      console.log('---- ', message)
-      // sendToSubjects(messageEventListeners, message)
+      console.log('as A', message.message, ' : ', message.id)
     },
     err => {
       // eslint-disable-next-line no-console
@@ -53,8 +52,9 @@ const AppService: AppServiceI = () => {
   }
   const addMessageEventListener: AddMessageEventListener = (listener, id) => {
     mT.subscribe((message: Message) => {
+      // filter ids here !!!
       // eslint-disable-next-line no-console
-      console.log('---- ', id)
+      console.log('as B ', id, ' : ', message.message)
       listener(message.message)
     })
   }
