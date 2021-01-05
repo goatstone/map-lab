@@ -35,21 +35,23 @@ jss.setup(preset())
 const sheet = jss.createStyleSheet(style)
 sheet.attach()
 
+const aS: AppServiceInstanceI = AppService()
+
 function App() {
   const id = 0
   const [userMessage, setUserMessage] = useState('Welcome')
 
-  const aS: AppServiceInstanceI = AppService()
-  aS.addMessageEventListener(message => {
-    // eslint-disable-next-line no-console
-    console.log('abc', message)
-    setUserMessage(message)
-  }, id)
   useEffect(() => {
     // eslint-disable-next-line no-console
     // console.log('xxx')
-    aS.addMessage('welcome 0', id)
-    aS.addMessage('Welcome 1', 1)
+    // aS = AppService()
+    aS.addMessageEventListener(message => {
+      // eslint-disable-next-line no-console
+      // console.log(message)
+      setUserMessage(message)
+    }, id)
+    // aS.addMessage('welcome 0', id)
+    // aS.addMessage('Welcome 1', 1)
   }, [])
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -162,12 +164,14 @@ function App() {
             config={config}
             control={controls[controlIds.BING]}
             statusDispatch={statusDispatch}
+            appService={aS}
           />
           <GMap
             controlId={controlIds.GMAP}
             mainClassName={sheet.classes.gMap}
             control={controls[controlIds.GMAP]}
             statusDispatch={statusDispatch}
+            appService={aS}
           />
           <LMap
             controlId={controlIds.LEAFLET}

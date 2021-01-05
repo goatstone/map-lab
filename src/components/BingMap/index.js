@@ -41,6 +41,7 @@ const BingMap = ({
   control,
   statusDispatch,
   controlId,
+  appService,
 }) => {
   const url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
   let userCenterChangeHangler
@@ -49,6 +50,7 @@ const BingMap = ({
       .filter(e => e[0] === 'latitude' || e[0] === 'longitude')
       .map(e => e[1])
     statusDispatch({ type: 'center', center: centerArr, callerId: controlId })
+    appService.addMessage(`[${centerArr}]`, 10)
   }
   // eslint-disable-next-line
   window.GetBingMap = () => {
@@ -107,6 +109,7 @@ BingMap.propTypes = {
   config: PropTypes.object.isRequired,
   statusDispatch: PropTypes.func.isRequired,
   control: PropTypes.object.isRequired,
+  appService: PropTypes.object.isRequired,
 }
 
 export default BingMap

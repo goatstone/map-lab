@@ -10,6 +10,7 @@ const GMap = ({
   statusDispatch,
   mainClassName,
   controlId,
+  appService,
 }) => {
   const idName = 'google-map'
   const resetZoomLevel = control.zoom
@@ -62,8 +63,22 @@ const GMap = ({
       })
   }, [])
   useEffect(() => {
+    // eslint-disable-next-line no-console
+    // console.log('xxx')
+    // aS = AppService()
+    appService.addMessageEventListener(message => {
+      if (map) {
+        // eslint-disable-next-line no-console
+        console.log('SSS')
+        const arr = JSON.parse(message)
+        const arg = { lat: arr[0], lng: arr[1] }
+        map.setCenter(arg)
+      }
+    }, 100)
+  }, [])
+  useEffect(() => {
     if (map) {
-      map.setCenter({ lat: control.center[0], lng: control.center[1] })
+      // map.setCenter({ lat: control.center[0], lng: control.center[1] })
     }
   }, [control.center])
   useEffect(() => {
@@ -89,6 +104,7 @@ GMap.propTypes = {
   control: PropTypes.object.isRequired,
   statusDispatch: PropTypes.func.isRequired,
   mainClassName: PropTypes.string.isRequired,
+  appService: PropTypes.object.isRequired,
 }
 
 export default GMap

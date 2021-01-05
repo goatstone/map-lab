@@ -34,14 +34,25 @@ const sendToSubjects = (subjects: MessageEventListener[], message: Message) => {
     })
 }
 const AppService: AppServiceI = () => {
+  const delay = 1000
   const messages$: Subject<Message> = new Subject()
-  const timer$ = timer(0, 3000)
+  const timer$ = timer(0, delay)
   const messageEventListeners: MessageEventListener[] = []
   zip(messages$, timer$).pipe(
     map(([message]) => message),
   )
     .subscribe((message: Message) => {
+      // eslint-disable-next-line no-console
+      console.log('---- ')
       sendToSubjects(messageEventListeners, message)
+    },
+    err => {
+      // eslint-disable-next-line no-console
+      console.log('Error: ', err)
+    },
+    () => {
+      // eslint-disable-next-line no-console
+      console.log('Completed')
     })
   const addMessage: AddMessage = (message, id) => {
     messages$.next({ message, id })
