@@ -65,19 +65,12 @@ const GMap = ({
   useEffect(() => {
     appService.addMessageEventListener(message => {
       if (map) {
-        // eslint-disable-next-line no-console
-        console.log('GMap')
         const arr = JSON.parse(message)
         const arg = { lat: arr[0], lng: arr[1] }
         map.setCenter(arg)
       }
     }, 100)
   }, [])
-  useEffect(() => {
-    if (map) {
-      // map.setCenter({ lat: control.center[0], lng: control.center[1] })
-    }
-  }, [control.center])
   useEffect(() => {
     if (map) {
       map.setZoom(control.zoom)

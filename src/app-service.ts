@@ -1,4 +1,4 @@
-import { Subject, timer, zip } from 'rxjs'
+import { Subject } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 export interface Message {
@@ -27,37 +27,26 @@ export interface MessageEventListener {
 }
 
 const AppService: AppServiceI = () => {
-  const delay = 1000
   const messages$: Subject<Message> = new Subject()
-  const timer$ = timer(0, delay)
-  const mT = zip(messages$, timer$).pipe(
-    map(([message]) => message),
-  )
-  mT.subscribe(
-    (message: Message) => {
-      // eslint-disable-next-line no-console
-      console.log('as A', message.message, ' : ', message.id)
-    },
-    err => {
-      // eslint-disable-next-line no-console
-      console.log('Error: ', err)
-    },
-    () => {
-      // eslint-disable-next-line no-console
-      console.log('Completed')
-    },
+  const mT = messages$.pipe(
+    map(message => message),
   )
   const addMessage: AddMessage = (message, id) => {
     messages$.next({ message, id })
   }
   const addMessageEventListener: AddMessageEventListener = (listener, id) => {
-    mT.subscribe((message: Message) => {
-      // filter ids here !!!
+    const subArgs = [
+      (message: Message) => {
+        listener(message.message)
+      },
       // eslint-disable-next-line no-console
-      console.log('as B ', id, ' : ', message.message)
-      listener(message.message)
-    })
+      console.log,
+      () => { // eslint-disable-next-line no-console
+        console.log('Completed: ', id)
+      }]
+    mT.subscribe(...subArgs)
   }
+
   return {
     addMessageEventListener,
     addMessage,

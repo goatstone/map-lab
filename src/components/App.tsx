@@ -45,8 +45,6 @@ function App() {
     aS.addMessageEventListener(message => {
       setUserMessage(message)
     }, id)
-    aS.addMessage('12.00, 45.00', id)
-    // aS.addMessage('Welcome 1', 1)
   }, [])
 
   const [isModalOpen, setIsModalOpen] = useState(false)

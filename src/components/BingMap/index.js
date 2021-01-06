@@ -39,8 +39,6 @@ let map
 const BingMap = ({
   config,
   control,
-  // statusDispatch,
-  // controlId,
   appService,
 }) => {
   const url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
@@ -49,7 +47,6 @@ const BingMap = ({
     const centerArr = Object.entries(map.getCenter())
       .filter(e => e[0] === 'latitude' || e[0] === 'longitude')
       .map(e => e[1])
-    // statusDispatch({ type: 'center', center: centerArr, callerId: controlId })
     appService.addMessage(`[${centerArr}]`, 10)
   }
   // eslint-disable-next-line
@@ -60,7 +57,7 @@ const BingMap = ({
       center: new window.Microsoft.Maps.Location(...control.center),
       // eslint-disable-next-line
       mapTypeId: window.Microsoft.Maps.MapTypeId.aerial,
-      zoom: control.zoom.bingmap,
+      zoom: 12,
       showLocateMeButton: false,
       disableStreetside: true,
       disableBirdseye: true,
