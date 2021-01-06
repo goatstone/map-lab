@@ -2,15 +2,22 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Loader } from '@googlemaps/loader'
 import config from '../config'
+import { AppServiceInstanceI } from '../app-service'
 
-let map
-let listener
+declare global {
+  interface Window { google: any; }
+}
+
+let map: any
+let listener: any
 const GMap = ({
   id,
   control,
   statusDispatch,
   mainClassName,
   appService,
+}: {
+  appService: AppServiceInstanceI, id: number, control: any, statusDispatch: any, mainClassName: any
 }) => {
   const idName = 'google-map'
   const resetZoomLevel = control.zoom
@@ -47,7 +54,7 @@ const GMap = ({
         const userCenterChanged = () => {
           const centerArr = Object
             .entries(map.getCenter())
-            .map(e => e[1]())
+            .map((e: any) => e[1]())
           statusDispatch({ type: 'center', center: centerArr, callerId: 100 })
         }
         map.addListener('mousedown', () => {
@@ -63,11 +70,9 @@ const GMap = ({
       })
   }, [])
   useEffect(() => {
-    appService.addMessageEventListener(message => {
+    appService.addCenterEventListener(centerValue => {
       if (map) {
-        const arr = JSON.parse(message)
-        const arg = { lat: arr[0], lng: arr[1] }
-        map.setCenter(arg)
+        map.setCenter({ lat: centerValue[0], lng: centerValue[1] })
       }
     }, id)
   }, [])

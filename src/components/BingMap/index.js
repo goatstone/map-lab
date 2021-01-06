@@ -48,7 +48,7 @@ const BingMap = ({
     const centerArr = Object.entries(map.getCenter())
       .filter(e => e[0] === 'latitude' || e[0] === 'longitude')
       .map(e => e[1])
-    appService.addMessage(`[${centerArr}]`, id)
+    appService.addCenterStatus(centerArr, id)
   }
   // eslint-disable-next-line
   window.GetBingMap = () => {

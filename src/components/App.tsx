@@ -39,11 +39,11 @@ const aS: AppServiceInstanceI = AppService()
 
 function App() {
   const id = 0
-  const [userMessage, setUserMessage] = useState('Welcome')
-
+  // const [userMessage, setUserMessage] = useState('Welcome')
+  const [mapCenter, setMapCenter] = useState([0, 0])
   useEffect(() => {
-    aS.addMessageEventListener(message => {
-      setUserMessage(message)
+    aS.addCenterEventListener(center => {
+      setMapCenter(center)
     }, id)
   }, [])
 
@@ -132,7 +132,7 @@ function App() {
   return (
     <>
       <section className={sheet.classes.mainContainer}>
-        {userMessage}
+        {mapCenter}
         <InfoModal
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
