@@ -4,6 +4,9 @@ import Adapter from 'enzyme-adapter-react-16'
 import { JSDOM } from 'jsdom'
 import { act } from 'react-dom/test-utils'
 import GMap from '../components/GMap'
+import AppService, { AppServiceInstanceI } from '../app-service'
+
+const aS = AppService()
 
 Enzyme.configure({ adapter: new Adapter() })
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>')
@@ -14,6 +17,8 @@ beforeEach(() => {
 })
 const mockZoomLevel = jest.fn(level => level)
 const props = {
+  id: 100,
+  appService: aS,
   control: {
     center: [0, 0],
     zoom: { leaflet: 0, gmap: 0 },

@@ -155,13 +155,14 @@ function App() {
           <BingMap
             config={config}
             control={controls[controlIds.BING]}
+            id={10}
             appService={aS}
           />
           <GMap
-            controlId={controlIds.GMAP}
             mainClassName={sheet.classes.gMap}
             control={controls[controlIds.GMAP]}
             statusDispatch={statusDispatch}
+            id={100}
             appService={aS}
           />
           <LMap

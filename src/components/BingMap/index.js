@@ -39,6 +39,7 @@ let map
 const BingMap = ({
   config,
   control,
+  id,
   appService,
 }) => {
   const url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
@@ -47,7 +48,7 @@ const BingMap = ({
     const centerArr = Object.entries(map.getCenter())
       .filter(e => e[0] === 'latitude' || e[0] === 'longitude')
       .map(e => e[1])
-    appService.addMessage(`[${centerArr}]`, 10)
+    appService.addMessage(`[${centerArr}]`, id)
   }
   // eslint-disable-next-line
   window.GetBingMap = () => {
@@ -102,6 +103,7 @@ const BingMap = ({
 }
 /* eslint-disable react/forbid-prop-types */
 BingMap.propTypes = {
+  id: PropTypes.number.isRequired,
   config: PropTypes.object.isRequired,
   control: PropTypes.object.isRequired,
   appService: PropTypes.object.isRequired,

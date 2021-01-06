@@ -31,7 +31,7 @@ describe('index', () => {
     global.window = window
     global.document = window.document
   })
-  it('should run file that mounts top level components', () => {
+  it.skip('should run file that mounts top level components', () => {
     Object.defineProperty(document, 'getElementById', {
       value: () => document.createElement('div'),
     })

@@ -6,10 +6,10 @@ import config from '../config'
 let map
 let listener
 const GMap = ({
+  id,
   control,
   statusDispatch,
   mainClassName,
-  controlId,
   appService,
 }) => {
   const idName = 'google-map'
@@ -48,7 +48,7 @@ const GMap = ({
           const centerArr = Object
             .entries(map.getCenter())
             .map(e => e[1]())
-          statusDispatch({ type: 'center', center: centerArr, callerId: controlId })
+          statusDispatch({ type: 'center', center: centerArr, callerId: 100 })
         }
         map.addListener('mousedown', () => {
           listener = map.addListener('center_changed', userCenterChanged)
@@ -69,7 +69,7 @@ const GMap = ({
         const arg = { lat: arr[0], lng: arr[1] }
         map.setCenter(arg)
       }
-    }, 100)
+    }, id)
   }, [])
   useEffect(() => {
     if (map) {
@@ -90,7 +90,7 @@ const GMap = ({
 
 /* eslint-disable react/forbid-prop-types */
 GMap.propTypes = {
-  controlId: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   control: PropTypes.object.isRequired,
   statusDispatch: PropTypes.func.isRequired,
   mainClassName: PropTypes.string.isRequired,
