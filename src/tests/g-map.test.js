@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import { JSDOM } from 'jsdom'
 import { act } from 'react-dom/test-utils'
 import GMap from '../components/GMap'
-import AppService, { AppServiceInstanceI } from '../app-service'
+import AppService from '../app-service'
 
 const aS = AppService()
 
