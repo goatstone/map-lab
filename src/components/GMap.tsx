@@ -13,7 +13,7 @@ let listener: any
 const GMap = ({
   id,
   control,
-  statusDispatch,
+  // statusDispatch,
   mainClassName,
   appService,
 }: {
@@ -55,7 +55,8 @@ const GMap = ({
           const centerArr = Object
             .entries(map.getCenter())
             .map((e: any) => e[1]())
-          statusDispatch({ type: 'center', center: centerArr, callerId: 100 })
+          appService.addCenterStatus(centerArr, id)
+          // statusDispatch({ type: 'center', center: centerArr, callerId: 100 })
         }
         map.addListener('mousedown', () => {
           listener = map.addListener('center_changed', userCenterChanged)
@@ -97,7 +98,7 @@ const GMap = ({
 GMap.propTypes = {
   id: PropTypes.number.isRequired,
   control: PropTypes.object.isRequired,
-  statusDispatch: PropTypes.func.isRequired,
+  // statusDispatch: PropTypes.func.isRequired,
   mainClassName: PropTypes.string.isRequired,
   appService: PropTypes.object.isRequired,
 }

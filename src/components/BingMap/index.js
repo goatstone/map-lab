@@ -66,12 +66,12 @@ const BingMap = ({
     })
     map.setOptions({ customMapStyle: sampleStyle })
     // eslint-disable-next-line
-    window.Microsoft.Maps.Events.addHandler(map, 'mousedown', function () { 
+    window.Microsoft.Maps.Events.addHandler(map, 'mousedown', function () {
       // eslint-disable-next-line
       userCenterChangeHangler = window.Microsoft.Maps.Events.addHandler(map, 'viewchange', userCenterChanged)
     })
     // eslint-disable-next-line
-    window.Microsoft.Maps.Events.addHandler(map, 'mouseup', function () { 
+    window.Microsoft.Maps.Events.addHandler(map, 'mouseup', function () {
       // eslint-disable-next-line
       window.Microsoft.Maps.Events.removeHandler(userCenterChangeHangler)
     })
@@ -80,6 +80,15 @@ const BingMap = ({
     const node = document.createElement('script')
     node.src = url
     document.getElementById('bing-map').appendChild(node)
+
+    appService.addCenterEventListener(centerValue => {
+      if (map) {
+        map.setView({
+          // eslint-disable-next-line
+          center: new window.Microsoft.Maps.Location(...centerValue),
+        })
+      }
+    }, id)
   }, [])
   useEffect(() => {
     if (map) {

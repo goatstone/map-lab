@@ -64,7 +64,10 @@ const AppService: AppServiceI = () => {
   }
   const addCenterEventListener: AddCenterEventListener = (listener, id) => {
     centers$.subscribe((center: Center) => {
-      listener(center.center)
+      // do not send the center event to the caller
+      if (center.id !== id) {
+        listener(center.center)
+      }
     },
     // eslint-disable-next-line no-console
     console.log,
