@@ -166,10 +166,9 @@ function App() {
             appService={aS}
           />
           <LMap
-            controlId={controlIds.LEAFLET}
+            id={1000}
+            appService={aS}
             mainClassName={sheet.classes.lMap}
-            control={controls[controlIds.LEAFLET]}
-            statusDispatch={statusDispatch}
             idName="leaflet"
           />
         </div>

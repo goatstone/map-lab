@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
+import { AppServiceInstanceI } from '../app-service'
 
 const attribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, '
   + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, '
@@ -21,26 +22,27 @@ const streets = L.tileLayer(
     accessToken: 'pk.eyJ1IjoiZ29hdHN0b25lIiwiYSI6ImNrMmp5dnoycjFsazgzYm1zbjE0anRobzkifQ.tW-4mQDJK41ayRkBxtz15w',
   },
 )
-/* eslint-disable */
+
 function Map({
-  control,
-  statusDispatch,
+  id,
+  appService,
   mainClassName,
   idName = 'leaflet-map',
-  controlId,
-}) {
-  const resetZoomLevel = 9
-  const mapRef = useRef(null)
-  const userMoveListener = function (ev) {
-    statusDispatch({
-      type: 'center',
-      center: [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng],
-      callerId: controlId,
-    })
+}: { id: any, appService: AppServiceInstanceI, mainClassName: any, idName: string }) {
+  const resetZoomLevel = 12
+  const mapRef: any = useRef(null)
+  const [mapCenter, setMapCenter]: any = useState([47.6, -122.3])
+  const userMoveListener = () => {
+    appService.addCenterStatus(
+      [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng], id,
+    )
   }
   useEffect(() => {
+    appService.addCenterEventListener(center => {
+      setMapCenter(center)
+    }, id)
     mapRef.current = L.map(idName, {
-      center: control.center,
+      center: mapCenter,
       zoom: resetZoomLevel,
       zoomControl: false,
       layers: [
@@ -50,7 +52,7 @@ function Map({
       keyboard: false,
     })
     // capture only user map chage to dispatch status
-    mapRef.current.on('mousedown', e => {
+    mapRef.current.on('mousedown', () => {
       mapRef.current.on('move', userMoveListener)
     })
     mapRef.current.on('mouseup', () => {
@@ -62,12 +64,9 @@ function Map({
   }, [])
   useEffect(() => {
     if (mapRef.current) {
-      mapRef.current.panTo(control.center)
+      mapRef.current.panTo(mapCenter)
     }
-  }, [control.center])
-  useEffect(() => {
-    mapRef.current.setZoom(control.zoom)
-  }, [control.zoom])
+  }, [mapCenter])
 
   return (
     <div
