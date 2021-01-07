@@ -15,13 +15,13 @@ describe('ApplicationService', () => {
     }, id)
     appService.addMessage(expectedMessage, 0)
   })
-  it('should provide center values when they are added', done => {
+  it('should provide center values when they are added with different ids', done => {
     const expectedCenter: number[] = [0, 0]
     const appService: AppServiceInstanceI = ApplicationService()
     appService.addCenterEventListener(centerValue => {
       expect(centerValue).toBe(expectedCenter)
       done()
     }, id)
-    appService.addCenterStatus(expectedCenter, 0)
+    appService.addCenterStatus(expectedCenter, 10)
   })
 })
