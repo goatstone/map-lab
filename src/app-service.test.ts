@@ -24,4 +24,13 @@ describe('ApplicationService', () => {
     }, id)
     appService.addCenterStatus(expectedCenter, 10)
   })
+  it('should provide center values to litener when values are added', done => {
+    const expectedZoom: number = 12
+    const applicationService: AppServiceInstanceI = ApplicationService()
+    applicationService.addZoomEventListener(zoom => {
+      expect(zoom).toBe(expectedZoom)
+      done()
+    }, 0)
+    applicationService.addZoom(expectedZoom, 10)
+  })
 })

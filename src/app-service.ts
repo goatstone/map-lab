@@ -1,5 +1,4 @@
 import { Subject } from 'rxjs'
-import { map } from 'rxjs/operators'
 
 export interface Message {
   message: string;
@@ -17,6 +16,7 @@ export interface AppServiceI {
     addMessage: AddMessage;
     addCenterEventListener: AddCenterEventListener;
     addCenterStatus: AddCenterStatus;
+    addZoomEventListener: AddZoomEventListener;
   }
 }
 export interface AppServiceInstanceI {
@@ -24,29 +24,34 @@ export interface AppServiceInstanceI {
   addMessage: AddMessage;
   addCenterEventListener: AddCenterEventListener;
   addCenterStatus: AddCenterStatus;
-}
-export interface MessageEventListener {
-  listener: any;
-  id: number;
+  addZoomEventLister: AddZoomEventListener;
 }
 interface AddCenterEventListener {
-  (listener: (center: number[])=> void, id: number): void
+  (listener: (center: number[]) => void, id: number): void
 }
 export interface Center {
   center: number[]
   id: number
 }
 interface AddCenterStatus {
-  (center: number[], id: number) : void
+  (center: number[], id: number): void
 }
-
+interface Zoom {
+  zoom: number
+  id: number
+}
+interface AddZoomEventListener {
+  (listener: (zoom: number) => void, id: number): void
+}
+interface AddZoom {
+  (zoom: number, id: number): void
+}
+const isValid = (id: number, idB: number) => id !== idB
 const AppService: AppServiceI = () => {
   const messages$: Subject<Message> = new Subject()
   const centers$: Subject<Center> = new Subject()
+  const zooms$: Subject<Zoom> = new Subject()
 
-  const mT = messages$.pipe(
-    map(message => message),
-  )
   const addMessage: AddMessage = (message, id) => {
     messages$.next({ message, id })
   }
@@ -60,7 +65,7 @@ const AppService: AppServiceI = () => {
       () => { // eslint-disable-next-line no-console
         console.log('Completed: ', id)
       }]
-    mT.subscribe(...subArgs)
+    messages$.subscribe(...subArgs)
   }
   const addCenterEventListener: AddCenterEventListener = (listener, id) => {
     centers$.subscribe((center: Center) => {
@@ -79,11 +84,21 @@ const AppService: AppServiceI = () => {
   const addCenterStatus: AddCenterStatus = (center, id) => {
     centers$.next({ center, id })
   }
+  const addZoomEventListener: AddZoomEventListener = (listener, id) => {
+    zooms$.subscribe((zoom: Zoom) => {
+      if (isValid(id, zoom.id)) {
+        listener(zoom.zoom)
+      }
+    })
+  }
+  const addZoom: AddZoom = (zoom, id) => zooms$.next({ zoom, id })
   return {
     addMessageEventListener,
     addMessage,
     addCenterEventListener,
     addCenterStatus,
+    addZoomEventListener,
+    addZoom,
   }
 }
 
