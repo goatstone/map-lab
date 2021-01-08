@@ -17,6 +17,7 @@ export interface AppServiceI {
     addCenterEventListener: AddCenterEventListener;
     addCenterStatus: AddCenterStatus;
     addZoomEventListener: AddZoomEventListener;
+    addZoom: AddZoom;
   }
 }
 export interface AppServiceInstanceI {
@@ -24,7 +25,8 @@ export interface AppServiceInstanceI {
   addMessage: AddMessage;
   addCenterEventListener: AddCenterEventListener;
   addCenterStatus: AddCenterStatus;
-  addZoomEventLister: AddZoomEventListener;
+  addZoomEventListener: AddZoomEventListener;
+  addZoom: AddZoom;
 }
 interface AddCenterEventListener {
   (listener: (center: number[]) => void, id: number): void
