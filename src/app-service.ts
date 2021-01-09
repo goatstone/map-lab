@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs'
+import { Subject, BehaviorSubject } from 'rxjs'
 
 export interface Message {
   message: string;
@@ -48,12 +48,18 @@ interface AddZoomEventListener {
 interface AddZoom {
   (zoom: number, id: number): void
 }
+const appServiceId = 0
+const initZoom = 10
+const initCenter = [47.6, -122.3]
 const isValid = (id: number, idB: number) => id !== idB
 const AppService: AppServiceI = () => {
   const messages$: Subject<Message> = new Subject()
-  const centers$: Subject<Center> = new Subject()
-  const zooms$: Subject<Zoom> = new Subject()
-
+  const centers$: BehaviorSubject<Center> = new BehaviorSubject(
+    { center: initCenter, id: appServiceId },
+  )
+  const zooms$: BehaviorSubject<Zoom> = new BehaviorSubject(
+    { zoom: initZoom, id: appServiceId },
+  )
   const addMessage: AddMessage = (message, id) => {
     messages$.next({ message, id })
   }
