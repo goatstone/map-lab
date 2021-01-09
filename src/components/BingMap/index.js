@@ -38,7 +38,6 @@ let map
 
 const BingMap = ({
   config,
-  // control,
   id,
   appService,
 }) => {
@@ -95,21 +94,6 @@ const BingMap = ({
       }
     })
   }, [])
-  // useEffect(() => {
-  //   if (map) {
-  //     map.setView({
-  //       // eslint-disable-next-line
-  //       center: new window.Microsoft.Maps.Location(...control.center),
-  //     })
-  //   }
-  // }, [control.center])
-  // useEffect(() => {
-  //   if (map) {
-  //     map.setView({
-  //       zoom: control.zoom,
-  //     })
-  //   }
-  // }, [control.zoom])
 
   return (
     <div id="bing-map">&nbsp;</div>
@@ -119,7 +103,6 @@ const BingMap = ({
 BingMap.propTypes = {
   id: PropTypes.number.isRequired,
   config: PropTypes.object.isRequired,
-  // control: PropTypes.object.isRequired,
   appService: PropTypes.object.isRequired,
 }
 

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-// import PropTypes from 'prop-types'
 import { Loader } from '@googlemaps/loader'
 import config from '../config'
 import { AppServiceInstanceI } from '../app-service'
@@ -12,15 +11,12 @@ let map: any
 let listener: any
 const GMap = ({
   id,
-  // control,
-  // statusDispatch,
   mainClassName,
   appService,
 }: {
   appService: AppServiceInstanceI, id: number, mainClassName: any
 }) => {
   const idName = 'google-map'
-  // const resetZoomLevel = control.zoom
   useEffect(() => {
     const loader = new Loader({
       apiKey: config.gMapAPIKey,
@@ -56,7 +52,6 @@ const GMap = ({
             .entries(map.getCenter())
             .map((e: any) => e[1]())
           appService.addCenterStatus(centerArr, id)
-          // statusDispatch({ type: 'center', center: centerArr, callerId: 100 })
         }
         map.addListener('mousedown', () => {
           listener = map.addListener('center_changed', userCenterChanged)
@@ -82,11 +77,6 @@ const GMap = ({
       }
     }, id)
   }, [])
-  // useEffect(() => {
-  //   if (map) {
-  //     map.setZoom(control.zoom)
-  //   }
-  // }, [control.zoom])
 
   return (
     <div
@@ -98,14 +88,5 @@ const GMap = ({
     </div>
   )
 }
-
-/* eslint-disable react/forbid-prop-types */
-// GMap.propTypes = {
-//   id: PropTypes.number.isRequired,
-//   control: PropTypes.object.isRequired,
-//   // statusDispatch: PropTypes.func.isRequired,
-//   mainClassName: PropTypes.string.isRequired,
-//   appService: PropTypes.object.isRequired,
-// }
 
 export default GMap

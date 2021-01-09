@@ -31,7 +31,6 @@ function Map({
 }: { id: any, appService: AppServiceInstanceI, mainClassName: any, idName: string }) {
   const resetZoomLevel = 12
   const mapRef: any = useRef(null)
-  // const [mapCenter, setMapCenter]: any = useState([47.6, -122.3])
   const userMoveListener = () => {
     appService.addCenterStatus(
       [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng], id,
@@ -64,11 +63,6 @@ function Map({
     mapRef.current.off('doubleClickZoom')
     mapRef.current.off('move')
   }, [])
-  // useEffect(() => {
-  //   if (mapRef.current) {
-  //     mapRef.current.panTo(mapCenter)
-  //   }
-  // }, [mapCenter])
 
   return (
     <div
