@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { Loader } from '@googlemaps/loader'
 import config from '../config'
 import { AppServiceInstanceI } from '../app-service'
@@ -12,15 +12,15 @@ let map: any
 let listener: any
 const GMap = ({
   id,
-  control,
+  // control,
   // statusDispatch,
   mainClassName,
   appService,
 }: {
-  appService: AppServiceInstanceI, id: number, control: any, statusDispatch: any, mainClassName: any
+  appService: AppServiceInstanceI, id: number, mainClassName: any
 }) => {
   const idName = 'google-map'
-  const resetZoomLevel = control.zoom
+  // const resetZoomLevel = control.zoom
   useEffect(() => {
     const loader = new Loader({
       apiKey: config.gMapAPIKey,
@@ -29,10 +29,10 @@ const GMap = ({
     })
     const mapOptions = {
       center: {
-        lat: control.center[0],
-        lng: control.center[1],
+        lat: 47.6,
+        lng: -122.3,
       },
-      zoom: resetZoomLevel,
+      zoom: 12,
       disableDefaultUI: true,
       zoomControl: false,
       zoomControlOptions: {
@@ -76,12 +76,17 @@ const GMap = ({
         map.setCenter({ lat: centerValue[0], lng: centerValue[1] })
       }
     }, id)
+    appService.addZoomEventListener(zoom => {
+      if (map) {
+        map.setZoom(zoom)
+      }
+    }, id)
   }, [])
-  useEffect(() => {
-    if (map) {
-      map.setZoom(control.zoom)
-    }
-  }, [control.zoom])
+  // useEffect(() => {
+  //   if (map) {
+  //     map.setZoom(control.zoom)
+  //   }
+  // }, [control.zoom])
 
   return (
     <div
@@ -95,12 +100,12 @@ const GMap = ({
 }
 
 /* eslint-disable react/forbid-prop-types */
-GMap.propTypes = {
-  id: PropTypes.number.isRequired,
-  control: PropTypes.object.isRequired,
-  // statusDispatch: PropTypes.func.isRequired,
-  mainClassName: PropTypes.string.isRequired,
-  appService: PropTypes.object.isRequired,
-}
+// GMap.propTypes = {
+//   id: PropTypes.number.isRequired,
+//   control: PropTypes.object.isRequired,
+//   // statusDispatch: PropTypes.func.isRequired,
+//   mainClassName: PropTypes.string.isRequired,
+//   appService: PropTypes.object.isRequired,
+// }
 
 export default GMap

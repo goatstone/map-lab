@@ -1,5 +1,5 @@
 
-const goToWithAction = (gotoCommandItems, cities, controlDispatch) => {
+const goToWithAction = (gotoCommandItems, cities, listener) => {
   let i = 0
   while (i < gotoCommandItems.subMenuProps.items.length) {
     const { key } = gotoCommandItems.subMenuProps.items[i]
@@ -7,7 +7,7 @@ const goToWithAction = (gotoCommandItems, cities, controlDispatch) => {
     const latLng = cities[key]
     Object.assign(
       gotoCommandItems.subMenuProps.items[i],
-      { onClick: () => controlDispatch({ type: 'center', center: latLng, callerId: 100 }) },
+      { onClick: () => listener(latLng) },
     )
     i += 1
   }

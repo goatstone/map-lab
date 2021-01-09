@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import L from 'leaflet'
 import { AppServiceInstanceI } from '../app-service'
 
@@ -31,7 +31,7 @@ function Map({
 }: { id: any, appService: AppServiceInstanceI, mainClassName: any, idName: string }) {
   const resetZoomLevel = 12
   const mapRef: any = useRef(null)
-  const [mapCenter, setMapCenter]: any = useState([47.6, -122.3])
+  // const [mapCenter, setMapCenter]: any = useState([47.6, -122.3])
   const userMoveListener = () => {
     appService.addCenterStatus(
       [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng], id,
@@ -39,10 +39,12 @@ function Map({
   }
   useEffect(() => {
     appService.addCenterEventListener(center => {
-      setMapCenter(center)
+      if (mapRef.current) {
+        mapRef.current.panTo(center)
+      }
     }, id)
     mapRef.current = L.map(idName, {
-      center: mapCenter,
+      center: [47.6, -122.3],
       zoom: resetZoomLevel,
       zoomControl: false,
       layers: [
@@ -62,11 +64,11 @@ function Map({
     mapRef.current.off('doubleClickZoom')
     mapRef.current.off('move')
   }, [])
-  useEffect(() => {
-    if (mapRef.current) {
-      mapRef.current.panTo(mapCenter)
-    }
-  }, [mapCenter])
+  // useEffect(() => {
+  //   if (mapRef.current) {
+  //     mapRef.current.panTo(mapCenter)
+  //   }
+  // }, [mapCenter])
 
   return (
     <div
