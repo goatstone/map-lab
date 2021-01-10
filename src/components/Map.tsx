@@ -37,11 +37,6 @@ function Map({
     )
   }
   useEffect(() => {
-    appService.addCenterEventListener(center => {
-      if (mapRef.current) {
-        mapRef.current.panTo(center)
-      }
-    }, id)
     mapRef.current = L.map(idName, {
       center: [47.6, -122.3],
       zoom: resetZoomLevel,
@@ -62,6 +57,11 @@ function Map({
     mapRef.current.off('dblclick')
     mapRef.current.off('doubleClickZoom')
     mapRef.current.off('move')
+    appService.addCenterEventListener(center => {
+      if (mapRef.current) {
+        mapRef.current.panTo(center)
+      }
+    }, id)
   }, [])
 
   return (

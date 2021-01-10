@@ -22,6 +22,7 @@ import {
 import { cities } from '../data'
 import config from '../config'
 import AppService, { AppServiceInstanceI } from '../app-service'
+import timerEngine from '../timer-engine'
 
 initializeIcons()
 jss.setup(preset())
@@ -34,6 +35,10 @@ function App() {
   const id = 0
   const [mapCenter, setMapCenter] = useState([47.6, -122.3])
   const [mapZoom, setMapZoom] = useState(12)
+
+  const tE = timerEngine()
+  tE.onMessage(message => console.log('message', message))
+
   useEffect(() => {
     applicationService.addCenterEventListener(center => {
       setMapCenter(center)
@@ -75,11 +80,13 @@ function App() {
             config={config}
             id={10}
             appService={applicationService}
+            timerEngine={tE}
           />
           <GMap
             mainClassName={sheet.classes.gMap}
             id={100}
             appService={applicationService}
+            timerEngine={tE}
           />
           <LMap
             id={1000}

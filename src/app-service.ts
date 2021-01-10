@@ -1,4 +1,4 @@
-import { Subject, BehaviorSubject } from 'rxjs'
+import { Subject, BehaviorSubject, timer } from 'rxjs'
 
 export interface Message {
   message: string;
@@ -49,9 +49,13 @@ interface AddZoom {
   (zoom: number, id: number): void
 }
 const appServiceId = 0
-const initZoom = 10
-const initCenter = [47.6, -122.3]
+const initZoom = 12
+const initCenter = [40.42028, -3.70577]
 const isValid = (id: number, idB: number) => id !== idB
+
+const timer$ = timer(1000)
+timer$.subscribe(console)
+// x
 const AppService: AppServiceI = () => {
   const messages$: Subject<Message> = new Subject()
   const centers$: BehaviorSubject<Center> = new BehaviorSubject(

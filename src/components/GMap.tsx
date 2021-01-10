@@ -13,8 +13,9 @@ const GMap = ({
   id,
   mainClassName,
   appService,
+  timerEngine,
 }: {
-  appService: AppServiceInstanceI, id: number, mainClassName: any
+  appService: AppServiceInstanceI, id: number, mainClassName: any, timerEngine: any
 }) => {
   const idName = 'google-map'
   useEffect(() => {
@@ -52,6 +53,7 @@ const GMap = ({
             .entries(map.getCenter())
             .map((e: any) => e[1]())
           appService.addCenterStatus(centerArr, id)
+          timerEngine.add(`${centerArr}`)
         }
         map.addListener('mousedown', () => {
           listener = map.addListener('center_changed', userCenterChanged)
@@ -61,21 +63,22 @@ const GMap = ({
           window.google.maps.event.removeListener(listener);
         })
       })
+      .then(() => {
+        appService.addCenterEventListener(centerValue => {
+          if (map) {
+            map.setCenter({ lat: centerValue[0], lng: centerValue[1] })
+          }
+        }, id)
+        appService.addZoomEventListener(zoom => {
+          if (map) {
+            map.setZoom(zoom)
+          }
+        }, id)
+        // timerEngine.onMessage(message => console.log('msg', message))
+      })
       .catch(e => {
         throw new Error(`Library Not Loaded ${e}`)
       })
-  }, [])
-  useEffect(() => {
-    appService.addCenterEventListener(centerValue => {
-      if (map) {
-        map.setCenter({ lat: centerValue[0], lng: centerValue[1] })
-      }
-    }, id)
-    appService.addZoomEventListener(zoom => {
-      if (map) {
-        map.setZoom(zoom)
-      }
-    }, id)
   }, [])
 
   return (

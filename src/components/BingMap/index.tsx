@@ -12,7 +12,8 @@ const BingMap = ({
   config,
   id,
   appService,
-}: { config: any, id: number, appService: AppServiceInstanceI }) => {
+  timerEngine,
+}: { config: any, id: number, appService: AppServiceInstanceI, timerEngine: any }) => {
   const url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
   let userCenterChangeHangler: any
 
@@ -39,6 +40,7 @@ const BingMap = ({
               .filter(e => e[0] === 'latitude' || e[0] === 'longitude')
               .map(e => e[1])
             appService.addCenterStatus(centerArr, id)
+            timerEngine.add(`${centerArr}`)
           })
       })
       window.Microsoft.Maps.Events.addHandler(map, 'mouseup', () => {
