@@ -40,7 +40,7 @@ const BingMap = ({
               .filter(e => e[0] === 'latitude' || e[0] === 'longitude')
               .map(e => e[1])
             appService.addCenterStatus(centerArr, id)
-            timerEngine.add(`${centerArr}`)
+            timerEngine.add(`[${centerArr}]`)
           })
       })
       window.Microsoft.Maps.Events.addHandler(map, 'mouseup', () => {

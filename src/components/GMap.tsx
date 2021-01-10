@@ -64,17 +64,23 @@ const GMap = ({
         })
       })
       .then(() => {
-        appService.addCenterEventListener(centerValue => {
-          if (map) {
-            map.setCenter({ lat: centerValue[0], lng: centerValue[1] })
-          }
-        }, id)
+        // appService.addCenterEventListener(centerValue => {
+        //   if (map) {
+        //     map.setCenter({ lat: centerValue[0], lng: centerValue[1] })
+        //   }
+        // }, id)
         appService.addZoomEventListener(zoom => {
           if (map) {
             map.setZoom(zoom)
           }
         }, id)
-        // timerEngine.onMessage(message => console.log('msg', message))
+        timerEngine.onMessage((message: string) => {
+          console.log('msg', message)
+          const c = JSON.parse(message)
+          if (map) {
+            map.setCenter({ lat: c[0], lng: c[1] })
+          }
+        })
       })
       .catch(e => {
         throw new Error(`Library Not Loaded ${e}`)

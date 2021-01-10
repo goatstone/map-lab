@@ -37,13 +37,13 @@ function App() {
   const [mapZoom, setMapZoom] = useState(12)
 
   const tE = timerEngine()
-  tE.onMessage(message => console.log('message', message))
 
   useEffect(() => {
     applicationService.addCenterEventListener(center => {
       setMapCenter(center)
     }, id)
     applicationService.addZoomEventListener(zoom => setMapZoom(zoom), 100)
+    // tE.onMessage(message => console.log('message', message))
   }, [])
 
   const [isModalOpen, setIsModalOpen] = useState(false)
