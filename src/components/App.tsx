@@ -4,10 +4,8 @@ import jss from 'jss'
 import preset from 'jss-preset-default'
 import style from '../style/main-style'
 import {
-  GMap,
-  LMap,
   InfoModal,
-  BingMap,
+  GibsMap,
 } from '.'
 import MainHeader from './MainHeader'
 import {
@@ -55,21 +53,8 @@ function App() {
           farItems={[infoCommandItem]}
         />
         <div className={sheet.classes.frame}>
-          <BingMap
+          <GibsMap
             config={config}
-            id={10}
-            appService={applicationService}
-          />
-          <GMap
-            mainClassName={sheet.classes.gMap}
-            id={100}
-            appService={applicationService}
-          />
-          <LMap
-            id={1000}
-            appService={applicationService}
-            mainClassName={sheet.classes.lMap}
-            idName="leaflet"
           />
         </div>
       </section>
