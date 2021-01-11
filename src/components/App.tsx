@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { initializeIcons } from '@fluentui/react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
@@ -31,18 +31,7 @@ sheet.attach()
 const applicationService: AppServiceInstanceI = AppService()
 
 function App() {
-  const id = 0
-  const [mapCenter, setMapCenter] = useState([47.6, -122.3])
-  const [mapZoom, setMapZoom] = useState(12)
-  useEffect(() => {
-    applicationService.addCenterEventListener(center => {
-      setMapCenter(center)
-    }, id)
-    applicationService.addZoomEventListener(zoom => setMapZoom(zoom), 100)
-  }, [])
-
   const [isModalOpen, setIsModalOpen] = useState(false)
-
   infoWithAction(infoCommandItem, setIsModalOpen)
   goToWithAction(gotoCommandItems, cities, applicationService.addCenterStatus)
   withAction(zoomCommandItem, () => {
@@ -52,11 +41,6 @@ function App() {
   return (
     <>
       <section className={sheet.classes.mainContainer}>
-        <div className="info">
-          {mapCenter}
-          :
-          {mapZoom}
-        </div>
         <InfoModal
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
