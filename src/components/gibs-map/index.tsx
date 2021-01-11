@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import './bingmap.css'
+import { gibsImageServiceUrl, gibs } from './gibs'
 
 declare global {
   interface Window { Microsoft: any, GetBingMap: any }
@@ -17,7 +18,7 @@ const GibsMap = ({
   window.GetBingMap = () => {
     map = new window.Microsoft.Maps.Map('#bing-map', {
       center: new window.Microsoft.Maps.Location(...seattle),
-      mapTypeId: window.Microsoft.Maps.MapTypeId.aerial,
+      mapTypeId: window.Microsoft.Maps.MapTypeId.canvasDark,
       zoom: 6,
       showLocateMeButton: false,
       disableStreetside: true,
@@ -28,15 +29,20 @@ const GibsMap = ({
       showScalebar: false,
       allowHidingLabelsOfRoad: true,
       showMapLabels: false,
+      labelOverlay: window.Microsoft.Maps.LabelOverlay.hidden,
     })
     const tileSource = new window.Microsoft.Maps.TileSource({
-      uriConstructor: (tile: any) => `https://map1.vis.earthdata.nasa.gov/wmts-geo/MODIS_Terra_CorrectedReflectance_TrueColor/default/2014-07-09/EPSG4326_250m/${tile.zoom}/${tile.y}/${tile.x}.jpg`,
+      uriConstructor: (tile: any) => gibsImageServiceUrl(
+        tile,
+        gibs.products.MODIS_Terra_CorrectedReflectance_Bands367.value,
+        '2011-07-10',
+      ),
       minZoom: 1,
       maxZoom: 16,
     })
     const layer = new window.Microsoft.Maps.TileLayer({
       mercator: tileSource,
-      opacity: 0.75,
+      opacity: 0.7,
     })
     map.layers.insert(layer)
   }
