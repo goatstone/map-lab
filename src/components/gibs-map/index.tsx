@@ -13,7 +13,9 @@ const seattle = [47.6062, -122.3321]
 
 const GibsMap = ({
   config,
-}: { config: any }) => {
+  product,
+}: { config: any, product: string }) => {
+  // const [s, setS] = useState('a')
   url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
   window.GetBingMap = () => {
     map = new window.Microsoft.Maps.Map('#bing-map', {
@@ -53,8 +55,29 @@ const GibsMap = ({
     if (el) {
       el.appendChild(node)
     }
+    // setS('a')
+    // setTimeout(() => setS('b'), 5000)
   }, [])
-
+  useEffect(() => {
+    if (map) {
+      const tileSource = new window.Microsoft.Maps.TileSource({
+        uriConstructor: (tile: any) => gibsImageServiceUrl(
+          tile,
+          product,
+          '2011-07-10',
+        ),
+        minZoom: 1,
+        maxZoom: 16,
+      })
+      const layer = new window.Microsoft.Maps.TileLayer({
+        mercator: tileSource,
+        opacity: 0.7,
+      })
+      map.layers.insert(layer)
+      //   const center = new window.Microsoft.Maps.Location(...[45.00, -122.00])
+      // map.setView({ center })
+    }
+  }, [product])
   return (
     <div id="bing-map">&nbsp;</div>
   )

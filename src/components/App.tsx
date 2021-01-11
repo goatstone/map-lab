@@ -30,11 +30,32 @@ const applicationService: AppServiceInstanceI = AppService()
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [product, setProduct] = useState('MODIS_Terra_CorrectedReflectance_TrueColor')
   infoWithAction(infoCommandItem, setIsModalOpen)
   goToWithAction(gotoCommandItems, cities, applicationService.addCenterStatus)
   withAction(zoomCommandItem, () => {
     applicationService.addZoom(12, 0)
   })
+
+  const cI = {
+    key: 'gibs-products',
+    text: 'Gibs Products',
+    iconProps: { iconName: 'ProductList' },
+    subMenuProps: {
+      items: [
+        {
+          key: 'MODIS_Terra_CorrectedReflectance_TrueColor',
+          text: 'MODIS_Terra_CorrectedReflectance_TrueColor',
+          onClick: () => setProduct('MODIS_Terra_CorrectedReflectance_TrueColor'),
+        },
+        {
+          key: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',
+          text: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',
+          onClick: () => setProduct('VIIRS_SNPP_CorrectedReflectance_TrueColor'),
+        },
+      ],
+    },
+  }
 
   return (
     <>
@@ -49,12 +70,14 @@ function App() {
             repoCommandItem,
             gotoCommandItems,
             zoomCommandItem,
+            cI,
           ]}
           farItems={[infoCommandItem]}
         />
         <div className={sheet.classes.frame}>
           <GibsMap
             config={config}
+            product={product}
           />
         </div>
       </section>
