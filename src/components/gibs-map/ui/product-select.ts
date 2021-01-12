@@ -1,7 +1,7 @@
 import { gibs, Product } from '../gibs'
 
 interface ProductSelect {
-  (setProduct: any): { key: string }
+  (setProduct: React.Dispatch<React.SetStateAction<string>>): { key: string }
 }
 
 const productSelect: ProductSelect = setProduct => {
