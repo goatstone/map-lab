@@ -1,26 +1,26 @@
+import { gibs, Product } from '../gibs'
+
 interface ProductSelect {
-  (setProduct: any): any
+  (setProduct: any): { key: string }
 }
 
 const productSelect: ProductSelect = setProduct => {
-  console.log(setProduct)
+  const items: Product[] = []
+  gibs.products.multibandImagery.forEach(product => {
+    const item: any = {
+      key: product.imageLayer,
+      text: product.description,
+      onClick: () => setProduct(product.imageLayer),
+    }
+    items.push(item)
+  })
+
   return {
     key: 'gibs-products',
     text: 'Gibs Products',
     iconProps: { iconName: 'ProductList' },
     subMenuProps: {
-      items: [
-        {
-          key: 'MODIS_Terra_CorrectedReflectance_TrueColor',
-          text: 'MODIS_Terra_CorrectedReflectance_TrueColor',
-          onClick: () => setProduct('MODIS_Terra_CorrectedReflectance_TrueColor'),
-        },
-        {
-          key: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',
-          text: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',
-          onClick: () => setProduct('VIIRS_SNPP_CorrectedReflectance_TrueColor'),
-        },
-      ],
+      items,
     },
   }
 }

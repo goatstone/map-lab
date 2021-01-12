@@ -36,7 +36,7 @@ const GibsMap = ({
     const tileSource = new window.Microsoft.Maps.TileSource({
       uriConstructor: (tile: any) => gibsImageServiceUrl(
         tile,
-        gibs.products.MODIS_Terra_CorrectedReflectance_Bands367.value,
+        gibs.products.multibandImagery[0].imageLayer,
         '2011-07-10',
       ),
       minZoom: 1,
