@@ -73,6 +73,7 @@ const GibsMap = ({
         mercator: tileSource,
         opacity: 0.7,
       })
+      map.layers.clear()
       map.layers.insert(layer)
       //   const center = new window.Microsoft.Maps.Location(...[45.00, -122.00])
       // map.setView({ center })
