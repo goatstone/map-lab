@@ -75,7 +75,7 @@ const InfoModal = ({ setIsModalOpen, isModalOpen }) => (
     </p>
     <p>
       &copy;&nbsp;
-      <a href="https://www.goatstone.com" target="new">Goatstone</a>
+      <a href="https://goatstone.com" target="new">Goatstone</a>
       &nbsp;
       2021
     </p>

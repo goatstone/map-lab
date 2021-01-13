@@ -1,5 +1,5 @@
 import React from 'react'
-import { CommandBar, Slider, ICommandBarItemProps } from '@fluentui/react'
+import { CommandBar, ICommandBarItemProps } from '@fluentui/react'
 
 interface MainHeaderProps {
   title: string
@@ -18,14 +18,12 @@ const MainHeader: IMainHeader = ({
     <h1>
       {title}
     </h1>
+    {children}
     <CommandBar
       items={items}
       farItems={farItems}
       ariaLabel="Use left and right arrow keys to navigate between commands"
-    >
-      <Slider />
-    </CommandBar>
-    {children}
+    />
   </header>
 )
 

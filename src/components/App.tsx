@@ -19,27 +19,22 @@ function App() {
   const [product, setProduct] = useState<string>('MODIS_Terra_CorrectedReflectance_TrueColor')
   const [day, setDay] = useState<number>(10)
   const [month, setMonth] = useState<number>(7)
-  const [year, setYear] = useState<number>(2011)
+  const [year, setYear] = useState<number>(2003)
   const [date, setDate] = useState('2003-08-10')
   infoWithAction(infoCommandItem, setIsModalOpen)
-
   useEffect(() => {
-    // const formattedDate = new Date(year, month, day).toLocaleTimeString('en-US', {
-    //   day: 'numeric',
-    //   month: 'short',
-    //   year: 'numeric',
-    // })
-    const d = new Date(year, month, day)
-    const fD = `${d.getFullYear()}-${String(d.getMonth()).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
-    console.log(d, fD, day)
-
-    setDate(fD)
-  }, [day, month, year])
+    const userSelectedDate = new Date(year, month, day)
+    setDate(
+      `${userSelectedDate
+        .getFullYear()}-${String(userSelectedDate
+        .getMonth()).padStart(2, '0')}-${String(userSelectedDate
+        .getDate()).padStart(2, '0')}`,
+    )
+  }, [year, month, day])
 
   return (
     <>
       <section className={sheet.classes.mainContainer}>
-        {day}
         <InfoModal
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
@@ -54,6 +49,7 @@ function App() {
           <>
             <Slider
               label="Day"
+              min={1}
               max={30}
               value={day}
               showValue
@@ -61,6 +57,7 @@ function App() {
             />
             <Slider
               label="Month"
+              min={1}
               max={12}
               value={month}
               showValue
@@ -68,12 +65,12 @@ function App() {
             />
             <Slider
               label="Year"
+              min={2003}
               max={2020}
               value={year}
               showValue
               onChange={(yearValue: number) => setYear(yearValue)}
             />
-            {day}
           </>
         </MainHeader>
         <div className={sheet.classes.frame}>
