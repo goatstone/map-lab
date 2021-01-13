@@ -1,11 +1,12 @@
-import { gibs, Product } from '../gibs'
+import { ICommandBarItemProps } from '@fluentui/react'
+import { gibs } from '../gibs'
 
 interface ProductSelect {
-  (setProduct: React.Dispatch<React.SetStateAction<string>>): { key: string }
+  (setProduct: React.Dispatch<React.SetStateAction<string>>): ICommandBarItemProps
 }
 
 const productSelect: ProductSelect = setProduct => {
-  const items: Product[] = []
+  const items: ICommandBarItemProps[] = []
   gibs.products.multibandImagery.forEach(product => {
     const item: any = {
       key: product.imageLayer,
