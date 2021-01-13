@@ -15,7 +15,6 @@ const GibsMap = ({
   config,
   product,
 }: { config: any, product: string }) => {
-  // const [s, setS] = useState('a')
   url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
   window.GetBingMap = () => {
     map = new window.Microsoft.Maps.Map('#bing-map', {
@@ -25,7 +24,6 @@ const GibsMap = ({
       showLocateMeButton: false,
       disableStreetside: true,
       disableBirdseye: true,
-      // disableKeyboardInput: true,
       showZoomButtons: false,
       showMapTypeSelector: false,
       showScalebar: false,
@@ -55,8 +53,6 @@ const GibsMap = ({
     if (el) {
       el.appendChild(node)
     }
-    // setS('a')
-    // setTimeout(() => setS('b'), 5000)
   }, [])
   useEffect(() => {
     if (map) {
@@ -75,8 +71,6 @@ const GibsMap = ({
       })
       map.layers.clear()
       map.layers.insert(layer)
-      //   const center = new window.Microsoft.Maps.Location(...[45.00, -122.00])
-      // map.setView({ center })
     }
   }, [product])
   return (

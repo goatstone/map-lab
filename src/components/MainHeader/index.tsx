@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react'
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react'
 
@@ -11,7 +10,7 @@ interface IMainHeader {
   (props: MainHeaderProps): React.ReactElement
 }
 
-const MainHeader: IMainHeader = ({ title, items, farItems }) => (
+const MainHeader: IMainHeader = ({ title, items, farItems }: MainHeaderProps) => (
   <header>
     <h1>
       {title}
