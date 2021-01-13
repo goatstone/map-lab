@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { initializeIcons } from '@fluentui/react'
+import React, { useEffect, useState } from 'react'
+import { initializeIcons, Slider } from '@fluentui/react'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 import style from '../style/main-style'
@@ -17,11 +17,29 @@ sheet.attach()
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [product, setProduct] = useState<string>('MODIS_Terra_CorrectedReflectance_TrueColor')
+  const [day, setDay] = useState<number>(10)
+  const [month, setMonth] = useState<number>(7)
+  const [year, setYear] = useState<number>(2011)
+  const [date, setDate] = useState('2003-08-10')
   infoWithAction(infoCommandItem, setIsModalOpen)
+
+  useEffect(() => {
+    // const formattedDate = new Date(year, month, day).toLocaleTimeString('en-US', {
+    //   day: 'numeric',
+    //   month: 'short',
+    //   year: 'numeric',
+    // })
+    const d = new Date(year, month, day)
+    const fD = `${d.getFullYear()}-${String(d.getMonth()).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    console.log(d, fD, day)
+
+    setDate(fD)
+  }, [day, month, year])
 
   return (
     <>
       <section className={sheet.classes.mainContainer}>
+        {day}
         <InfoModal
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
@@ -32,11 +50,37 @@ function App() {
             productSelect(setProduct),
           ]}
           farItems={[infoCommandItem]}
-        />
+        >
+          <>
+            <Slider
+              label="Day"
+              max={30}
+              value={day}
+              showValue
+              onChange={(dayValue: number) => setDay(dayValue)}
+            />
+            <Slider
+              label="Month"
+              max={12}
+              value={month}
+              showValue
+              onChange={(monthValue: number) => setMonth(monthValue)}
+            />
+            <Slider
+              label="Year"
+              max={2020}
+              value={year}
+              showValue
+              onChange={(yearValue: number) => setYear(yearValue)}
+            />
+            {day}
+          </>
+        </MainHeader>
         <div className={sheet.classes.frame}>
           <GibsMap
             config={config}
             product={product}
+            date={date}
           />
         </div>
       </section>

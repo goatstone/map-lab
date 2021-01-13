@@ -9,18 +9,19 @@ declare const window: Window
 
 let map: any
 let url: any
-const seattle = [47.6062, -122.3321]
+const seattle = [40.0, 0.0]
 
 const GibsMap = ({
   config,
   product,
-}: { config: any, product: string }) => {
+  date,
+}: { config: any, product: string, date: string }) => {
   url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMap&key=${config.bingAPIKey}`
   window.GetBingMap = () => {
     map = new window.Microsoft.Maps.Map('#bing-map', {
       center: new window.Microsoft.Maps.Location(...seattle),
       mapTypeId: window.Microsoft.Maps.MapTypeId.canvasDark,
-      zoom: 6,
+      zoom: 3,
       showLocateMeButton: false,
       disableStreetside: true,
       disableBirdseye: true,
@@ -35,7 +36,7 @@ const GibsMap = ({
       uriConstructor: (tile: any) => gibsImageServiceUrl(
         tile,
         gibs.products.multibandImagery[0].imageLayer,
-        '2011-07-10',
+        date,
       ),
       minZoom: 1,
       maxZoom: 16,
@@ -60,7 +61,7 @@ const GibsMap = ({
         uriConstructor: (tile: any) => gibsImageServiceUrl(
           tile,
           product,
-          '2011-07-10',
+          date,
         ),
         minZoom: 1,
         maxZoom: 16,
@@ -72,7 +73,7 @@ const GibsMap = ({
       map.layers.clear()
       map.layers.insert(layer)
     }
-  }, [product])
+  }, [product, date])
   return (
     <div id="bing-map">&nbsp;</div>
   )
