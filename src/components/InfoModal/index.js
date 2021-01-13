@@ -66,28 +66,18 @@ const InfoModal = ({ setIsModalOpen, isModalOpen }) => (
         onClick={() => setIsModalOpen(false)}
       />
     </div>
-    <h2>MapLab</h2>
+    <h2>Nasa Layers</h2>
     <p>
-      MapLab is a place to establish examples of web mapping libraries.
-      Currently, the libraries used are
-      &nbsp;
-      <a href="https://cloud.google.com/maps-platform" target="new">Google Maps Platform</a>
-      &nbsp;
-      and
-      &nbsp;
-      <a href="https://leafletjs.com/" target="new">Leaflet</a>
-      &nbsp;
-      in the context of a
-      &nbsp;
-      <a href="https://reactjs.org/" target="new">React</a>
-      &nbsp;
-      application.
+      Images from&nbsp;
+      <a href="https://earthdata.nasa.gov/eosdis/science-system-description/eosdis-components/gibs" target="new">
+        Global Imagery Browse Services (GIBS)
+      </a>
     </p>
     <p>
       &copy;&nbsp;
       <a href="https://www.goatstone.com" target="new">Goatstone</a>
       &nbsp;
-      2020
+      2021
     </p>
   </Modal>
 )
