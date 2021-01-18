@@ -3,6 +3,7 @@ import MainHeader from './MainHeader'
 import LMap from './Map'
 import GMap from './GMap'
 import BingMap from './BingMap'
+import GibsMap from './gibs-map'
 
 export {
   InfoModal,
@@ -10,4 +11,5 @@ export {
   LMap,
   GMap,
   BingMap,
+  GibsMap,
 }
