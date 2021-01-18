@@ -17,6 +17,9 @@ const style = {
     '& .info': {
       position: 'absolute',
     },
+    '& #gibs-map': {
+      width: '100%',
+    },
     '& #bing-map': {
       width: '100%',
     },
