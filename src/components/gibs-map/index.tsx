@@ -11,7 +11,6 @@ let map: any
 let url: any
 const seattle = [40.0, 0.0]
 const idName = 'gibs-map'
-let containerEl: any
 
 const GibsMap = ({
   config,
@@ -20,7 +19,7 @@ const GibsMap = ({
 }: { config: any, product: string, date: string }) => {
   url = `https://www.bing.com/api/maps/mapcontrol?callback=GetBingMapB&key=${config.bingAPIKey}`
   window.GetBingMapB = () => {
-    map = new window.Microsoft.Maps.Map(containerEl, {
+    map = new window.Microsoft.Maps.Map(`#${idName}`, {
       center: new window.Microsoft.Maps.Location(...seattle),
       mapTypeId: window.Microsoft.Maps.MapTypeId.canvasDark,
       zoom: 3,
@@ -54,15 +53,15 @@ const GibsMap = ({
     node.src = url
     const el = document.getElementById(idName)
     if (el) {
-      // el.appendChild(node)
+      el.appendChild(node)
     }
-    const elm = document.getElementById(idName)
-    if (elm) {
-      const sR: any = elm.attachShadow({ mode: 'open' })
-      sR.innerHTML = 'XXXXx'
-      sR.appendChild(node)
-      containerEl = sR
-    }
+    // const elm = document.getElementById(idName)
+    // if (elm) {
+    //   const sR: any = elm.attachShadow({ mode: 'open' })
+    //   sR.innerHTML = 'XXXXx'
+    //   sR.appendChild(node)
+    //   containerEl = sR
+    // }
   }, [])
   useEffect(() => {
     if (map) {

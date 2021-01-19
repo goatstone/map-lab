@@ -10,8 +10,8 @@ import jss from 'jss'
 import preset from 'jss-preset-default'
 import style from '../style/main-style'
 import {
-  // GMap,
-  // LMap,
+  GMap,
+  LMap,
   InfoModal,
   // BingMap,
   GibsMap,
@@ -115,7 +115,7 @@ function App() {
             id={10}
             appService={applicationService}
           /> */}
-          {/* <GMap
+          <GMap
             mainClassName={sheet.classes.gMap}
             id={100}
             appService={applicationService}
@@ -125,7 +125,13 @@ function App() {
             appService={applicationService}
             mainClassName={sheet.classes.lMap}
             idName="leaflet"
-          /> */}
+          />
+          <LMap
+            id={10000}
+            appService={applicationService}
+            mainClassName={sheet.classes.lMap}
+            idName="leaflet-b"
+          />
         </div>
       </section>
     </>

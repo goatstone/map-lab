@@ -20,22 +20,35 @@ function Map({
       [mapRef.current.getCenter().lat, mapRef.current.getCenter().lng], id,
     )
   }
-  const grayscale = L.tileLayer(
-    mbUrl,
-    {
-      id: 'mapbox/streets-v11',
-      attribution,
-      accessToken,
-    },
-  )
-  const streets = L.tileLayer(
-    mbUrl,
-    {
-      id: 'mapbox/streets-v11',
-      attribution,
-      accessToken,
-    },
-  )
+  const grayscale = L.tileLayer(mbUrl, { id: 'mapbox/dark-v10', attribution, accessToken })
+  const light = L.tileLayer(mbUrl, { id: 'mapbox/light-v10', attribution, accessToken })
+  const out = L.tileLayer(mbUrl, { id: 'mapbox/outdoors-v11', attribution, accessToken })
+  const satStreet = L.tileLayer(mbUrl, { id: 'mapbox/satellite-streets-v11', attribution, accessToken })
+  const satelite = L.tileLayer(mbUrl, { id: 'mapbox/satellite-v9', attribution, accessToken })
+  const streets = L.tileLayer(mbUrl, { id: 'mapbox/streets-v11', attribution, accessToken })
+  const t1 = 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2012-07-09/250m/7/13/36.jpg'
+  const layer = L.tileLayer(t1, {
+    tileSize: 256,
+    accessToken,
+    subdomains: 'abc',
+    noWrap: true,
+    attribution:
+      '<a href="https://wiki.earthdata.nasa.gov/display/GIBS">'
+      + 'NASA EOSDIS GIBS</a>&nbsp;&nbsp;&nbsp;'
+      + '<a href="https://github.com/nasa-gibs/web-examples/blob/master/examples/leaflet/antarctic-epsg3031.js">'
+      + 'View Source'
+      + '</a>',
+  })
+  const baseMaps = {
+    Gibs: layer,
+    Out: out,
+    Light: light,
+    SateStreet: satStreet,
+    SatLite: satelite,
+    Grayscale: grayscale,
+    Satelite: satelite,
+    Streets: streets,
+  }
   useEffect(() => {
     appService.addCenterEventListener(center => {
       if (mapRef.current) {
@@ -45,10 +58,12 @@ function Map({
     mapRef.current = L.map(idName, {
       center: [47.6, -122.3],
       zoom: 12,
+      zoomControl: false,
       layers: [
-        grayscale, streets,
+        grayscale, streets, layer,
       ],
     })
+    L.control.layers(baseMaps).addTo(mapRef.current)
     mapRef.current.on('mousedown', () => {
       mapRef.current.on('move', userMoveListener)
     })
