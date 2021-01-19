@@ -4,10 +4,11 @@ import jss from 'jss'
 import preset from 'jss-preset-default'
 import style from '../style/main-style'
 import {
-  GMap,
-  LMap,
+  // GMap,
+  // LMap,
   InfoModal,
-  BingMap,
+  // BingMap,
+  MapBox,
 } from '.'
 import MainHeader from './MainHeader'
 import {
@@ -20,7 +21,7 @@ import {
   withAction,
 } from '../command-items'
 import { cities } from '../data'
-import config from '../config'
+// import config from '../config'
 import AppService, { AppServiceInstanceI } from '../app-service'
 
 initializeIcons()
@@ -55,7 +56,10 @@ function App() {
           farItems={[infoCommandItem]}
         />
         <div className={sheet.classes.frame}>
-          <BingMap
+          <MapBox
+            idName="map-box-X"
+          />
+          {/* <BingMap
             config={config}
             id={10}
             appService={applicationService}
@@ -70,7 +74,7 @@ function App() {
             appService={applicationService}
             mainClassName={sheet.classes.lMap}
             idName="leaflet"
-          />
+          /> */}
         </div>
       </section>
     </>
