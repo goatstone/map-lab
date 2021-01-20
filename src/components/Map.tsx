@@ -77,8 +77,6 @@ function Map({
       layers: [
         layers[layerType],
       ],
-      scrollWheelZoom: false,
-      keyboard: false,
     })
     // capture only user map chage to dispatch status
     mapRef.current.on('mousedown', () => {
