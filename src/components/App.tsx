@@ -7,7 +7,6 @@ import {
   GMap,
   LMap,
   InfoModal,
-  BingMap,
 } from '.'
 import MainHeader from './MainHeader'
 import {
@@ -20,7 +19,6 @@ import {
   withAction,
 } from '../command-items'
 import { cities } from '../data'
-import config from '../config'
 import AppService, { AppServiceInstanceI } from '../app-service'
 
 initializeIcons()
@@ -55,11 +53,6 @@ function App() {
           farItems={[infoCommandItem]}
         />
         <div className={sheet.classes.frame}>
-          <BingMap
-            config={config}
-            id={10}
-            appService={applicationService}
-          />
           <GMap
             mainClassName={sheet.classes.gMap}
             id={100}
@@ -70,6 +63,14 @@ function App() {
             appService={applicationService}
             mainClassName={sheet.classes.lMap}
             idName="leaflet"
+            layerType="light"
+          />
+          <LMap
+            id={10000}
+            appService={applicationService}
+            mainClassName={sheet.classes.lMap}
+            idName="leaflet-b"
+            layerType="satelite"
           />
         </div>
       </section>
