@@ -56,9 +56,10 @@ function App() {
           farItems={[infoCommandItem]}
         />
         <div className={sheet.classes.frame}>
-          <MapBox
+          <MapBox />
+          {/* <MapBox
             idName="map-box-X"
-          />
+          /> */}
           {/* <BingMap
             config={config}
             id={10}
