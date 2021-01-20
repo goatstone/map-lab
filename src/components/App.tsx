@@ -8,6 +8,7 @@ import {
   LMap,
   InfoModal,
 } from '.'
+import MapWrapper from './openlayer'
 import MainHeader from './MainHeader'
 import {
   repoCommandItem,
@@ -53,6 +54,9 @@ function App() {
           farItems={[infoCommandItem]}
         />
         <div className={sheet.classes.frame}>
+          <MapWrapper
+            features={[]}
+          />
           <GMap
             mainClassName={sheet.classes.gMap}
             id={100}

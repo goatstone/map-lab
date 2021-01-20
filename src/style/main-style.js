@@ -113,14 +113,14 @@ const gMap = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '100%',
+  width: '25%',
   height: '100%',
 }
 const lMap = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '100%',
+  width: '25%',
   height: '100%',
 }
 const frame = {
