@@ -66,6 +66,13 @@ const style = {
       display: 'flex',
       justifyContent: 'flex-start',
     },
+    '& .openlayer': {
+      width: '25%',
+    },
+    '& .map-container': {
+      position: 'relative',
+      height: '100%',
+    },
   },
   displayResults: {
     display: 'flex',
@@ -110,16 +117,16 @@ const drawerContainer = {
 }
 
 const gMap = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  // display: 'flex',
+  // justifyContent: 'center',
+  // alignItems: 'center',
   width: '25%',
   height: '100%',
 }
 const lMap = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  // display: 'flex',
+  // justifyContent: 'center',
+  // alignItems: 'center',
   width: '25%',
   height: '100%',
 }

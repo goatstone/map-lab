@@ -10,7 +10,6 @@ import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
 import { transform } from 'ol/proj'
 import { Coordinate, toStringXY } from 'ol/coordinate'
-import './style.css'
 
 interface IMapWrapper {
   (props: any): any
@@ -94,7 +93,7 @@ const MapWrapper: IMapWrapper = (({ features }: { features: any[] }) => {
 
   // render component
   return (
-    <div>
+    <div className="openlayer">
       <div ref={mapElement} className="map-container" />
       <div className="clicked-coord-label">
         <p>{ (selectedCoord) ? toStringXY(selectedCoord, 5) : '' }</p>
