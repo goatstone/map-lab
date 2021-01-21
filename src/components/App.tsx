@@ -57,6 +57,9 @@ function App() {
           <MapWrapper
             features={[]}
           />
+          <MapWrapper
+            features={[]}
+          />
           <GMap
             mainClassName={sheet.classes.gMap}
             id={100}

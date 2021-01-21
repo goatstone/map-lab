@@ -7,16 +7,20 @@ import View from 'ol/View'
 import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
+import VectorWMTS from 'ol/source/WMTS'
 import XYZ from 'ol/source/XYZ'
 import { transform } from 'ol/proj'
 import { Coordinate, toStringXY } from 'ol/coordinate'
+import TileGrid from 'ol/tilegrid/WMTS'
 
+// ol.tilegrid.WMTS
 interface IMapWrapper {
   (props: any): any
 }
 interface MapRef {
   current?: any
 }
+
 const MapWrapper: IMapWrapper = (({ features }: { features: any[] }) => {
   // set intial state
   const [map, setMap]: any[] = useState()
@@ -44,15 +48,64 @@ const MapWrapper: IMapWrapper = (({ features }: { features: any[] }) => {
     const initalFeaturesLayer = new VectorLayer({
       source: new VectorSource(),
     })
+    const xyz = new XYZ({
+      url: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
+    })
+    const gibs = new VectorWMTS({
+      style: '',
+      url: 'https://gibs-{a-c}.earthdata.nasa.gov/wmts/epsg4326/best/wmts.cgi?TIME=2013-06-16',
+      layer: 'MODIS_Terra_CorrectedReflectance_TrueColor',
+      format: 'image/jpeg',
+      matrixSet: 'EPSG4326_250m',
+      tileGrid: new TileGrid({
+        origin: [-180, 90],
+        resolutions: [
+          0.5625,
+          0.28125,
+          0.140625,
+          0.0703125,
+          0.03515625,
+          0.017578125,
+          0.0087890625,
+          0.00439453125,
+          0.002197265625,
+        ],
+        matrixIds: ['0', '1', '2', '3', '4', '5', '6', '7', '8'],
+        tileSize: 512,
+      }),
+    })
+    const sourceB = new XYZ({
+      url: 'https://gibs-{a-c}.earthdata.nasa.gov/wmts/epsg3857/best/'
+      + 'MODIS_Terra_CorrectedReflectance_TrueColor/default/2013-06-15/'
+      + 'GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg',
+      // matrixSet: 'EPSG4326_250m',
+      // style: '',
+      // layer: 'MODIS_Terra_CorrectedReflectance_TrueColor',
+      // tileGrid: new TileGrid({
+      //   origin: [-180, 90],
+      //   resolutions: [
+      //     0.5625,
+      //     0.28125,
+      //     0.140625,
+      //     0.0703125,
+      //     0.03515625,
+      //     0.017578125,
+      //     0.0087890625,
+      //     0.00439453125,
+      //     0.002197265625,
+      //   ],
+      //   matrixIds: ['0', '1', '2', '3', '4', '5', '6', '7', '8'],
+      //   tileSize: 512,
+      // }),
+    })
+    console.log(gibs, xyz, sourceB)
     // create map
     const initialMap = new Map({
       target: mapElement.current,
       layers: [
         // USGS Topo
         new TileLayer({
-          source: new XYZ({
-            url: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
-          }),
+          source: sourceB,
         }),
         // Google Maps Terrain
         /* new TileLayer({
