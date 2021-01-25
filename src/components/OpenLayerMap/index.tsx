@@ -28,7 +28,7 @@ const MapWrapper = ({ id, appService }: {
       url: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
     })
     // eslint-disable-next-line
-    new Map({
+    const map: any = new Map({
       target: mapElement.current,
       layers: [
         new TileLayer({
@@ -46,6 +46,12 @@ const MapWrapper = ({ id, appService }: {
       const latLong = olProj.toLonLat(e.map.getView().getCenter())
       addCenter([latLong[1], latLong[0]])
     })
+    appService.addCenterEventListener(center => {
+      if (map) {
+        const lLConverted = olProj.fromLonLat([center[1], center[0]])
+        map.target.getView().setCenter(lLConverted)
+      }
+    }, id)
   }, [])
 
   return (
