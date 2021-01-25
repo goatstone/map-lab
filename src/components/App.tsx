@@ -60,7 +60,8 @@ function App() {
             appService={applicationService}
           />
           <GibsMap
-            features={[]}
+            id={10}
+            appService={applicationService}
           />
           <GoogleMap
             id={100}
