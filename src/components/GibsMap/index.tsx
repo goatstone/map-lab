@@ -27,8 +27,9 @@ const GibsMap: IMapWrapper = ({ id, appService }: {
       url: 'https://gibs-{a-c}.earthdata.nasa.gov/wmts/epsg3857/best/'
         + 'MODIS_Terra_CorrectedReflectance_TrueColor/default/2013-06-15/'
         + 'GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg',
+      attributions:
+        ['Global Imagery Browse Services <a href="https://wiki.earthdata.nasa.gov/pages/viewpage.action?pageId=2228230" >(GIBS)</a>'],
     })
-    // eslint-disable-next-line
     const map: any = new Map({
       target: mapElement.current,
       layers: [
@@ -42,7 +43,6 @@ const GibsMap: IMapWrapper = ({ id, appService }: {
         center: [-13614350.227919813, 6040458.372108159],
         zoom: 9,
       }),
-      controls: [],
     }).on('pointerdrag', (e: any) => {
       const latLong = olProj.toLonLat(e.map.getView().getCenter())
       addCenter([latLong[1], latLong[0]])

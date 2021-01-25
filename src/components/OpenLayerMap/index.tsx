@@ -26,8 +26,8 @@ const MapWrapper = ({ id, appService }: {
     })
     const xyz = new XYZ({
       url: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
+      attributions: ['© OpenStreetMap -Mitwirkende, SRTM | Affichage de la carte: © OpenTopoMap (CC-BY-SA)'],
     })
-    // eslint-disable-next-line
     const map: any = new Map({
       target: mapElement.current,
       layers: [
@@ -41,7 +41,6 @@ const MapWrapper = ({ id, appService }: {
         center: [-13614350.227919813, 6040458.372108159],
         zoom: 12,
       }),
-      controls: [],
     }).on('pointerdrag', (e: any) => {
       const latLong = olProj.toLonLat(e.map.getView().getCenter())
       addCenter([latLong[1], latLong[0]])
