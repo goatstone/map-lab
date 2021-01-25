@@ -8,8 +8,8 @@ import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
-import { transform } from 'ol/proj'
-import { Coordinate, toStringXY } from 'ol/coordinate'
+// import { transform } from 'ol/proj'
+// import { Coordinate } from 'ol/coordinate'
 
 // ol.tilegrid.WMTS
 interface IMapWrapper {
@@ -23,7 +23,7 @@ const GibsMap: IMapWrapper = (({ features }: { features: any[] }) => {
   // set intial state
   const [map, setMap]: any[] = useState()
   const [featuresLayer, setFeaturesLayer]: any[] = useState()
-  const [selectedCoord, setSelectedCoord]: any[] = useState()
+  // const [selectedCoord, setSelectedCoord]: any[] = useState()
   // pull refs
   const mapElement: any = useRef()
   // create state ref that can be accessed in OpenLayers onclick callback function
@@ -31,14 +31,14 @@ const GibsMap: IMapWrapper = (({ features }: { features: any[] }) => {
   const mapRef: MapRef = useRef()
   mapRef.current = map
   // map click handler
-  const handleMapClick = (event: any) => {
+  const handleMapClick = () => {
     // get clicked coordinate using mapRef to access current React state inside OpenLayers callback
     //  https://stackoverflow.com/a/60643670
-    const clickedCoord = mapRef.current.getCoordinateFromPixel(event.pixel)
+    // const clickedCoord = mapRef.current.getCoordinateFromPixel(event.pixel)
     // transform coord to EPSG 4326 standard Lat Long
-    const transormedCoord: Coordinate = transform(clickedCoord, 'EPSG:3857', 'EPSG:4326')
+    // const transormedCoord: Coordinate = transform(clickedCoord, 'EPSG:3857', 'EPSG:4326')
     // set React state
-    setSelectedCoord(transormedCoord)
+    // setSelectedCoord(transormedCoord)
   }
   // initialize map on first render - logic formerly put into componentDidMount
   useEffect(() => {
@@ -117,12 +117,13 @@ const GibsMap: IMapWrapper = (({ features }: { features: any[] }) => {
 
   // render component
   return (
-    <div className="openlayer">
-      <div ref={mapElement} className="map-container" />
-      <div className="clicked-coord-label">
-        <p>{ (selectedCoord) ? toStringXY(selectedCoord, 5) : '' }</p>
-      </div>
-    </div>
+    <div ref={mapElement} className="openlayer" />
+    // <div className="openlayer">
+    //   <div ref={mapElement} className="map-container" />
+    //   <div className="clicked-coord-label">
+    //     <p>{ (selectedCoord) ? toStringXY(selectedCoord, 5) : '' }</p>
+    //   </div>
+    // </div>
   )
 })
 

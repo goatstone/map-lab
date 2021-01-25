@@ -35,10 +35,6 @@ const style: any = {
       height: '100%',
 
     },
-    '& .openlayer .map-container': {
-      position: 'relative',
-      height: '100%',
-    },
     '& .leaflet-map': {
       width: '100%',
       height: '100%',
