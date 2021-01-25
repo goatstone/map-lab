@@ -55,9 +55,7 @@ function App() {
           farItems={[infoCommandItem]}
         />
         <div className="map-frame">
-          <MapWrapper
-            features={[]}
-          />
+          <MapWrapper />
           <GibsMap
             features={[]}
           />
