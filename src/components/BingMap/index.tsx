@@ -60,7 +60,7 @@ const BingMap = ({
   }, [])
 
   return (
-    <div id="bing-map">&nbsp;</div>
+    <div id="bing-map" className="bing-map">&nbsp;</div>
   )
 }
 

@@ -2,9 +2,7 @@ const style: any = {
   mainContainer: {
     display: 'flex',
     flexDirection: 'column',
-    fontSize: '0.9em',
     fontFamily: 'sans-serif',
-    color: '#eee',
     background: 'gray',
     position: 'absolute',
     top: 0,
@@ -13,9 +11,6 @@ const style: any = {
     bottom: 0,
     '& .info': {
       position: 'absolute',
-    },
-    '& #bing-map': {
-      width: '100%',
     },
     '& header': {
       display: 'flex',
@@ -29,31 +24,31 @@ const style: any = {
     '& header > div': {
       flexGrow: 1,
     },
-    '& footer': {
-      background: 'gray',
-      display: 'flex',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-    },
-    '& .openlayer': {
-      width: '25%',
-    },
-    '& .map-container': {
-      position: 'relative',
-      height: '100%',
-    },
-    '& .leaflet-map': {
-      width: '25%',
-      height: '100%',
-    },
-    '& .google-map': {
-      width: '25%',
-      height: '100%',
-    },
     '& .map-frame': {
       display: 'flex',
       width: '100%',
       height: '100%',
+    },
+    '& .openlayer': {
+      position: 'relative',
+      width: '100%',
+      height: '100%',
+
+    },
+    '& .openlayer .map-container': {
+      position: 'relative',
+      height: '100%',
+    },
+    '& .leaflet-map': {
+      width: '100%',
+      height: '100%',
+    },
+    '& .google-map': {
+      width: '100%',
+      height: '100%',
+    },
+    '& .bing-map': {
+      width: '100%',
     },
   },
 }

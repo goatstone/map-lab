@@ -6,6 +6,7 @@ import style from '../style/main-style'
 import {
   GMap,
   LMap,
+  BingMap,
   InfoModal,
 } from '.'
 import MapWrapper from './openlayer'
@@ -55,6 +56,11 @@ function App() {
           farItems={[infoCommandItem]}
         />
         <div className="map-frame">
+          <BingMap
+            config={{}}
+            id={10}
+            appService={applicationService}
+          />
           <MapWrapper
             features={[]}
           />
@@ -62,21 +68,18 @@ function App() {
             features={[]}
           />
           <GMap
-            // mainClassName={sheet.classes.gMap}
             id={100}
             appService={applicationService}
           />
           <LMap
             id={1000}
             appService={applicationService}
-            // mainClassName={sheet.classes.lMap}
             idName="leaflet"
             layerType="light"
           />
           <LMap
             id={10000}
             appService={applicationService}
-            // mainClassName={sheet.classes.lMap}
             idName="leaflet-b"
             layerType="satelite"
           />
