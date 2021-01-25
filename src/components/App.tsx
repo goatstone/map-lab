@@ -9,6 +9,7 @@ import {
   InfoModal,
 } from '.'
 import MapWrapper from './openlayer'
+import GibsMap from './GibsMap'
 import MainHeader from './MainHeader'
 import {
   repoCommandItem,
@@ -57,7 +58,7 @@ function App() {
           <MapWrapper
             features={[]}
           />
-          <MapWrapper
+          <GibsMap
             features={[]}
           />
           <GMap
