@@ -11,13 +11,13 @@ const accessToken = 'pk.eyJ1IjoiZ29hdHN0b25lIiwiYSI6ImNrMmp5dnoycjFsazgzYm1zbjE0
 function Map({
   id,
   appService,
-  mainClassName,
+  // mainClassName,
   idName = 'leaflet-map',
   layerType = 'light',
 }: {
   id: any,
   appService: AppServiceInstanceI,
-  mainClassName: any,
+  // mainClassName: any,
   idName: string,
   layerType: string
 }) {
@@ -91,8 +91,7 @@ function Map({
   return (
     <div
       id={idName}
-      data-id="goatstone-component-leaflet-map"
-      className={mainClassName}
+      className="leaflet-map"
     />
   )
 }

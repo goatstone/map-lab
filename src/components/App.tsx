@@ -54,7 +54,7 @@ function App() {
           ]}
           farItems={[infoCommandItem]}
         />
-        <div className={sheet.classes.frame}>
+        <div className="map-frame">
           <MapWrapper
             features={[]}
           />
@@ -62,21 +62,21 @@ function App() {
             features={[]}
           />
           <GMap
-            mainClassName={sheet.classes.gMap}
+            // mainClassName={sheet.classes.gMap}
             id={100}
             appService={applicationService}
           />
           <LMap
             id={1000}
             appService={applicationService}
-            mainClassName={sheet.classes.lMap}
+            // mainClassName={sheet.classes.lMap}
             idName="leaflet"
             layerType="light"
           />
           <LMap
             id={10000}
             appService={applicationService}
-            mainClassName={sheet.classes.lMap}
+            // mainClassName={sheet.classes.lMap}
             idName="leaflet-b"
             layerType="satelite"
           />

@@ -11,10 +11,10 @@ let map: any
 let listener: any
 const GMap = ({
   id,
-  mainClassName,
+  // mainClassName,
   appService,
 }: {
-  appService: AppServiceInstanceI, id: number, mainClassName: any
+  appService: AppServiceInstanceI, id: number
 }) => {
   const idName = 'google-map'
   useEffect(() => {
@@ -81,8 +81,7 @@ const GMap = ({
   return (
     <div
       id={idName}
-      className={mainClassName}
-      data-component-name="gmap"
+      className="google-map"
     >
       GMap
     </div>
