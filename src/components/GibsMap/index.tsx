@@ -16,6 +16,9 @@ const GibsMap: IMapWrapper = ({ id, appService }: {
   id: number, appService: AppServiceInstanceI
 }) => {
   const mapElement: any = useRef()
+  const addCenter = (center: any) => {
+    appService.addCenterStatus(center, id)
+  }
   useEffect(() => {
     const initalFeaturesLayer = new VectorLayer({
       source: new VectorSource(),
@@ -40,11 +43,14 @@ const GibsMap: IMapWrapper = ({ id, appService }: {
         zoom: 9,
       }),
       controls: [],
+    }).on('pointerdrag', (e: any) => {
+      const latLong = olProj.toLonLat(e.map.getView().getCenter())
+      addCenter([latLong[1], latLong[0]])
     })
     appService.addCenterEventListener(center => {
       if (map) {
         const lLConverted = olProj.fromLonLat([center[1], center[0]])
-        map.getView().setCenter(lLConverted)
+        map.target.getView().setCenter(lLConverted)
       }
     }, id)
   }, [])
