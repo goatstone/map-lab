@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Loader } from '@googlemaps/loader'
-import config from '../config'
-import { AppServiceInstanceI } from '../app-service'
+import config from '../../config'
+import { AppServiceInstanceI } from '../../app-service'
 
 declare global {
   interface Window { google: any; }
@@ -9,7 +9,7 @@ declare global {
 
 let map: any
 let listener: any
-const GMap = ({
+const GoogleMap = ({
   id,
   // mainClassName,
   appService,
@@ -88,4 +88,4 @@ const GMap = ({
   )
 }
 
-export default GMap
+export default GoogleMap

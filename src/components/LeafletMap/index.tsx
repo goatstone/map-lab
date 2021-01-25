@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import L from 'leaflet'
-import { AppServiceInstanceI } from '../app-service'
+import { AppServiceInstanceI } from '../../app-service'
 
 const attribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, '
   + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, '
@@ -8,7 +8,7 @@ const attribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">Op
 const mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}'
 const accessToken = 'pk.eyJ1IjoiZ29hdHN0b25lIiwiYSI6ImNrMmp5dnoycjFsazgzYm1zbjE0anRobzkifQ.tW-4mQDJK41ayRkBxtz15w'
 
-function Map({
+function LeafletMap({
   id,
   appService,
   // mainClassName,
@@ -96,4 +96,4 @@ function Map({
   )
 }
 
-export default Map
+export default LeafletMap

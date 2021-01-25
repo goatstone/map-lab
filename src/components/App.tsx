@@ -4,12 +4,11 @@ import jss from 'jss'
 import preset from 'jss-preset-default'
 import style from '../style/main-style'
 import {
-  GMap,
-  LMap,
-  BingMap,
   InfoModal,
 } from '.'
-import MapWrapper from './openlayer'
+import GoogleMap from './GoogleMap'
+import LeafletMap from './LeafletMap'
+import MapWrapper from './OpenLayerMap'
 import GibsMap from './GibsMap'
 import MainHeader from './MainHeader'
 import {
@@ -56,28 +55,23 @@ function App() {
           farItems={[infoCommandItem]}
         />
         <div className="map-frame">
-          <BingMap
-            config={{}}
-            id={10}
-            appService={applicationService}
-          />
           <MapWrapper
             features={[]}
           />
           <GibsMap
             features={[]}
           />
-          <GMap
+          <GoogleMap
             id={100}
             appService={applicationService}
           />
-          <LMap
+          <LeafletMap
             id={1000}
             appService={applicationService}
             idName="leaflet"
             layerType="light"
           />
-          <LMap
+          <LeafletMap
             id={10000}
             appService={applicationService}
             idName="leaflet-b"

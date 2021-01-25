@@ -3,7 +3,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import { JSDOM } from 'jsdom'
 import React from 'react'
 import { act } from 'react-dom/test-utils'
-import Map from '../components/Map'
+import Map from '../components/LeafletMap'
 
 Enzyme.configure({ adapter: new Adapter() })
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>')

@@ -3,7 +3,7 @@ import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { JSDOM } from 'jsdom'
 import { act } from 'react-dom/test-utils'
-import GMap from '../components/GMap'
+import GMap from '../components/GoogleMap'
 import AppService from '../app-service'
 
 const aS = AppService()
