@@ -5,13 +5,21 @@ import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import XYZ from 'ol/source/XYZ'
+import * as olProj from 'ol/proj'
+import { AppServiceInstanceI } from '../../app-service'
 
 interface IMapWrapper {
-  (props: any): any
+  (id: number, appService: AppServiceInstanceI): any
 }
 
-const MapWrapper: IMapWrapper = () => {
+const MapWrapper = ({ id, appService }: {
+  id: number,
+  appService: AppServiceInstanceI,
+}) => {
   const mapElement: any = useRef()
+  const addCenter = (center: any) => {
+    appService.addCenterStatus(center, id)
+  }
   useEffect(() => {
     const initalFeaturesLayer = new VectorLayer({
       source: new VectorSource(),
@@ -30,10 +38,13 @@ const MapWrapper: IMapWrapper = () => {
       ],
       view: new View({
         projection: 'EPSG:3857',
-        center: [0, 0],
-        zoom: 4,
+        center: [-13614350.227919813, 6040458.372108159],
+        zoom: 12,
       }),
       controls: [],
+    }).on('pointerdrag', (e: any) => {
+      const latLong = olProj.toLonLat(e.map.getView().getCenter())
+      addCenter([latLong[1], latLong[0]])
     })
   }, [])
 
