@@ -15,10 +15,8 @@ import {
   repoCommandItem,
   gotoCommandItems,
   infoCommandItem,
-  zoomCommandItem,
   infoWithAction,
   goToWithAction,
-  withAction,
 } from '../command-items'
 import { cities } from '../data'
 import AppService, { AppServiceInstanceI } from '../app-service'
@@ -34,9 +32,6 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   infoWithAction(infoCommandItem, setIsModalOpen)
   goToWithAction(gotoCommandItems, cities, applicationService.addCenterStatus)
-  withAction(zoomCommandItem, () => {
-    applicationService.addZoom(12, 0)
-  })
 
   return (
     <>
@@ -50,7 +45,6 @@ function App() {
           items={[
             repoCommandItem,
             gotoCommandItems,
-            zoomCommandItem,
           ]}
           farItems={[infoCommandItem]}
         />
