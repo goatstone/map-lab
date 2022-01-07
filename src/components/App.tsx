@@ -6,8 +6,6 @@ import style from '../style/main-style'
 import {
   InfoModal,
 } from '.'
-import GoogleMap from './GoogleMap'
-import LeafletMap from './LeafletMap'
 import MapWrapper from './OpenLayerMap'
 import GibsMap from './GibsMap'
 import MainHeader from './MainHeader'
@@ -27,6 +25,14 @@ const sheet = jss.createStyleSheet(style)
 sheet.attach()
 
 const applicationService: AppServiceInstanceI = AppService()
+
+const tileUrls = {
+  World_Hillshade: 'https://server.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}',
+  World_Imagery: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  World_Street_Map: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+  NatGeo_World_Map: 'https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
+  openstreetmap: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+}
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -52,26 +58,21 @@ function App() {
           <MapWrapper
             id={0}
             appService={applicationService}
+            url={tileUrls.World_Hillshade}
+          />
+          <MapWrapper
+            id={100000}
+            appService={applicationService}
+            url={tileUrls.World_Imagery}
           />
           <GibsMap
             id={10}
             appService={applicationService}
           />
-          <GoogleMap
-            id={100}
+          <MapWrapper
+            id={99}
             appService={applicationService}
-          />
-          <LeafletMap
-            id={1000}
-            appService={applicationService}
-            idName="leaflet"
-            layerType="light"
-          />
-          <LeafletMap
-            id={10000}
-            appService={applicationService}
-            idName="leaflet-b"
-            layerType="satelite"
+            url={tileUrls.World_Street_Map}
           />
         </div>
       </section>

@@ -1,4 +1,11 @@
-import { Subject, BehaviorSubject } from 'rxjs'
+import {
+  Subject,
+  BehaviorSubject,
+  concat,
+  zip,
+  interval,
+} from 'rxjs'
+import { filter, map, throttle } from 'rxjs/operators'
 
 export interface Message {
   message: string;
@@ -60,6 +67,15 @@ const AppService: AppServiceI = () => {
   const zooms$: BehaviorSubject<Zoom> = new BehaviorSubject(
     { zoom: initZoom, id: appServiceId },
   )
+  const conC = concat(
+    zip(centers$, messages$)
+      .pipe(
+        map(e => ({ center: e[0], message: e[1] })),
+      ),
+  )
+  conC.subscribe(({ center, message }) => {
+    console.log('message', message, center)
+  })
   const addMessage: AddMessage = (message, id) => {
     messages$.next({ message, id })
   }
@@ -76,18 +92,16 @@ const AppService: AppServiceI = () => {
     messages$.subscribe(...subArgs)
   }
   const addCenterEventListener: AddCenterEventListener = (listener, id) => {
-    centers$.subscribe((center: Center) => {
-      // do not send the center event to the caller
-      if (center.id !== id) {
+    centers$
+      .pipe(throttle(() => interval(200)), filter((center: Center) => center.id !== id))
+      .subscribe((center: Center) => {
         listener(center.center)
-      }
-    },
-    // eslint-disable-next-line no-console
-    console.log,
-    () => {
-      // eslint-disable-next-line no-console
-      console.log('Completed: ', id)
-    })
+      },
+      console.log,
+      () => {
+        // eslint-disable-next-line no-console
+        console.log('Completed: ', id)
+      })
   }
   const addCenterStatus: AddCenterStatus = (center, id) => {
     centers$.next({ center, id })

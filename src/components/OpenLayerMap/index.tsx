@@ -9,12 +9,13 @@ import * as olProj from 'ol/proj'
 import { AppServiceInstanceI } from '../../app-service'
 
 interface IMapWrapper {
-  (id: number, appService: AppServiceInstanceI): any
+  (id: number, appService: AppServiceInstanceI, url: any): any
 }
 
-const MapWrapper = ({ id, appService }: {
+const MapWrapper = ({ id, appService, url }: {
   id: number,
   appService: AppServiceInstanceI,
+  url: string,
 }) => {
   const mapElement: any = useRef()
   const addCenter = (center: any) => {
@@ -25,7 +26,7 @@ const MapWrapper = ({ id, appService }: {
       source: new VectorSource(),
     })
     const xyz = new XYZ({
-      url: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
+      url,
       attributions: ['© OpenStreetMap -Mitwirkende, SRTM | Affichage de la carte: © OpenTopoMap (CC-BY-SA)'],
     })
     const map: any = new Map({
