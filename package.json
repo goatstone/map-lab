@@ -192,6 +192,6 @@
     "@testing-library/react": "^9.4.0",
     "eslint-config-airbnb-typescript": "^4.0.0",
     "gh-pages": "^2.0.1",
-    "jsdom": "^15.1.0"
+    "jsdom": "^16.5.0"
   }
 }
